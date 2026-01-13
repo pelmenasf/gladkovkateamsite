@@ -52,7 +52,7 @@
         }
 
         .hero {
-            height: 40vh;
+            height: 30vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -76,12 +76,27 @@
             text-transform: uppercase;
         }
 
+        .section-title {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            letter-spacing: 3px;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            border-left: 5px solid var(--neon-green);
+            display: table;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 15px;
+        }
+
         .players-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 25px;
-            padding: 50px;
+            padding: 0 50px 50px 50px;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -92,6 +107,10 @@
             border-bottom: 4px solid var(--primary-green);
             transition: 0.3s ease;
             position: relative;
+        }
+
+        .player-card.management-card {
+            border-bottom-color: #ffffff; /* Белый акцент для руководства */
         }
 
         .player-card:hover {
@@ -144,6 +163,14 @@
             text-transform: uppercase;
         }
 
+        .management-tag {
+            color: #fff !important;
+            background: #444;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
         .real-name {
             color: #777;
             font-size: 14px;
@@ -151,10 +178,11 @@
 
         footer {
             text-align: center;
-            padding: 40px;
+            padding: 60px;
             color: #333;
             font-size: 12px;
             letter-spacing: 1px;
+            border-top: 1px solid #111;
         }
     </style>
 </head>
@@ -164,18 +192,44 @@
 
     <header>
         <div class="logo-box">GLADKOVKA</div>
-        <div style="color: #666; font-size: 12px; letter-spacing: 2px;">OFFICIAL ROSTER</div>
+        <div style="color: #666; font-size: 12px; letter-spacing: 2px;">GAMING DIVISION</div>
     </header>
 
     <section class="hero">
         <div class="est-text">EST. 2023</div>
-        <h1>TEAM</h1>
+        <h1>GLADKOVKA</h1>
     </section>
 
+    <h2 class="section-title">Management</h2>
+    <div class="players-container">
+        <div class="player-card management-card">
+            <div class="img-box">
+                <img src="https://i.ibb.co/WWN62CM2/image.png" class="player-img" alt="Ronik CEO">
+            </div>
+            <div class="info-box">
+                <p class="role"><span class="management-tag">CEO</span></p>
+                <h3 class="nick">RONIK</h3>
+                <span class="real-name">Stanislav Vasyaslanovich</span>
+            </div>
+        </div>
+
+        <div class="player-card management-card">
+            <div class="img-box">
+                <img src="https://i.ibb.co/VcczcCtL/image.png" class="player-img" alt="lominok Coach">
+            </div>
+            <div class="info-box">
+                <p class="role"><span class="management-tag">HEAD COACH</span></p>
+                <h3 class="nick">LOMINOK</h3>
+                <span class="real-name">Stanislav Petlyuchenko</span>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Active Roster</h2>
     <div class="players-container">
         <div class="player-card">
             <div class="img-box">
-                <img src="https://i.ibb.co/WWN62CM2/image.png" class="player-img" alt="Ronik">
+                <img src="https://i.ibb.co/WWN62CM2/image.png" class="player-img" alt="Ronik Player">
             </div>
             <div class="info-box">
                 <p class="role">Rifler</p>
@@ -230,7 +284,7 @@
     </div>
 
     <footer>
-        &copy; 2024 GLADKOVKA TEAM. DIGITAL FOREST DIVISION.
+        &copy; 2026 GLADKOVKA TEAM. DIGITAL FOREST DIVISION.
     </footer>
 
 </body>
