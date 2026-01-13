@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLADKOVKA TEAM | Official Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #008a2e;
+            --neon-green: #00ff55;
+            --dark-bg: #050505;
+            --card-bg: #111111;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(to right, rgba(0, 138, 46, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 138, 46, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        header {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--primary-green);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-box {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .hero {
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, rgba(0, 138, 46, 0.15) 0%, transparent 70%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(40px, 8vw, 80px);
+            margin: 0;
+            letter-spacing: 10px;
+        }
+
+        .est-text {
+            color: var(--neon-green);
+            letter-spacing: 5px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .players-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            padding: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .player-card {
+            width: 280px;
+            background: var(--card-bg);
+            border-bottom: 4px solid var(--primary-green);
+            transition: 0.3s ease;
+            position: relative;
+        }
+
+        .player-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 85, 0.2);
+            border-bottom-color: var(--neon-green);
+        }
+
+        .img-box {
+            height: 380px;
+            background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        .player-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .placeholder-img {
+            width: 50%;
+            opacity: 0.2;
+            margin-bottom: 80px;
+        }
+
+        .info-box {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .nick {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            margin: 0;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .role {
+            color: var(--neon-green);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin: 5px 0 10px 0;
+            text-transform: uppercase;
+        }
+
+        .real-name {
+            color: #777;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #333;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-bg"></div>
+
+    <header>
+        <div class="logo-box">GLADKOVKA</div>
+        <div style="color: #666; font-size: 12px; letter-spacing: 2px;">OFFICIAL ROSTER</div>
+    </header>
+
+    <section class="hero">
+        <div class="est-text">EST. 2023</div>
+        <h1>TEAM</h1>
+    </section>
+
+    <div class="players-container">
+        <div class="player-card">
+            <div class="img-box">
+                <img src="https://i.ibb.co/WWN62CM2/image.png" class="player-img" alt="Ronik">
+            </div>
+            <div class="info-box">
+                <p class="role">Rifler</p>
+                <h3 class="nick">RONIK</h3>
+                <span class="real-name">Stanislav Vasyaslanovich</span>
+            </div>
+        </div>
+
+        <div class="player-card">
+            <div class="img-box">
+                <img src="https://i.ibb.co/hx6yd1cJ/image.png" class="player-img" alt="Nopidorabeme">
+            </div>
+            <div class="info-box">
+                <p class="role">Main AWP</p>
+                <h3 class="nick">NOPIDORABEME</h3>
+                <span class="real-name">Nikita Zhopynsky</span>
+            </div>
+        </div>
+
+        <div class="player-card">
+            <div class="img-box">
+                <img src="https://i.ibb.co/n8kb5Qc5/image.png" class="player-img" alt="Danich">
+            </div>
+            <div class="info-box">
+                <p class="role">Rifler</p>
+                <h3 class="nick">DANICH</h3>
+                <span class="real-name">Daniil Stanika</span>
+            </div>
+        </div>
+
+        <div class="player-card">
+            <div class="img-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" class="placeholder-img" alt="Placeholder">
+            </div>
+            <div class="info-box">
+                <p class="role">Rifler / 2nd AWP</p>
+                <h3 class="nick">MALISH-VASYA</h3>
+                <span class="real-name">Egor Belyavsky</span>
+            </div>
+        </div>
+
+        <div class="player-card">
+            <div class="img-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" class="placeholder-img" alt="Placeholder">
+            </div>
+            <div class="info-box">
+                <p class="role">Rifler</p>
+                <h3 class="nick">SYNBLYADI</h3>
+                <span class="real-name">Ivan Levitsky</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 GLADKOVKA TEAM. DIGITAL FOREST DIVISION.
+    </footer>
+
+</body>
+</html>
