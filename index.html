@@ -1,1 +1,242 @@
-hb
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gladkovka Team — CS2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #00ff66;
+      --bg: #030504;
+      --card: #0a120e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #06140c, var(--bg));
+      color: #eafff3;
+      overflow-x: hidden;
+    }
+
+    /* language switch */
+    .lang {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+    }
+
+    .lang button {
+      background: transparent;
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    header {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .logo {
+      width: 200px;
+      margin-bottom: 25px;
+      filter: drop-shadow(0 0 25px var(--green));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+    h1 {
+      font-size: 3.8rem;
+      color: var(--green);
+      text-shadow: 0 0 25px rgba(0,255,102,0.8);
+    }
+
+    .subtitle { opacity: .75; margin-top: 10px; }
+
+    section { padding: 90px 8%; }
+
+    .section-title {
+      font-size: 2.4rem;
+      margin-bottom: 50px;
+      color: var(--green);
+      text-shadow: 0 0 15px rgba(0,255,102,0.6);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 35px;
+    }
+
+    .card {
+      background: linear-gradient(160deg, #0c1f15, var(--card));
+      border: 1px solid rgba(0,255,102,0.25);
+      border-radius: 22px;
+      padding: 28px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(60px) scale(0.95);
+      transition: transform .6s ease, opacity .6s ease, box-shadow .4s;
+    }
+
+    .card.show { opacity: 1; transform: translateY(0) scale(1); }
+
+    .card:hover { box-shadow: 0 0 35px rgba(0,255,102,0.5); }
+
+    .card img.player {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 14px;
+      border: 2px solid var(--green);
+      box-shadow: 0 0 20px rgba(0,255,102,0.6);
+    }
+
+    .nick {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .flag {
+      width: 14px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .role { font-size: .9rem; opacity: .8; margin-top: 6px; }
+
+    footer {
+      padding: 40px;
+      text-align: center;
+      opacity: .6;
+      border-top: 1px solid rgba(0,255,102,0.25);
+    }
+  </style>
+</head>
+<body>
+
+<div class="lang">
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('ua')">UA</button>
+  <button onclick="setLang('en')">EN</button>
+  <button onclick="setLang('de')">DE</button>
+</div>
+
+<header>
+  <img class="logo" src="https://i.ibb.co/7tpnqdms/6.png" alt="Gladkovka Team Logo">
+  <h1>GLADKOVKA TEAM</h1>
+  <div class="subtitle">CS2 ESPORTS SQUAD</div>
+</header>
+
+<section id="roster">
+  <div class="section-title" data-key="roster">Основной состав</div>
+  <div class="grid">
+
+    <div class="card">
+      <img src="https://i.ibb.co/n8kb5Qc5/image.png" class="player" alt="Danilko">
+      <div class="nick">Danill "Danilko" Stanyka <img class="flag" src="https://tse3.mm.bing.net/th/id/OIP.urOx1skeOvQN8otCwVURZAHaEK"></div>
+      <div class="role">Rifler</div>
+    </div>
+
+    <div class="card">
+      <img src="https://i.ibb.co/bjbbDjqP/abeme.png" class="player" alt="Abeme">
+      <div class="nick">Nikita "Abeme" Zhovynskiy <img class="flag" src="https://tse3.mm.bing.net/th/id/OIP.urOx1skeOvQN8otCwVURZAHaEK"></div>
+      <div class="role">AWP</div>
+    </div>
+
+    <div class="card">
+      <img src="https://i.ibb.co/b5DfCDYN/content.png" class="player" alt="Ronik">
+      <div class="nick">Stanislav "Ronik" K. <img class="flag" src="https://tse3.mm.bing.net/th/id/OIP.urOx1skeOvQN8otCwVURZAHaEK"></div>
+      <div class="role">Captain</div>
+    </div>
+
+    <div class="card">
+      <img src="https://i.ibb.co/HfqnfZ7k/file-0000000045c871f490ca3caf6b490d71.png" class="player" alt="Malish-Vasya">
+      <div class="nick">Egor "Malish-Vasya" Belyavskiy <img class="flag" src="https://tse3.mm.bing.net/th/id/OIP.urOx1skeOvQN8otCwVURZAHaEK"></div>
+      <div class="role">Rifler / 2nd AWP</div>
+    </div>
+
+    <div class="card">
+      <div class="nick">Ivan "synblyadi" Levitskiy <img class="flag" src="https://tse3.mm.bing.net/th/id/OIP.urOx1skeOvQN8otCwVURZAHaEK"></div>
+      <div class="role">Support</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="subs">
+  <div class="section-title" data-key="subs">Запасные игроки</div>
+  <div class="grid">
+    <div class="card">
+      <img src="https://i.ibb.co/hJb9Xdf0/ad9e4420-472d-4df3-882a-0b78ffb4eaee.png" class="player" alt="Valerka">
+      <div class="nick">David "Valerka" Gladkovskiy <img class="flag" src="https://tse3.mm.bing.net/th/id/OIP.urOx1skeOvQN8otCwVURZAHaEK"></div>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/353NfWTn/63a236e9-6635-49e4-bb40-06b6db11055d.jpg" class="player" alt="Lominok">
+      <div class="nick">Stanislav "Lominok" Petliuchenko <img class="flag" src="https://tse3.mm.bing.net/th/id/OIP.urOx1skeOvQN8otCwVURZAHaEK"></div>
+    </div>
+  </div>
+</section>
+
+<section id="sponsors">
+  <div class="section-title" data-key="sponsors">Наши спонсоры</div>
+  <div class="grid">
+    <div class="card">
+      <img src="https://i.ibb.co/qLYJDfWD/image.png" class="player" alt="JobCenter">
+      <div class="nick">JobCenter</div>
+      <div class="role">Stärken entdecken. Wege finden</div>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/PswmcrWy/image-687ec6970b44f4-37480113.jpg" class="player" alt="ТЦК">
+      <div class="nick">ТЦК</div>
+      <div class="role">КС2 але в реальному житті</div>
+    </div>
+    <div class="card">
+      <img src="https://igmr.org.ua/img/%D0%B6%D0%BE%D0%B2%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9.jpg" class="player" alt="Eduard Zhovynskiy">
+      <div class="nick">Єдуард Жовинський Якович</div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Gladkovka Team · Black & Green Era</footer>
+
+<script>
+  const translations = {
+    ru: { roster: 'Основной состав', subs: 'Запасные игроки', sponsors: 'Наши спонсоры' },
+    ua: { roster: 'Основний склад', subs: 'Запасні гравці', sponsors: 'Наші спонсори' },
+    en: { roster: 'Main Roster', subs: 'Substitutes', sponsors: 'Our Sponsors' },
+    de: { roster: 'Hauptaufstellung', subs: 'Ersatzspieler', sponsors: 'Unsere Sponsoren' }
+  };
+
+  function setLang(lang) {
+    document.querySelectorAll('[data-key]').forEach(el => {
+      el.innerText = translations[lang][el.dataset.key];
+    });
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.card').forEach(c => observer.observe(c));
+</script>
+
+</body>
+</html>
