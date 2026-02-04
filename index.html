@@ -22,6 +22,7 @@
             font-family: 'Exo 2', sans-serif;
             overflow-x: hidden;
             background: radial-gradient(circle at center, #001a00 0%, #000 100%);
+            min-height: 100vh;
         }
 
         .bg-glow {
@@ -49,20 +50,20 @@
             background: #000;
             padding: 5px;
             transition: 0.3s;
-            cursor: pointer;
         }
         .ad-unit img { width: 100%; height: auto; display: block; }
         .ad-label { font-size: 9px; color: var(--primary); text-align: center; margin-bottom: 4px; font-family: 'Orbitron'; }
-        .ad-unit:hover { border-color: var(--primary); transform: scale(1.1) rotate(2deg); }
+        .ad-unit:hover { border-color: var(--primary); transform: scale(1.1); }
 
         /* Контейнер меню */
         .container {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 40px 0;
+            transition: 0.5s ease;
         }
 
         .logo-main {
@@ -80,38 +81,44 @@
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 8vw, 3.5rem);
             letter-spacing: 8px;
             margin-bottom: 40px;
+            text-align: center;
             text-shadow: 0 0 15px var(--primary);
         }
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(2, 300px);
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
+            width: 90%;
+            max-width: 650px;
         }
 
         .menu-btn {
             background: var(--card-bg);
             border: 1px solid var(--primary-dark);
-            padding: 30px;
+            padding: clamp(15px, 5vh, 30px);
             color: #fff;
             font-family: 'Orbitron', sans-serif;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 2px;
             cursor: pointer;
-            transition: 0.4s;
+            transition: 0.3s;
             backdrop-filter: blur(10px);
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .menu-btn:hover {
             border-color: var(--primary);
             background: rgba(0, 255, 0, 0.1);
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.2);
-            transform: translateY(-5px);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
         }
 
         /* Модальное окно контактов */
@@ -120,7 +127,7 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9);
-            z-index: 1000;
+            z-index: 2000;
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(10px);
@@ -134,46 +141,37 @@
             border-radius: 20px;
             max-width: 400px;
             width: 90%;
-            position: relative;
         }
 
         .contact-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
+            display: block;
             padding: 15px;
             margin: 15px 0;
             background: rgba(255,255,255,0.05);
             border-radius: 10px;
             text-decoration: none;
             color: #fff;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             transition: 0.3s;
             border: 1px solid transparent;
         }
+        .contact-link:hover { border-color: var(--primary); background: rgba(0,255,0,0.1); }
 
-        .contact-link:hover {
-            background: rgba(0,255,0,0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        /* Секции */
+        /* Секции контента */
         .section {
             display: none;
-            padding: 80px 40px;
+            padding: 60px 20px;
             max-width: 1200px;
             margin: 0 auto;
             opacity: 0;
-            transform: translateY(40px);
-            transition: 0.6s;
+            transform: translateY(20px);
         }
 
         .section.active {
             display: block;
             opacity: 1;
             transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         .header-row {
@@ -181,49 +179,49 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--primary);
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             padding-bottom: 15px;
         }
 
-        /* Карточки игроков */
+        /* Сетка игроков */
         .roster-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
+            gap: 25px;
         }
 
         .player-card {
             background: #111;
-            width: 280px;
+            width: 260px;
             border-radius: 15px;
             overflow: hidden;
             border: 1px solid #333;
             transition: 0.3s;
         }
-        .player-card:hover { border-color: var(--primary); transform: translateY(-10px); }
-        .img-container { height: 320px; overflow: hidden; background: #000; }
-        .player-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .player-info { padding: 20px; }
-        .player-nick { font-family: 'Orbitron'; font-size: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-        .player-role { font-size: 13px; color: #888; text-transform: uppercase; margin-top: 8px; }
-        .flag-img { width: 28px; border-radius: 3px; }
+        .player-card:hover { border-color: var(--primary); }
+        .img-container { height: 300px; overflow: hidden; }
+        .player-img { width: 100%; height: 100%; object-fit: cover; }
+        .player-info { padding: 15px; }
+        .player-nick { font-family: 'Orbitron'; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .player-role { font-size: 12px; color: #888; text-transform: uppercase; margin-top: 5px; }
+        .flag-img { width: 25px; border-radius: 2px; }
 
         .back-btn {
             background: var(--primary);
             color: #000;
-            padding: 12px 25px;
+            padding: 10px 20px;
             text-decoration: none;
             font-weight: bold;
             font-family: 'Orbitron';
-            font-size: 12px;
-            border-radius: 5px;
+            font-size: 11px;
+            border-radius: 4px;
         }
 
-        .sponsor-item { text-align: center; }
+        .sponsor-item { text-align: center; margin-bottom: 30px; }
 
-        @media (max-width: 800px) {
-            .menu-grid { grid-template-columns: 1fr; width: 90%; }
+        @media (max-width: 600px) {
+            .menu-grid { grid-template-columns: 1fr; }
             .ads-sidebar { display: none; }
         }
     </style>
@@ -233,36 +231,21 @@
 <div class="bg-glow"></div>
 
 <div class="ads-sidebar">
-    <div class="ad-unit">
-        <div class="ad-label">РЕКЛАМА</div>
-        <img src="https://www.steuerzahler.de/fileadmin/user_upload/Plakat_Jobcenter_Berlin_gruen.jpg">
-    </div>
-    <div class="ad-unit">
-        <div class="ad-label">PROMO</div>
-        <img src="https://i.imgur.com/3ckqVEv.png">
-    </div>
+    <div class="ad-unit"><div class="ad-label">РЕКЛАМА</div><img src="https://www.steuerzahler.de/fileadmin/user_upload/Plakat_Jobcenter_Berlin_gruen.jpg"></div>
+    <div class="ad-unit"><div class="ad-label">PROMO</div><img src="https://i.imgur.com/3ckqVEv.png"></div>
 </div>
 
 <div id="contact-modal" onclick="closeModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <h2 style="font-family: 'Orbitron'; color: var(--primary); margin-bottom: 20px;">CONTACT US</h2>
-        
-        <a href="https://t.me/stas_user" target="_blank" class="contact-link">
-            <span>✈️ Telegram: @stas_user</span>
-        </a>
-
-        <div class="contact-link" onclick="copyDiscord()">
-            <span>🎮 Discord: ronik69</span>
-        </div>
-        
-        <p style="font-size: 10px; color: #666; margin-top: 15px;">Нажми на Discord, чтобы скопировать ник</p>
-        
-        <button onclick="document.getElementById('contact-modal').style.display='none'" style="margin-top: 25px; background: none; border: 1px solid #555; color: #555; cursor: pointer; padding: 5px 15px;">Закрыть</button>
+        <h2 style="font-family: 'Orbitron'; color: var(--primary); margin-bottom: 20px;">CONTACTS</h2>
+        <a href="https://t.me/stas_user" target="_blank" class="contact-link">✈️ Telegram: @stas_user</a>
+        <div class="contact-link" onclick="copyDiscord()" style="cursor:pointer">🎮 Discord: ronik69</div>
+        <button onclick="document.getElementById('contact-modal').style.display='none'" style="margin-top: 20px; padding: 10px 20px; background: #333; color: #fff; border: none; cursor: pointer;">ЗАКРЫТЬ</button>
     </div>
 </div>
 
 <div class="container" id="main-menu">
-    <img src="https://i.imgur.com/S8mBPo9.png" class="logo-main">
+    <img src="https://i.imgur.com/S8mBPo9.png" class="logo-main" alt="Logo">
     <h1>GLADKOVKA</h1>
     <div class="menu-grid">
         <div class="menu-btn" onclick="openSection('main-roster')">Основной состав</div>
@@ -270,12 +253,15 @@
         <div class="menu-btn" onclick="openSection('games')">Прошедшие игры</div>
         <div class="menu-btn" onclick="openSection('sponsors')">Спонсоры</div>
         <div class="menu-btn" onclick="openSection('about')">О нас</div>
-        <div class="menu-btn" onclick="document.getElementById('contact-modal').style.display='flex'" style="border-color: #fff; color: #fff;">Связаться с нами</div>
+        <div class="menu-btn" onclick="document.getElementById('contact-modal').style.display='flex'" style="border-color: #fff;">Связаться</div>
     </div>
 </div>
 
 <div id="main-roster" class="section">
-    <div class="header-row"><h2>MAIN ROSTER</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">Назад</a></div>
+    <div class="header-row">
+        <h2>MAIN ROSTER</h2>
+        <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a>
+    </div>
     <div class="roster-grid">
         <div class="player-card">
             <div class="img-container"><img src="https://i.imgur.com/Q84c4k0.png" class="player-img"></div>
@@ -316,7 +302,10 @@
 </div>
 
 <div id="sub-roster" class="section">
-    <div class="header-row"><h2>SUBSTITUTES</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">Назад</a></div>
+    <div class="header-row">
+        <h2>SUBSTITUTES</h2>
+        <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a>
+    </div>
     <div class="roster-grid">
         <div class="player-card">
             <div class="img-container"><img src="https://i.imgur.com/lmde7mb.png" class="player-img"></div>
@@ -336,33 +325,100 @@
 </div>
 
 <div id="sponsors" class="section">
-    <div class="header-row"><h2>OFFICIAL PARTNERS</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">Назад</a></div>
+    <div class="header-row">
+        <h2>SPONSORS</h2>
+        <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a>
+    </div>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;">
-        <div class="sponsor-item" style="width: 300px;">
-            <div style="padding: 5px; background: linear-gradient(45deg, #ffd700, #bf953f); border-radius: 15px;">
-                <img src="http://calendar.interesniy.kiev.ua/Pic/zhovinskiy-1.jpg" style="width: 100%; border-radius: 10px;">
+        <div class="sponsor-item" style="width: 280px;">
+            <div style="border: 3px solid var(--gold); border-radius: 10px; overflow: hidden;">
+                <img src="http://calendar.interesniy.kiev.ua/Pic/zhovinskiy-1.jpg" style="width: 100%; display: block;">
             </div>
-            <h3 style="margin-top: 15px; color: var(--gold); font-family: 'Orbitron';">Эдуард Жовинський</h3>
+            <h3 style="color: var(--gold); margin-top: 10px; font-family: 'Orbitron';">Эдуард Жовинський</h3>
         </div>
-        <div class="sponsor-item" style="width: 300px;">
-            <div style="height: 230px; background: rgba(255,255,255,0.05); display: flex; align-items: center; padding: 20px; border-radius: 15px; border: 1px solid var(--primary-dark);">
+        <div class="sponsor-item" style="width: 280px;">
+            <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; height: 215px; display: flex; align-items: center;">
                 <img src="https://www.arbeitsagentur.de/vor-ort/services/logos/jobcenter/default_gross_transparent.png" style="width: 100%;">
             </div>
-            <h3 style="margin-top: 15px; color: var(--primary); font-family: 'Orbitron';">JOBCENTER</h3>
+            <h3 style="color: var(--primary); margin-top: 10px; font-family: 'Orbitron';">JOBCENTER</h3>
         </div>
-        <div class="sponsor-item" style="width: 300px;">
-            <div style="height: 230px; border: 2px solid #ff0000; border-radius: 15px; overflow: hidden; background: #000;">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5qPRRjKxtUbBi5pxuUBFM8f0EgyLW6vN7uQ&s" style="width: 100%; height: 100%; object-fit: contain;">
+        <div class="sponsor-item" style="width: 280px;">
+            <div style="border: 2px solid #ff0000; border-radius: 10px; height: 215px; background: #000; display: flex; align-items: center;">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5qPRRjKxtUbBi5pxuUBFM8f0EgyLW6vN7uQ&s" style="width: 100%;">
             </div>
-            <h3 style="margin-top: 15px; color: #ff0000; font-family: 'Orbitron';">ТЦК ТА СП</h3>
+            <h3 style="color: #ff0000; margin-top: 10px; font-family: 'Orbitron';">ТЦК ТА СП</h3>
         </div>
     </div>
 </div>
 
 <div id="games" class="section">
-    <div class="header-row"><h2>MATCH HISTORY</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">Назад</a></div>
-    <div style="background: rgba(0,255,0,0.05); padding: 30px; border-left: 5px solid var(--primary);">
-        <h3 style="font-family: 'Orbitron'; margin-bottom: 20px;">GLADKOVKA 2:0 POZNYAKI</h3>
-        <iframe width="100%" height="450" src="https://www.youtube.com/embed/YNGU1q3-KzQ" frameborder="0" allowfullscreen></iframe>
+    <div class="header-row">
+        <h2>MATCHES</h2>
+        <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a>
+    </div>
+    <div style="background: #111; padding: 20px; border: 1px solid var(--primary);">
+        <h3 style="font-family: 'Orbitron'; margin-bottom: 15px;">GLADKOVKA 2:0 POZNYAKI</h3>
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/YNGU1q3-KzQ" frameborder="0" allowfullscreen></iframe>
     </div>
 </div>
+
+<div id="about" class="section">
+    <div class="header-row">
+        <h2>ABOUT US</h2>
+        <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a>
+    </div>
+    <p style="font-size: 1.2rem; line-height: 1.6; color: #ccc;">
+        Gladkovka Team — команда, основанная в 2023 году двоюродными братьями Ronik и Danich. 
+        Название дано в честь села в Херсонской области. Мы стремимся к вершинам киберспорта!
+    </p>
+</div>
+
+<script>
+    function openSection(id) {
+        // Скрываем меню
+        document.getElementById('main-menu').style.display = 'none';
+        
+        // Скрываем все секции на всякий случай
+        document.querySelectorAll('.section').forEach(s => {
+            s.style.display = 'none';
+            s.classList.remove('active');
+        });
+        
+        // Показываем нужную
+        const target = document.getElementById(id);
+        if(target) {
+            target.style.display = 'block';
+            setTimeout(() => {
+                target.classList.add('active');
+            }, 10);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
+    function closeSections() {
+        // Скрываем все секции
+        document.querySelectorAll('.section').forEach(s => {
+            s.classList.remove('active');
+            s.style.display = 'none';
+        });
+        
+        // Показываем меню
+        const menu = document.getElementById('main-menu');
+        menu.style.display = 'flex';
+        menu.style.opacity = '1';
+    }
+
+    function closeModal(e) {
+        if(e.target.id === 'contact-modal') {
+            document.getElementById('contact-modal').style.display = 'none';
+        }
+    }
+
+    function copyDiscord() {
+        navigator.clipboard.writeText('ronik69');
+        alert('Discord ник ronik69 скопирован!');
+    }
+</script>
+
+</body>
+</html>
