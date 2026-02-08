@@ -33,7 +33,6 @@
             z-index: -1;
         }
 
-        /* Рекламный баннер */
         .ads-sidebar {
             position: fixed; right: 15px; top: 50%;
             transform: translateY(-50%);
@@ -44,7 +43,6 @@
         .ad-label { font-size: 9px; color: var(--primary); text-align: center; margin-bottom: 4px; font-family: 'Orbitron'; }
         .ad-unit:hover { border-color: var(--primary); transform: scale(1.1); }
 
-        /* Контейнер меню */
         .container {
             min-height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -94,7 +92,6 @@
             color: var(--gold);
         }
 
-        /* Секции */
         .section {
             display: none; padding: 60px 20px; max-width: 1200px; margin: 0 auto;
             opacity: 0; transform: translateY(20px);
@@ -116,7 +113,6 @@
             font-size: 11px; border-radius: 4px;
         }
 
-        /* Игроки */
         .roster-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
         .player-card { background: #111; width: 260px; border-radius: 15px; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
         .player-card:hover { border-color: var(--primary); transform: translateY(-5px); }
@@ -127,7 +123,6 @@
         .player-role { font-size: 12px; color: #888; text-transform: uppercase; margin-top: 5px; }
         .flag-img { width: 25px; border-radius: 2px; }
 
-        /* Модалка */
         #contact-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(10px);
@@ -149,7 +144,7 @@
 <div id="contact-modal" onclick="this.style.display='none'">
     <div class="modal-content" onclick="event.stopPropagation()">
         <h2 style="font-family: 'Orbitron'; color: var(--primary); margin-bottom: 20px;">CONTACTS</h2>
-        <a href="https://t.me/stas_user" target="_blank" style="display:block; padding:15px; color:#fff; text-decoration:none; background:rgba(255,255,255,0.1); margin-bottom:10px;">Telegram: @stas_user</a>
+        <a href="https://t.me/cmacjk" target="_blank" style="display:block; padding:15px; color:#fff; text-decoration:none; background:rgba(255,255,255,0.1); margin-bottom:10px;">Telegram: @cmacjk</a>
         <div onclick="navigator.clipboard.writeText('ronik69'); alert('Discord скопирован!')" style="padding:15px; background:rgba(255,255,255,0.1); cursor:pointer;">Discord: ronik69</div>
     </div>
 </div>
@@ -224,6 +219,20 @@
             <div class="player-info">
                 <div class="player-nick">synblyadi <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
                 <div class="player-role">Substitute / Support</div>
+            </div>
+        </div>
+        <div class="player-card">
+            <div class="img-container"><img src="https://i.imgur.com/Qhm4fz9.png" class="player-img"></div>
+            <div class="player-info">
+                <div class="player-nick">glenomessi <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
+                <div class="player-role">Substitute</div>
+            </div>
+        </div>
+        <div class="player-card">
+            <div class="img-container"><img src="https://i.imgur.com/Mh8V8Dq.jpeg" class="player-img"></div>
+            <div class="player-info">
+                <div class="player-nick">Lominok <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
+                <div class="player-role">Substitute</div>
             </div>
         </div>
     </div>
