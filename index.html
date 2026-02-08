@@ -26,95 +26,50 @@
             min-height: 100vh;
         }
 
-        .bg-glow {
-            position: fixed;
-            width: 100vw; height: 100vh;
-            background: linear-gradient(45deg, #000, #001a00);
-            z-index: -1;
-        }
-
+        .bg-glow { position: fixed; width: 100vw; height: 100vh; background: linear-gradient(45deg, #000, #001a00); z-index: -1; }
+        
         .ads-sidebar {
-            position: fixed; right: 15px; top: 50%;
-            transform: translateY(-50%);
+            position: fixed; right: 15px; top: 50%; transform: translateY(-50%);
             display: flex; flex-direction: column; gap: 15px; z-index: 100;
         }
         .ad-unit { width: 130px; border: 1px solid var(--primary-dark); background: #000; padding: 5px; transition: 0.3s; }
         .ad-unit img { width: 100%; height: auto; display: block; }
         .ad-label { font-size: 9px; color: var(--primary); text-align: center; margin-bottom: 4px; font-family: 'Orbitron'; }
-        .ad-unit:hover { border-color: var(--primary); transform: scale(1.1); }
 
         .container {
-            min-height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 40px 0; transition: 0.5s ease;
+            min-height: 100vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; padding: 40px 0;
         }
 
-        .logo-main {
-            width: 200px; filter: drop-shadow(0 0 20px var(--primary));
-            margin-bottom: 20px; animation: pulse 2s infinite;
-        }
+        .logo-main { width: 200px; filter: drop-shadow(0 0 20px var(--primary)); margin-bottom: 20px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        @keyframes pulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 10px var(--primary-dark)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 30px var(--primary)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 10px var(--primary-dark)); }
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            letter-spacing: 8px; margin-bottom: 40px;
-            text-align: center; text-shadow: 0 0 15px var(--primary);
-        }
-
-        .menu-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 20px; width: 90%; max-width: 650px;
-        }
-
+        h1 { font-family: 'Orbitron'; font-size: clamp(2rem, 8vw, 3.5rem); letter-spacing: 8px; margin-bottom: 40px; text-shadow: 0 0 15px var(--primary); }
+        
+        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 90%; max-width: 650px; }
+        
         .menu-btn {
             background: var(--card-bg); border: 1px solid var(--primary-dark);
-            padding: 25px; color: #fff; font-family: 'Orbitron', sans-serif;
+            padding: 25px; color: #fff; font-family: 'Orbitron';
             text-align: center; font-size: 13px; letter-spacing: 2px;
             cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);
             text-transform: uppercase; display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
         }
+        .menu-btn:hover { border-color: var(--primary); background: rgba(0, 255, 0, 0.1); transform: translateY(-3px); }
+        
+        .btn-join { grid-column: span 2; border: 1px solid var(--primary); color: var(--primary); font-weight: bold; }
+        .btn-donate-menu { grid-column: span 2; border: 1px solid var(--gold); color: var(--gold); background: linear-gradient(45deg, rgba(0,255,0,0.05), rgba(255,215,0,0.05)); }
 
-        .menu-btn:hover {
-            border-color: var(--primary); background: rgba(0, 255, 0, 0.1);
-            transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
-        }
+        .section { display: none; padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+        .section.active { display: block; animation: fadeIn 0.5s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .btn-donate-menu {
-            grid-column: span 2;
-            background: linear-gradient(45deg, rgba(0, 255, 0, 0.1), rgba(255, 215, 0, 0.1));
-            border: 1px solid var(--gold);
-            color: var(--gold);
-        }
-
-        .section {
-            display: none; padding: 60px 20px; max-width: 1200px; margin: 0 auto;
-            opacity: 0; transform: translateY(20px);
-        }
-
-        .section.active {
-            display: block; opacity: 1; transform: translateY(0);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .header-row {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid var(--primary); margin-bottom: 40px; padding-bottom: 15px;
-        }
-
-        .back-btn {
-            background: var(--primary); color: #000; padding: 10px 20px;
-            text-decoration: none; font-weight: bold; font-family: 'Orbitron';
-            font-size: 11px; border-radius: 4px;
-        }
+        .header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); margin-bottom: 40px; padding-bottom: 15px; }
+        .back-btn { background: var(--primary); color: #000; padding: 10px 20px; text-decoration: none; font-weight: bold; font-family: 'Orbitron'; font-size: 11px; border-radius: 4px; }
 
         .roster-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
-        .player-card { background: #111; width: 260px; border-radius: 15px; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
+        .player-card { background: #111; width: 260px; border-radius: 15px; overflow: hidden; border: 1px solid #333; transition: 0.3s; position: relative; }
         .player-card:hover { border-color: var(--primary); transform: translateY(-5px); }
         .img-container { height: 300px; overflow: hidden; background: #000; }
         .player-img { width: 100%; height: 100%; object-fit: cover; }
@@ -123,13 +78,10 @@
         .player-role { font-size: 12px; color: #888; text-transform: uppercase; margin-top: 5px; }
         .flag-img { width: 25px; border-radius: 2px; }
 
-        #contact-modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(10px);
-        }
+        #contact-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
         .modal-content { background: #111; border: 2px solid var(--primary); padding: 40px; text-align: center; border-radius: 20px; max-width: 400px; width: 90%; }
 
-        @media (max-width: 600px) { .menu-grid { grid-template-columns: 1fr; } .btn-donate-menu { grid-column: auto; } .ads-sidebar { display: none; } }
+        @media (max-width: 600px) { .menu-grid { grid-template-columns: 1fr; } .ads-sidebar { display: none; } }
     </style>
 </head>
 <body>
@@ -144,8 +96,8 @@
 <div id="contact-modal" onclick="this.style.display='none'">
     <div class="modal-content" onclick="event.stopPropagation()">
         <h2 style="font-family: 'Orbitron'; color: var(--primary); margin-bottom: 20px;">CONTACTS</h2>
-        <a href="https://t.me/cmacjk" target="_blank" style="display:block; padding:15px; color:#fff; text-decoration:none; background:rgba(255,255,255,0.1); margin-bottom:10px;">Telegram: @cmacjk</a>
-        <div onclick="navigator.clipboard.writeText('ronik69'); alert('Discord скопирован!')" style="padding:15px; background:rgba(255,255,255,0.1); cursor:pointer;">Discord: ronik69</div>
+        <a href="https://t.me/cmacjk" target="_blank" style="display:block; padding:15px; color:#fff; text-decoration:none; background:rgba(255,255,255,0.05); margin-bottom:10px; border: 1px solid #333;">Telegram: @cmacjk</a>
+        <div onclick="navigator.clipboard.writeText('ronik69'); alert('Discord скопирован!')" style="padding:15px; background:rgba(255,255,255,0.05); cursor:pointer; border: 1px solid #333;">Discord: ronik69</div>
     </div>
 </div>
 
@@ -153,6 +105,7 @@
     <img src="https://i.imgur.com/S8mBPo9.png" class="logo-main">
     <h1>GLADKOVKA</h1>
     <div class="menu-grid">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe-c38MOtNRZi24DDaJO-V6m4t3Sy9X53FPipJBox3QmDEDFg/viewform" target="_blank" class="menu-btn btn-join">🔥 ВСТУПИТЬ В КОМАНДУ</a>
         <div class="menu-btn" onclick="openSection('main-roster')">Основной Состав</div>
         <div class="menu-btn" onclick="openSection('sub-roster')">Запасные Игроки</div>
         <div class="menu-btn" onclick="openSection('games')">Прошедшие Игры</div>
@@ -166,75 +119,21 @@
 <div id="main-roster" class="section">
     <div class="header-row"><h2>MAIN ROSTER</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a></div>
     <div class="roster-grid">
-        <div class="player-card">
-            <div class="img-container"><img src="https://i.imgur.com/Q84c4k0.png" class="player-img"></div>
-            <div class="player-info">
-                <div class="player-nick">ronik <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
-                <div class="player-role">Captain / IGL</div>
-            </div>
-        </div>
-        <div class="player-card">
-            <div class="img-container"><img src="https://i.imgur.com/cjElvG2.png" class="player-img"></div>
-            <div class="player-info">
-                <div class="player-nick">Danich <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
-                <div class="player-role">Rifler</div>
-            </div>
-        </div>
-        <div class="player-card">
-            <div class="img-container"><img src="https://i.imgur.com/F0E6bpT.png" class="player-img"></div>
-            <div class="player-info">
-                <div class="player-nick">Malish-vasya <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
-                <div class="player-role">AWP</div>
-            </div>
-        </div>
-        <div class="player-card">
-            <div class="img-container"><img src="https://i.imgur.com/lmde7mb.png" class="player-img"></div>
-            <div class="player-info">
-                <div class="player-nick">d1mxcs <img src="https://i.imgur.com/vmWXEEr.jpeg" class="flag-img"></div>
-                <div class="player-role">Rifler</div>
-            </div>
-        </div>
-        <div class="player-card">
-            <div class="img-container"><img src="https://i.imgur.com/JjRHXcP.jpeg" class="player-img"></div>
-            <div class="player-info">
-                <div class="player-nick">dxnisixs <img src="https://i.imgur.com/vmWXEEr.jpeg" class="flag-img"></div>
-                <div class="player-role">Rifler</div>
-            </div>
-        </div>
+        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/Q84c4k0.png" class="player-img"></div><div class="player-info"><div class="player-nick">ronik <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div><div class="player-role">Captain / IGL</div></div></div>
+        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/cjElvG2.png" class="player-img"></div><div class="player-info"><div class="player-nick">Danich <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div><div class="player-role">Rifler</div></div></div>
+        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/F0E6bpT.png" class="player-img"></div><div class="player-info"><div class="player-nick">Malish-vasya <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div><div class="player-role">AWP</div></div></div>
+        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/lmde7mb.png" class="player-img"></div><div class="player-info"><div class="player-nick">d1mxcs <img src="https://i.imgur.com/vmWXEEr.jpeg" class="flag-img"></div><div class="player-role">Rifler</div></div></div>
+        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/JjRHXcP.jpeg" class="player-img"></div><div class="player-info"><div class="player-nick">dxnisixs <img src="https://i.imgur.com/vmWXEEr.jpeg" class="flag-img"></div><div class="player-role">Rifler</div></div></div>
     </div>
 </div>
 
 <div id="sub-roster" class="section">
     <div class="header-row"><h2>SUBSTITUTES</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a></div>
     <div class="roster-grid">
-        <div class="player-card">
-            <div class="img-container"><img src="https://i.imgur.com/HkdwmSZ.png" class="player-img"></div>
-            <div class="player-info">
-                <div class="player-nick">Abeme <img src="https://i.imgur.com/WWc4Rvn.png" class="flag-img"></div>
-                <div class="player-role">Substitute / AWP</div>
-            </div>
-        </div>
-        <div class="player-card">
-            <div class="img-container"><img src="https://i.imgur.com/ywKudlq.jpeg" class="player-img"></div>
-            <div class="player-info">
-                <div class="player-nick">synblyadi <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
-                <div class="player-role">Substitute / Support</div>
-            </div>
-        </div>
-        <div class="player-card">
-            <div class="img-container"><img src="https://i.imgur.com/Qhm4fz9.png" class="player-img"></div>
-            <div class="player-info">
-                <div class="player-nick">glenomessi <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
-                <div class="player-role">Substitute</div>
-            </div>
-        </div>
-        <div class="player-card">
-            <div class="img-container"><img src="https://i.imgur.com/Mh8V8Dq.jpeg" class="player-img"></div>
-            <div class="player-info">
-                <div class="player-nick">Lominok <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
-                <div class="player-role">Substitute</div>
-            </div>
-        </div>
+        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/HkdwmSZ.png" class="player-img"></div><div class="player-info"><div class="player-nick">Abeme <img src="https://i.imgur.com/WWc4Rvn.png" class="flag-img"></div><div class="player-role">Substitute / AWP</div></div></div>
+        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/ywKudlq.jpeg" class="player-img"></div><div class="player-info"><div class="player-nick">synblyadi <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div><div class="player-role">Substitute / Support</div></div></div>
+        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/Qhm4fz9.png" class="player-img"></div><div class="player-info"><div class="player-nick">glenomessi <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div><div class="player-role">Substitute</div></div></div>
+        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/Mh8V8Dq.jpeg" class="player-img"></div><div class="player-info"><div class="player-nick">Lominok <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div><div class="player-role">Substitute</div></div></div>
     </div>
 </div>
 
@@ -247,7 +146,7 @@
         </div>
         <div style="width:280px; text-align:center;">
             <div style="background:#fff; padding:15px; border-radius:10px; height:200px; display:flex; align-items:center;">
-                <img src="https://www.arbeitsagentur.de/vor-ort/services/logos/jobcenter/default_gross_transparent.png" style="width:100%;">
+                <img src="https://www.arbeitsagentur.de/vor-орт/services/logos/jobcenter/default_gross_transparent.png" style="width:100%;">
             </div>
             <h4 style="color:var(--primary); margin-top:10px; font-family:'Orbitron'">JOBCENTER</h4>
         </div>
@@ -260,20 +159,29 @@
 
 <div id="donate" class="section">
     <div class="header-row"><h2>SUPPORT US</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a></div>
-    <div style="text-align:center; padding:50px; border:1px dashed var(--gold); border-radius:20px;">
-        <h3 style="color:var(--gold); font-family:'Orbitron'; font-size:2rem;">СТАНЬ ЧАСТЬЮ ИСТОРИИ</h3>
-        <a href="https://donatepay.eu/don/38734" target="_blank" style="display:inline-block; margin-top:30px; padding:20px 50px; background:var(--donate-gradient); color:#000; text-decoration:none; font-family:'Orbitron'; font-weight:bold; border-radius:50px; box-shadow: 0 0 30px rgba(0,255,0,0.3);">ЗАКИНУТЬ ДОНАТ</a>
+    <div style="text-align:center; padding:50px; border:1px dashed var(--gold); border-radius:20px; background: rgba(255,215,0,0.02);">
+        <h3 style="color:var(--gold); font-family:'Orbitron'; font-size:2rem; margin-bottom: 20px;">СТАНЬ ЧАСТЬЮ ИСТОРИИ</h3>
+        <p style="margin-bottom: 30px; color: #ccc;">Ваша поддержка помогает нам развиваться.</p>
+        <a href="https://donatepay.eu/don/38734" target="_blank" style="display:inline-block; padding:20px 50px; background:var(--donate-gradient); color:#000; text-decoration:none; font-family:'Orbitron'; font-weight:bold; border-radius:50px;">ЗАКИНУТЬ ДОНАТ</a>
     </div>
 </div>
 
 <div id="games" class="section">
     <div class="header-row"><h2>MATCH HISTORY</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a></div>
-    <iframe width="100%" height="450" src="https://www.youtube.com/embed/YNGU1q3-KzQ" frameborder="0" allowfullscreen></iframe>
+    <div style="background: #000; padding: 10px; border: 1px solid var(--primary-dark); border-radius: 10px;">
+        <iframe width="100%" height="500" src="https://www.youtube.com/embed/YNGU1q3-KzQ" frameborder="0" allowfullscreen></iframe>
+    </div>
 </div>
 
 <div id="about" class="section">
     <div class="header-row"><h2>ABOUT TEAM</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a></div>
-    <p style="font-size:1.2rem; line-height:1.8;">Gladkovka Team была основана в 2023 году. Мы названы в честь села в Херсонской области и стремимся только к победе.</p>
+    <div style="background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid #333; text-align:center;">
+        <p style="font-size:1.2rem; line-height:1.8; color: #ddd; margin-bottom:30px;">
+            <span style="color: var(--primary); font-weight: bold;">Gladkovka Team</span> была основана в 2023 году. 
+            Мы — амбициозный коллектив из Херсонской области. 
+        </p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe-c38MOtNRZi24DDaJO-V6m4t3Sy9X53FPipJBox3QmDEDFg/viewform" target="_blank" style="display:inline-block; padding:15px 30px; border:2px solid var(--primary); color:var(--primary); text-decoration:none; font-family:'Orbitron'; border-radius:5px;">ПОДАТЬ ЗАЯВКУ В ТИМУ</a>
+    </div>
 </div>
 
 <script>
@@ -281,11 +189,7 @@
         document.getElementById('main-menu').style.display = 'none';
         document.querySelectorAll('.section').forEach(s => { s.style.display = 'none'; s.classList.remove('active'); });
         const target = document.getElementById(id);
-        if(target) {
-            target.style.display = 'block';
-            setTimeout(() => { target.classList.add('active'); }, 10);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        if(target) { target.style.display = 'block'; setTimeout(() => target.classList.add('active'), 10); }
     }
     function closeSections() {
         document.querySelectorAll('.section').forEach(s => { s.classList.remove('active'); s.style.display = 'none'; });
