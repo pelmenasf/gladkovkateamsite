@@ -12,6 +12,7 @@
             --bg-dark: #0a0a0a;
             --card-bg: rgba(255, 255, 255, 0.05);
             --gold: #ffd700;
+            --media-blue: #00ccff;
             --donate-gradient: linear-gradient(45deg, #00ff00, #ffd700);
         }
 
@@ -41,17 +42,17 @@
             justify-content: center; align-items: center; padding: 40px 0;
         }
 
-        .logo-main { width: 200px; filter: drop-shadow(0 0 20px var(--primary)); margin-bottom: 20px; animation: pulse 2s infinite; }
+        .logo-main { width: 180px; filter: drop-shadow(0 0 20px var(--primary)); margin-bottom: 20px; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        h1 { font-family: 'Orbitron'; font-size: clamp(2rem, 8vw, 3.5rem); letter-spacing: 8px; margin-bottom: 40px; text-shadow: 0 0 15px var(--primary); }
+        h1 { font-family: 'Orbitron'; font-size: clamp(2rem, 8vw, 3.5rem); letter-spacing: 8px; margin-bottom: 30px; text-shadow: 0 0 15px var(--primary); }
         
-        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 90%; max-width: 650px; }
+        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 90%; max-width: 750px; }
         
         .menu-btn {
             background: var(--card-bg); border: 1px solid var(--primary-dark);
-            padding: 25px; color: #fff; font-family: 'Orbitron';
-            text-align: center; font-size: 13px; letter-spacing: 2px;
+            padding: 20px; color: #fff; font-family: 'Orbitron';
+            text-align: center; font-size: 11px; letter-spacing: 2px;
             cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);
             text-transform: uppercase; display: flex; align-items: center; justify-content: center;
             text-decoration: none;
@@ -59,7 +60,8 @@
         .menu-btn:hover { border-color: var(--primary); background: rgba(0, 255, 0, 0.1); transform: translateY(-3px); }
         
         .btn-join { grid-column: span 2; border: 1px solid var(--primary); color: var(--primary); font-weight: bold; }
-        .btn-donate-menu { grid-column: span 2; border: 1px solid var(--gold); color: var(--gold); background: linear-gradient(45deg, rgba(0,255,0,0.05), rgba(255,215,0,0.05)); }
+        .btn-donate-menu { grid-column: span 2; border: 1px solid var(--gold); color: var(--gold); }
+        .btn-media { border-color: var(--media-blue); color: var(--media-blue); }
 
         .section { display: none; padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
         .section.active { display: block; animation: fadeIn 0.5s ease forwards; }
@@ -77,6 +79,10 @@
         .player-nick { font-family: 'Orbitron'; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
         .player-role { font-size: 12px; color: #888; text-transform: uppercase; margin-top: 5px; }
         .flag-img { width: 25px; border-radius: 2px; }
+
+        .media-join-box { margin-top: 50px; text-align: center; border-top: 1px solid #333; padding-top: 40px; }
+        .btn-form { display: inline-block; padding: 15px 30px; border: 2px solid var(--media-blue); color: var(--media-blue); text-decoration: none; font-family: 'Orbitron'; border-radius: 5px; transition: 0.3s; }
+        .btn-form:hover { background: var(--media-blue); color: #000; }
 
         #contact-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
         .modal-content { background: #111; border: 2px solid var(--primary); padding: 40px; text-align: center; border-radius: 20px; max-width: 400px; width: 90%; }
@@ -108,9 +114,9 @@
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSe-c38MOtNRZi24DDaJO-V6m4t3Sy9X53FPipJBox3QmDEDFg/viewform" target="_blank" class="menu-btn btn-join">🔥 ВСТУПИТЬ В КОМАНДУ</a>
         <div class="menu-btn" onclick="openSection('main-roster')">Основной Состав</div>
         <div class="menu-btn" onclick="openSection('sub-roster')">Запасные Игроки</div>
+        <div class="menu-btn btn-media" onclick="openSection('media-roster')">Медиа Состав</div>
         <div class="menu-btn" onclick="openSection('games')">Прошедшие Игры</div>
         <div class="menu-btn" onclick="openSection('sponsors')">Спонсоры</div>
-        <div class="menu-btn" onclick="openSection('about')">О нас</div>
         <div class="menu-btn" onclick="document.getElementById('contact-modal').style.display='flex'">Связь</div>
         <div class="menu-btn btn-donate-menu" onclick="openSection('donate')">💰 ПОДДЕРЖАТЬ КОМАНДУ (ДОНАТ)</div>
     </div>
@@ -133,7 +139,23 @@
         <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/HkdwmSZ.png" class="player-img"></div><div class="player-info"><div class="player-nick">Abeme <img src="https://i.imgur.com/WWc4Rvn.png" class="flag-img"></div><div class="player-role">Substitute / AWP</div></div></div>
         <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/ywKudlq.jpeg" class="player-img"></div><div class="player-info"><div class="player-nick">synblyadi <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div><div class="player-role">Substitute / Support</div></div></div>
         <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/hRvCa4J.jpeg" class="player-img"></div><div class="player-info"><div class="player-nick">glenomessi <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div><div class="player-role">Substitute</div></div></div>
-        <div class="player-card"><div class="img-container"><img src="https://i.imgur.com/Mh8V8Dq.jpeg" class="player-img"></div><div class="player-info"><div class="player-nick">Lominok <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div><div class="player-role">Substitute</div></div></div>
+    </div>
+</div>
+
+<div id="media-roster" class="section">
+    <div class="header-row"><h2>MEDIA ROSTER</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a></div>
+    <div class="roster-grid">
+        <div class="player-card">
+            <div class="img-container"><img src="https://i.imgur.com/Mh8V8Dq.jpeg" class="player-img"></div>
+            <div class="player-info">
+                <div class="player-nick">Lominok <img src="https://i.imgur.com/vBEl7ag.jpeg" class="flag-img"></div>
+                <div class="player-role">Media / Substitute</div>
+            </div>
+        </div>
+    </div>
+    <div class="media-join-box">
+        <p style="margin-bottom: 20px; color: #888;">Хочешь помогать с контентом для Gladkovka Team?</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe-c38MOtNRZi24DDaJO-V6m4t3Sy9X53FPipJBox3QmDEDFg/viewform" target="_blank" class="btn-form">ПОДАТЬ ЗАЯВКУ В МЕДИА</a>
     </div>
 </div>
 
@@ -170,17 +192,6 @@
     <div class="header-row"><h2>MATCH HISTORY</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a></div>
     <div style="background: #000; padding: 10px; border: 1px solid var(--primary-dark); border-radius: 10px;">
         <iframe width="100%" height="500" src="https://www.youtube.com/embed/YNGU1q3-KzQ" frameborder="0" allowfullscreen></iframe>
-    </div>
-</div>
-
-<div id="about" class="section">
-    <div class="header-row"><h2>ABOUT TEAM</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">НАЗАД</a></div>
-    <div style="background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid #333; text-align:center;">
-        <p style="font-size:1.2rem; line-height:1.8; color: #ddd; margin-bottom:30px;">
-            <span style="color: var(--primary); font-weight: bold;">Gladkovka Team</span> была основана в 2023 году. 
-            Мы — амбициозный коллектив из Херсонской области. 
-        </p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe-c38MOtNRZi24DDaJO-V6m4t3Sy9X53FPipJBox3QmDEDFg/viewform" target="_blank" style="display:inline-block; padding:15px 30px; border:2px solid var(--primary); color:var(--primary); text-decoration:none; font-family:'Orbitron'; border-radius:5px;">ПОДАТЬ ЗАЯВКУ В ТИМУ</a>
     </div>
 </div>
 
