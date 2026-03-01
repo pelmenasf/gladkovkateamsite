@@ -6,958 +6,231 @@
 <title>GLADKOVKA TEAM</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-:root {
-  --g: #00ff41;
-  --g2: #00cc33;
-  --g3: #004d1a;
-  --gold: #ffc200;
-  --red: #ff2244;
-  --bg: #030a03;
-  --card: rgba(0,255,65,0.04);
-  --border: rgba(0,255,65,0.15);
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
-html{scroll-behavior:smooth;}
-
-body{
-  background:var(--bg);
-  color:#fff;
-  font-family:'Rajdhani',sans-serif;
-  overflow-x:hidden;
-  cursor:none;
-}
-
-/* CUSTOM CURSOR */
-.cursor{
-  position:fixed;width:12px;height:12px;background:var(--g);
-  border-radius:50%;pointer-events:none;z-index:9999;
-  transition:transform 0.1s;mix-blend-mode:difference;
-}
-.cursor-ring{
-  position:fixed;width:36px;height:36px;border:1px solid var(--g);
-  border-radius:50%;pointer-events:none;z-index:9998;
-  transition:all 0.15s ease;opacity:0.6;
-}
-
-/* SCANLINES */
-body::before{
-  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
-  background:repeating-linear-gradient(
-    0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px
-  );
-  pointer-events:none;z-index:1000;
-}
-
-/* GRID BG */
-.grid-bg{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  background-image:
-    linear-gradient(rgba(0,255,65,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,65,0.04) 1px, transparent 1px);
-  background-size:60px 60px;
-  pointer-events:none;z-index:0;
-  animation:gridMove 20s linear infinite;
-}
+:root{--primary:#00ff41;--g2:#00cc33;--gold:#ffc200;--red:#ff2244;--bg:#030a03;--card:rgba(0,255,65,0.04);--border:rgba(0,255,65,0.15);--loss:#ff2244;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:#fff;font-family:'Rajdhani',sans-serif;overflow-x:hidden;cursor:none;}
+.cursor{position:fixed;width:12px;height:12px;background:var(--primary);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.1s;mix-blend-mode:difference;}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--primary);border-radius:50%;pointer-events:none;z-index:9998;transition:all 0.15s ease;opacity:0.6;}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:1000;}
+.grid-bg{position:fixed;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(0,255,65,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,65,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;animation:gridMove 20s linear infinite;}
 @keyframes gridMove{from{background-position:0 0;}to{background-position:60px 60px;}}
-
-/* PARTICLES */
 .particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden;}
-.p{position:absolute;width:2px;height:2px;background:var(--g);border-radius:50%;opacity:0;animation:fall linear infinite;}
-@keyframes fall{
-  0%{opacity:0;transform:translateY(-10px);}
-  10%{opacity:1;}
-  90%{opacity:0.3;}
-  100%{opacity:0;transform:translateY(100vh);}
-}
-
-/* MAIN LAYOUT */
+.p{position:absolute;width:2px;height:2px;background:var(--primary);border-radius:50%;opacity:0;animation:fall linear infinite;}
+@keyframes fall{0%{opacity:0;transform:translateY(-10px);}10%{opacity:1;}90%{opacity:0.3;}100%{opacity:0;transform:translateY(100vh);}}
 .site{position:relative;z-index:2;min-height:100vh;}
-
-/* ============ HERO / MAIN MENU ============ */
-#home{
-  min-height:100vh;display:flex;flex-direction:column;
-  justify-content:center;align-items:center;
-  position:relative;padding:20px;
-}
-
-.hero-bg-text{
-  position:absolute;font-family:'Bebas Neue';font-size:clamp(80px,18vw,200px);
-  color:rgba(0,255,65,0.03);letter-spacing:20px;user-select:none;
-  animation:bgTextFloat 8s ease-in-out infinite;white-space:nowrap;
-}
+#home{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;padding:20px;}
+.hero-bg-text{position:absolute;font-family:'Bebas Neue';font-size:clamp(80px,18vw,200px);color:rgba(0,255,65,0.03);letter-spacing:20px;user-select:none;animation:bgTextFloat 8s ease-in-out infinite;white-space:nowrap;}
 @keyframes bgTextFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
-
-.logo-wrap{
-  position:relative;margin-bottom:20px;
-}
-.logo-wrap img{
-  width:140px;height:140px;object-fit:contain;
-  filter:drop-shadow(0 0 30px var(--g)) drop-shadow(0 0 60px rgba(0,255,65,0.4));
-  animation:logoFloat 3s ease-in-out infinite;
-}
+.logo-wrap{position:relative;margin-bottom:20px;}
+.logo-wrap img{width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 0 30px var(--primary)) drop-shadow(0 0 60px rgba(0,255,65,0.4));animation:logoFloat 3s ease-in-out infinite;}
 @keyframes logoFloat{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-8px) rotate(2deg);}}
-
-.logo-ring{
-  position:absolute;top:50%;left:50%;
-  width:180px;height:180px;transform:translate(-50%,-50%);
-  border:1px solid rgba(0,255,65,0.3);border-radius:50%;
-  animation:spin 8s linear infinite;
-}
-.logo-ring::before{
-  content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;
-  background:var(--g);border-radius:50%;
-  box-shadow:0 0 10px var(--g);
-}
+.logo-ring{position:absolute;top:50%;left:50%;width:180px;height:180px;transform:translate(-50%,-50%);border:1px solid rgba(0,255,65,0.3);border-radius:50%;animation:spin 8s linear infinite;}
+.logo-ring::before{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;background:var(--primary);border-radius:50%;box-shadow:0 0 10px var(--primary);}
 @keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
-
-.hero-title{
-  font-family:'Bebas Neue';
-  font-size:clamp(48px,12vw,110px);
-  letter-spacing:clamp(5px,2vw,20px);
-  line-height:1;
-  position:relative;
-  margin-bottom:5px;
-}
-.hero-title span{
-  display:inline-block;
-  background:linear-gradient(180deg, #fff 0%, var(--g) 60%, var(--g2) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 20px rgba(0,255,65,0.5));
-}
-
-.hero-sub{
-  font-family:'Share Tech Mono';font-size:clamp(10px,2vw,13px);
-  color:var(--g);letter-spacing:4px;margin-bottom:40px;
-  opacity:0.7;
-}
-
-.hero-stats{
-  display:flex;gap:clamp(20px,5vw,50px);margin-bottom:50px;
-  flex-wrap:wrap;justify-content:center;
-}
+.hero-title{font-family:'Bebas Neue';font-size:clamp(48px,12vw,110px);letter-spacing:clamp(5px,2vw,20px);line-height:1;position:relative;margin-bottom:5px;}
+.hero-title span{display:inline-block;background:linear-gradient(180deg,#fff 0%,var(--primary) 60%,var(--g2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(0,255,65,0.5));}
+.hero-sub{font-family:'Share Tech Mono';font-size:clamp(10px,2vw,13px);color:var(--primary);letter-spacing:4px;margin-bottom:40px;opacity:0.7;}
+.hero-stats{display:flex;gap:clamp(20px,5vw,50px);margin-bottom:50px;flex-wrap:wrap;justify-content:center;}
 .stat-item{text-align:center;}
-.stat-num{
-  font-family:'Bebas Neue';font-size:clamp(28px,6vw,48px);
-  color:var(--g);display:block;
-  text-shadow:0 0 20px var(--g);
-}
+.stat-num{font-family:'Bebas Neue';font-size:clamp(28px,6vw,48px);color:var(--primary);display:block;text-shadow:0 0 20px var(--primary);}
 .stat-label{font-family:'Share Tech Mono';font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;}
-
-/* NAV MENU */
-.nav-grid{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:12px;
-  width:100%;max-width:680px;
-}
-
-.nav-btn{
-  position:relative;overflow:hidden;
-  background:var(--card);
-  border:1px solid var(--border);
-  padding:clamp(14px,3vw,20px) 10px;
-  color:#fff;font-family:'Rajdhani';font-weight:700;
-  font-size:clamp(11px,2vw,14px);letter-spacing:2px;
-  text-align:center;cursor:pointer;
-  transition:all 0.3s;text-transform:uppercase;
-  text-decoration:none;display:flex;align-items:center;
-  justify-content:center;flex-direction:column;gap:4px;
-  backdrop-filter:blur(10px);
-}
+.nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:680px;}
+.nav-btn{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--border);padding:clamp(14px,3vw,20px) 10px;color:#fff;font-family:'Rajdhani';font-weight:700;font-size:clamp(11px,2vw,14px);letter-spacing:2px;text-align:center;cursor:pointer;transition:all 0.3s;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;backdrop-filter:blur(10px);}
 .nav-btn .btn-icon{font-size:clamp(18px,4vw,24px);display:block;}
-.nav-btn::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,transparent 40%,rgba(0,255,65,0.08));
-  opacity:0;transition:0.3s;
-}
-.nav-btn::after{
-  content:'';position:absolute;bottom:0;left:0;
-  width:0;height:2px;background:var(--g);
-  transition:width 0.3s;
-}
-.nav-btn:hover{border-color:var(--g);transform:translateY(-4px);color:var(--g);}
+.nav-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(0,255,65,0.08));opacity:0;transition:0.3s;}
+.nav-btn::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--primary);transition:width 0.3s;}
+.nav-btn:hover{border-color:var(--primary);transform:translateY(-4px);color:var(--primary);}
 .nav-btn:hover::before{opacity:1;}
 .nav-btn:hover::after{width:100%;}
-
 .nav-btn.tg{grid-column:span 3;background:rgba(0,136,212,0.08);border-color:rgba(0,136,212,0.3);color:#29b6f6;}
 .nav-btn.tg:hover{border-color:#29b6f6;color:#fff;}
 .nav-btn.tg::after{background:#29b6f6;}
-
 .nav-btn.yt{background:rgba(255,0,0,0.06);border-color:rgba(255,0,0,0.2);color:#ff4444;}
 .nav-btn.yt:hover{border-color:#ff4444;color:#fff;}
 .nav-btn.yt::after{background:#ff4444;}
-
 .nav-btn.tt{background:rgba(255,0,80,0.06);border-color:rgba(255,0,80,0.2);color:#ff0050;}
 .nav-btn.tt:hover{border-color:#ff0050;color:#fff;}
 .nav-btn.tt::after{background:#ff0050;}
-
 .nav-btn.donate{grid-column:span 3;background:rgba(255,194,0,0.06);border-color:rgba(255,194,0,0.3);color:var(--gold);}
 .nav-btn.donate:hover{border-color:var(--gold);color:#fff;}
 .nav-btn.donate::after{background:var(--gold);}
-
-/* SPONSORS */
-.sponsors-strip{
-  position:fixed;bottom:0;left:0;right:0;
-  display:flex;justify-content:center;align-items:center;gap:20px;
-  background:rgba(0,0,0,0.9);border-top:1px solid var(--border);
-  padding:8px 20px;z-index:500;backdrop-filter:blur(20px);
-}
+.nav-btn.dota-btn{background:rgba(180,60,255,0.06);border-color:rgba(180,60,255,0.2);color:#b43cff;}
+.nav-btn.dota-btn:hover{border-color:#b43cff;color:#fff;}
+.nav-btn.dota-btn::after{background:#b43cff;}
+.sponsors-strip{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:20px;background:rgba(0,0,0,0.9);border-top:1px solid var(--border);padding:8px 20px;z-index:500;backdrop-filter:blur(20px);}
 .sponsor-item{display:flex;align-items:center;gap:8px;opacity:0.6;transition:0.3s;}
 .sponsor-item:hover{opacity:1;}
 .sponsor-item img{height:28px;width:auto;filter:brightness(0.8);}
-.sponsor-label{font-family:'Share Tech Mono';font-size:8px;color:var(--g);letter-spacing:2px;}
-
-/* ============ SECTIONS ============ */
-.section{
-  display:none;min-height:100vh;
-  padding:clamp(20px,5vw,60px) clamp(15px,5vw,40px);
-  max-width:1100px;margin:0 auto;
-}
+.sponsor-label{font-family:'Share Tech Mono';font-size:8px;color:var(--primary);letter-spacing:2px;}
+.section{display:none;min-height:100vh;padding:clamp(20px,5vw,60px) clamp(15px,5vw,40px);max-width:1100px;margin:0 auto;}
 .section.active{display:block;animation:sectionIn 0.5s cubic-bezier(0.16,1,0.3,1);}
-@keyframes sectionIn{
-  from{opacity:0;transform:translateY(30px) scale(0.98);}
-  to{opacity:1;transform:translateY(0) scale(1);}
-}
-
-.sec-header{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:clamp(25px,5vw,50px);padding-bottom:15px;
-  border-bottom:1px solid var(--border);position:relative;
-}
-.sec-header::after{
-  content:'';position:absolute;bottom:-1px;left:0;width:80px;height:2px;background:var(--g);
-}
-.sec-title{
-  font-family:'Bebas Neue';font-size:clamp(28px,7vw,56px);
-  letter-spacing:4px;
-  background:linear-gradient(90deg,#fff,var(--g));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.back-btn{
-  display:flex;align-items:center;gap:8px;
-  background:transparent;border:1px solid var(--border);
-  color:var(--g);padding:10px 20px;
-  font-family:'Share Tech Mono';font-size:11px;letter-spacing:2px;
-  cursor:pointer;transition:0.3s;text-decoration:none;
-}
-.back-btn:hover{background:var(--g);color:#000;border-color:var(--g);}
-
-/* ROSTER */
-.roster-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
-  gap:clamp(12px,3vw,25px);
-}
-
-.player-card{
-  position:relative;overflow:hidden;
-  background:#080d08;border:1px solid var(--border);
-  border-radius:4px;cursor:pointer;
-  transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
-  group:true;
-}
-.player-card:hover{
-  border-color:var(--g);transform:translateY(-8px);
-  box-shadow:0 20px 60px rgba(0,255,65,0.2), 0 0 30px rgba(0,255,65,0.1);
-}
-
-.player-img-wrap{
-  position:relative;height:clamp(220px,35vw,300px);overflow:hidden;
-}
-.player-img-wrap img{
-  width:100%;height:100%;object-fit:cover;
-  transition:transform 0.5s;filter:saturate(0.8);
-}
+@keyframes sectionIn{from{opacity:0;transform:translateY(30px) scale(0.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+.sec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(25px,5vw,50px);padding-bottom:15px;border-bottom:1px solid var(--border);position:relative;}
+.sec-header::after{content:'';position:absolute;bottom:-1px;left:0;width:80px;height:2px;background:var(--primary);}
+.sec-title{font-family:'Bebas Neue';font-size:clamp(28px,7vw,56px);letter-spacing:4px;background:linear-gradient(90deg,#fff,var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.back-btn{display:flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--border);color:var(--primary);padding:10px 20px;font-family:'Share Tech Mono';font-size:11px;letter-spacing:2px;cursor:pointer;transition:0.3s;text-decoration:none;}
+.back-btn:hover{background:var(--primary);color:#000;border-color:var(--primary);}
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:clamp(12px,3vw,25px);}
+.player-card{position:relative;overflow:hidden;background:#080d08;border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);}
+.player-card:hover{border-color:var(--primary);transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,255,65,0.2),0 0 30px rgba(0,255,65,0.1);}
+.player-img-wrap{position:relative;height:clamp(220px,35vw,300px);overflow:hidden;}
+.player-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;filter:saturate(0.8);}
 .player-card:hover .player-img-wrap img{transform:scale(1.08);filter:saturate(1.1);}
-
-.player-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(to top, rgba(0,10,0,0.95) 0%, rgba(0,10,0,0.4) 40%, transparent 70%);
-}
-.player-scan{
-  position:absolute;top:0;left:0;width:100%;height:3px;
-  background:linear-gradient(90deg,transparent,var(--g),transparent);
-  opacity:0;transition:0.3s;
-  animation:scanLine 2s ease-in-out infinite;
-}
+.player-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,10,0,0.95) 0%,rgba(0,10,0,0.4) 40%,transparent 70%);}
+.player-scan{position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--primary),transparent);opacity:0;transition:0.3s;animation:scanLine 2s ease-in-out infinite;}
 .player-card:hover .player-scan{opacity:1;}
-@keyframes scanLine{
-  0%{top:0;opacity:0;}10%{opacity:1;}90%{opacity:0.5;}100%{top:100%;opacity:0;}
-}
-
-.player-num{
-  position:absolute;top:10px;right:10px;
-  font-family:'Bebas Neue';font-size:32px;color:rgba(0,255,65,0.15);
-  line-height:1;transition:0.3s;
-}
+@keyframes scanLine{0%{top:0;opacity:0;}10%{opacity:1;}90%{opacity:0.5;}100%{top:100%;opacity:0;}}
+.player-num{position:absolute;top:10px;right:10px;font-family:'Bebas Neue';font-size:32px;color:rgba(0,255,65,0.15);line-height:1;transition:0.3s;}
 .player-card:hover .player-num{color:rgba(0,255,65,0.4);}
-
 .player-info{padding:clamp(10px,2vw,15px);}
-.player-nick{
-  font-family:'Bebas Neue';font-size:clamp(18px,3vw,24px);
-  letter-spacing:2px;color:#fff;transition:0.3s;
-}
-.player-card:hover .player-nick{color:var(--g);}
+.player-nick{font-family:'Bebas Neue';font-size:clamp(18px,3vw,24px);letter-spacing:2px;color:#fff;transition:0.3s;}
+.player-card:hover .player-nick{color:var(--primary);}
 .player-role{font-family:'Share Tech Mono';font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:1px;margin-top:3px;}
-.player-tag{
-  display:inline-block;margin-top:8px;padding:3px 8px;
-  border:1px solid var(--border);font-family:'Share Tech Mono';
-  font-size:9px;color:var(--g);letter-spacing:2px;
-}
-
-/* MATCH HISTORY */
-.matches-list{display:flex;flex-direction:column;gap:clamp(8px,2vw,15px);}
-
-.match-card{
-  position:relative;overflow:hidden;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:clamp(15px,3vw,25px) clamp(15px,4vw,30px);
-  background:rgba(255,255,255,0.02);
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:4px;
-  transition:all 0.3s;
-  flex-wrap:wrap;gap:10px;
-}
-.match-card::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
-}
-.match-card.win::before{background:linear-gradient(180deg,var(--g),var(--g2));}
-.match-card.loss::before{background:linear-gradient(180deg,var(--red),#880000);}
-
+.player-tag{display:inline-block;margin-top:8px;padding:3px 8px;border:1px solid var(--border);font-family:'Share Tech Mono';font-size:9px;color:var(--primary);letter-spacing:2px;}
+.pos-badge{position:absolute;top:10px;left:10px;width:28px;height:28px;border-radius:50%;border:2px solid;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:16px;}
+.match-card{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;padding:clamp(15px,3vw,25px) clamp(15px,4vw,30px);background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:4px;transition:all 0.3s;flex-wrap:wrap;gap:10px;margin-bottom:15px;}
+.match-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+.match-card.win::before{background:linear-gradient(180deg,var(--primary),var(--g2));}
+.match-card.loss::before{background:linear-gradient(180deg,var(--loss),#880000);}
 .match-card:hover{transform:translateX(6px);}
 .match-card.win:hover{background:rgba(0,255,65,0.04);border-color:rgba(0,255,65,0.2);}
 .match-card.loss:hover{background:rgba(255,34,68,0.04);border-color:rgba(255,34,68,0.2);}
-
 .match-left{display:flex;align-items:center;gap:15px;}
-.match-result-tag{
-  font-family:'Bebas Neue';font-size:clamp(11px,2vw,14px);letter-spacing:2px;
-  padding:4px 10px;border-radius:2px;
-}
-.win .match-result-tag{background:rgba(0,255,65,0.15);color:var(--g);}
-.loss .match-result-tag{background:rgba(255,34,68,0.15);color:var(--red);}
-
-.match-vs{
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-}
-.match-team-name{
-  font-family:'Rajdhani';font-weight:700;
-  font-size:clamp(13px,3vw,18px);letter-spacing:1px;
-}
+.match-result-tag{font-family:'Bebas Neue';font-size:clamp(11px,2vw,14px);letter-spacing:2px;padding:4px 10px;border-radius:2px;}
+.win .match-result-tag{background:rgba(0,255,65,0.15);color:var(--primary);}
+.loss .match-result-tag{background:rgba(255,34,68,0.15);color:var(--loss);}
+.match-vs{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.match-team-name{font-family:'Rajdhani';font-weight:700;font-size:clamp(13px,3vw,18px);letter-spacing:1px;}
 .vs-dot{color:rgba(255,255,255,0.2);font-family:'Share Tech Mono';font-size:11px;}
-
-.match-score-wrap{
-  font-family:'Bebas Neue';
-  font-size:clamp(22px,5vw,36px);
-  letter-spacing:4px;
-}
-.win .match-score-wrap{color:var(--g);text-shadow:0 0 15px rgba(0,255,65,0.5);}
-.loss .match-score-wrap{color:var(--red);}
-
-/* DONATE */
-.donate-wrap{
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;min-height:60vh;gap:30px;text-align:center;
-}
-.donate-box{
-  position:relative;overflow:hidden;
-  border:1px solid rgba(255,194,0,0.3);border-radius:8px;
-  padding:clamp(30px,6vw,60px) clamp(20px,5vw,80px);
-  background:rgba(255,194,0,0.03);
-  max-width:500px;width:100%;
-}
-.donate-box::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at center, rgba(255,194,0,0.05) 0%, transparent 70%);
-}
-.donate-title{
-  font-family:'Bebas Neue';font-size:clamp(28px,7vw,48px);
-  letter-spacing:4px;color:var(--gold);margin-bottom:10px;
-  text-shadow:0 0 30px rgba(255,194,0,0.4);
-}
-.donate-sub{
-  font-family:'Share Tech Mono';font-size:12px;color:rgba(255,255,255,0.4);
-  letter-spacing:2px;margin-bottom:30px;
-}
-.donate-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:clamp(14px,3vw,18px) clamp(30px,6vw,60px);
-  background:linear-gradient(135deg,var(--gold),#ff9900);
-  color:#000;font-family:'Bebas Neue';font-size:clamp(14px,3vw,20px);
-  letter-spacing:4px;text-decoration:none;border-radius:4px;
-  transition:all 0.3s;border:none;cursor:pointer;
-  font-weight:700;
-}
-.donate-btn:hover{
-  transform:scale(1.05) translateY(-3px);
-  box-shadow:0 20px 50px rgba(255,194,0,0.4);
-  filter:brightness(1.1);
-}
-
-/* GLITCH EFFECT */
+.match-score-wrap{font-family:'Bebas Neue';font-size:clamp(22px,5vw,36px);letter-spacing:4px;}
+.win .match-score-wrap{color:var(--primary);text-shadow:0 0 15px rgba(0,255,65,0.5);}
+.loss .match-score-wrap{color:var(--loss);}
+.donate-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:30px;text-align:center;}
+.donate-box{position:relative;overflow:hidden;border:1px solid rgba(255,194,0,0.3);border-radius:8px;padding:clamp(30px,6vw,60px) clamp(20px,5vw,80px);background:rgba(255,194,0,0.03);max-width:500px;width:100%;}
+.donate-title{font-family:'Bebas Neue';font-size:clamp(28px,7vw,48px);letter-spacing:4px;color:var(--gold);margin-bottom:10px;text-shadow:0 0 30px rgba(255,194,0,0.4);}
+.donate-sub{font-family:'Share Tech Mono';font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:2px;margin-bottom:30px;}
+.donate-btn{display:inline-flex;align-items:center;gap:10px;padding:clamp(14px,3vw,18px) clamp(30px,6vw,60px);background:linear-gradient(135deg,var(--gold),#ff9900);color:#000;font-family:'Bebas Neue';font-size:clamp(14px,3vw,20px);letter-spacing:4px;text-decoration:none;border-radius:4px;transition:all 0.3s;}
+.donate-btn:hover{transform:scale(1.05) translateY(-3px);box-shadow:0 20px 50px rgba(255,194,0,0.4);}
 .glitch{position:relative;}
-.glitch::before,.glitch::after{
-  content:attr(data-text);position:absolute;top:0;left:0;
-  width:100%;height:100%;
-  background:linear-gradient(180deg,#fff,var(--g));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.glitch::before{
-  left:2px;text-shadow:none;
-  animation:glitch1 3s infinite;clip-path:polygon(0 0,100% 0,100% 35%,0 35%);
-}
-.glitch::after{
-  left:-2px;
-  animation:glitch2 3s infinite;clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);
-}
-@keyframes glitch1{
-  0%,90%,100%{transform:none;opacity:0;}
-  91%{transform:translate(-2px,1px);opacity:0.8;filter:hue-rotate(90deg);}
-  93%{transform:translate(2px,-1px);opacity:0.8;}
-  95%{transform:none;opacity:0;}
-}
-@keyframes glitch2{
-  0%,93%,100%{transform:none;opacity:0;}
-  94%{transform:translate(2px,2px);opacity:0.6;filter:hue-rotate(-90deg);}
-  96%{transform:translate(-2px,-1px);opacity:0.6;}
-  98%{transform:none;opacity:0;}
-}
-
-/* LOADING INTRO */
-#loader{
-  position:fixed;inset:0;background:#000;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:9000;transition:opacity 0.8s, visibility 0.8s;
-}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,#fff,var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.glitch::before{left:2px;animation:glitch1 3s infinite;clip-path:polygon(0 0,100% 0,100% 35%,0 35%);}
+.glitch::after{left:-2px;animation:glitch2 3s infinite;clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);}
+@keyframes glitch1{0%,90%,100%{transform:none;opacity:0;}91%{transform:translate(-2px,1px);opacity:0.8;filter:hue-rotate(90deg);}93%{transform:translate(2px,-1px);opacity:0.8;}95%{transform:none;opacity:0;}}
+@keyframes glitch2{0%,93%,100%{transform:none;opacity:0;}94%{transform:translate(2px,2px);opacity:0.6;filter:hue-rotate(-90deg);}96%{transform:translate(-2px,-1px);opacity:0.6;}98%{transform:none;opacity:0;}}
+#loader{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9000;transition:opacity 0.8s,visibility 0.8s;}
 #loader.hide{opacity:0;visibility:hidden;pointer-events:none;}
-.loader-text{
-  font-family:'Bebas Neue';font-size:clamp(32px,8vw,64px);letter-spacing:8px;
-  color:var(--g);text-shadow:0 0 30px var(--g);
-  animation:loaderPulse 0.5s ease-in-out infinite alternate;
-}
+.loader-text{font-family:'Bebas Neue';font-size:clamp(32px,8vw,64px);letter-spacing:8px;color:var(--primary);text-shadow:0 0 30px var(--primary);animation:loaderPulse 0.5s ease-in-out infinite alternate;}
 @keyframes loaderPulse{from{opacity:0.3;}to{opacity:1;}}
-.loader-bar-wrap{
-  width:200px;height:2px;background:rgba(255,255,255,0.1);
-  margin-top:20px;overflow:hidden;
-}
-.loader-bar{
-  height:100%;background:var(--g);width:0%;
-  animation:loadFill 1.5s ease forwards;
-  box-shadow:0 0 10px var(--g);
-}
+.loader-bar-wrap{width:200px;height:2px;background:rgba(255,255,255,0.1);margin-top:20px;overflow:hidden;}
+.loader-bar{height:100%;background:var(--primary);width:0%;animation:loadFill 1.5s ease forwards;box-shadow:0 0 10px var(--primary);}
 @keyframes loadFill{to{width:100%;}}
-
-/* MOBILE */
-@media(max-width:640px){
-  .nav-grid{grid-template-columns:repeat(2,1fr);}
-  .nav-btn.tg,.nav-btn.donate{grid-column:span 2;}
-  .roster-grid{grid-template-columns:repeat(2,1fr);}
-  .match-card{flex-direction:column;align-items:flex-start;}
-  .sponsors-strip{gap:10px;padding:6px 10px;}
-  .sponsor-item img{height:20px;}
-}
-@media(max-width:380px){
-  .roster-grid{grid-template-columns:1fr;}
-  .nav-grid{grid-template-columns:1fr;}
-  .nav-btn.tg,.nav-btn.donate{grid-column:span 1;}
-}
-
-/* DOTA MAP */
-.dota-pos{position:absolute;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:0.3s;}
-.dota-pos:hover{transform:scale(1.1);}
-.dota-pos-num{width:34px;height:34px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-family:"Bebas Neue";font-size:18px;box-shadow:0 0 12px currentColor;}
-.dota-pos-name{font-family:"Rajdhani";font-weight:700;font-size:clamp(9px,1.8vw,11px);color:#fff;letter-spacing:1px;white-space:nowrap;}
-.dota-pos-role{font-family:"Share Tech Mono";font-size:clamp(7px,1.5vw,9px);color:rgba(255,255,255,0.4);letter-spacing:1px;white-space:nowrap;}
-.pos-badge{position:absolute;top:10px;left:10px;width:28px;height:28px;border-radius:50%;border:2px solid;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;font-family:"Bebas Neue";font-size:16px;}
-/* GLOW ORBS */
-.orb{
-  position:fixed;border-radius:50%;pointer-events:none;
-  filter:blur(80px);opacity:0.12;animation:orbFloat 15s ease-in-out infinite;
-}
-.orb1{width:400px;height:400px;background:var(--g);top:-100px;left:-100px;animation-delay:0s;}
+.orb{position:fixed;border-radius:50%;pointer-events:none;filter:blur(80px);opacity:0.12;animation:orbFloat 15s ease-in-out infinite;}
+.orb1{width:400px;height:400px;background:var(--primary);top:-100px;left:-100px;}
 .orb2{width:300px;height:300px;background:#004400;bottom:-100px;right:-50px;animation-delay:-7s;}
-@keyframes orbFloat{
-  0%,100%{transform:translate(0,0);}
-  33%{transform:translate(30px,-20px);}
-  66%{transform:translate(-20px,30px);}
-}
-
-/* CORNER DECORS */
-.corner-decor{
-  position:fixed;pointer-events:none;z-index:10;
-  border-color:rgba(0,255,65,0.2);border-style:solid;
-  width:40px;height:40px;
-}
+@keyframes orbFloat{0%,100%{transform:translate(0,0);}33%{transform:translate(30px,-20px);}66%{transform:translate(-20px,30px);}}
+.corner-decor{position:fixed;pointer-events:none;z-index:10;border-color:rgba(0,255,65,0.2);border-style:solid;width:40px;height:40px;}
 .corner-tl{top:15px;left:15px;border-width:2px 0 0 2px;}
 .corner-tr{top:15px;right:15px;border-width:2px 2px 0 0;}
 .corner-bl{bottom:50px;left:15px;border-width:0 0 2px 2px;}
 .corner-br{bottom:50px;right:15px;border-width:0 2px 2px 0;}
-
-/* TIME DISPLAY */
-.hud-time{
-  position:fixed;top:20px;left:50%;transform:translateX(-50%);
-  font-family:'Share Tech Mono';font-size:11px;color:rgba(0,255,65,0.4);
-  letter-spacing:3px;z-index:10;pointer-events:none;
-}
+.hud-time{position:fixed;top:20px;left:50%;transform:translateX(-50%);font-family:'Share Tech Mono';font-size:11px;color:rgba(0,255,65,0.4);letter-spacing:3px;z-index:10;pointer-events:none;}
+.dota-pos{position:absolute;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:0.3s;}
+.dota-pos:hover{transform:scale(1.1);}
+.dota-pos-num{width:34px;height:34px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:18px;box-shadow:0 0 12px currentColor;}
+.dota-pos-name{font-family:'Rajdhani';font-weight:700;font-size:clamp(9px,1.8vw,11px);color:#fff;letter-spacing:1px;white-space:nowrap;}
+.dota-pos-role{font-family:'Share Tech Mono';font-size:clamp(7px,1.5vw,9px);color:rgba(255,255,255,0.4);letter-spacing:1px;white-space:nowrap;}
+@media(max-width:640px){.nav-grid{grid-template-columns:repeat(2,1fr);}.nav-btn.tg,.nav-btn.donate{grid-column:span 2;}.roster-grid{grid-template-columns:repeat(2,1fr);}.match-card{flex-direction:column;align-items:flex-start;}.sponsors-strip{gap:10px;padding:6px 10px;}.sponsor-item img{height:20px;}}
+@media(max-width:380px){.roster-grid{grid-template-columns:1fr;}.nav-grid{grid-template-columns:1fr;}.nav-btn.tg,.nav-btn.donate{grid-column:span 1;}}
 </style>
 </head>
 <body>
-
-<!-- CURSOR -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
-
-<!-- LOADER -->
-<div id="loader">
-  <div class="loader-text">GLADKOVKA</div>
-  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
-</div>
-
-<!-- BG ELEMENTS -->
+<div id="loader"><div class="loader-text">GLADKOVKA</div><div class="loader-bar-wrap"><div class="loader-bar"></div></div></div>
 <div class="grid-bg"></div>
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
+<div class="orb orb1"></div><div class="orb orb2"></div>
 <div class="particles" id="particles"></div>
-
-<!-- CORNER DECORS -->
-<div class="corner-decor corner-tl"></div>
-<div class="corner-decor corner-tr"></div>
-<div class="corner-decor corner-bl"></div>
-<div class="corner-decor corner-br"></div>
-
-<!-- HUD -->
+<div class="corner-decor corner-tl"></div><div class="corner-decor corner-tr"></div>
+<div class="corner-decor corner-bl"></div><div class="corner-decor corner-br"></div>
 <div class="hud-time" id="hudTime">00:00:00</div>
-
-<!-- SPONSORS BOTTOM -->
 <div class="sponsors-strip">
   <div class="sponsor-label">SPONSORED BY</div>
-  <div class="sponsor-item"><img src="https://i.imgur.com/AT0ZCfb.png" alt="sponsor"></div>
-  <div class="sponsor-item"><img src="https://i.imgur.com/hNWsLDJ.png" alt="sponsor"></div>
+  <div class="sponsor-item"><img src="https://i.imgur.com/AT0ZCfb.png" alt="sponsor"></div><div class="sponsor-item"><img src="https://i.imgur.com/hNWsLDJ.png" alt="sponsor"></div>
 </div>
-
-<!-- ============ MAIN MENU ============ -->
 <div class="site">
 <div id="home">
   <div class="hero-bg-text">GLADKOVKA</div>
-
-  <div class="logo-wrap">
-    <img src="https://i.imgur.com/S8mBPo9.png" alt="Gladkovka">
-    <div class="logo-ring"></div>
-  </div>
-
-  <h1 class="hero-title glitch" data-text="GLADKOVKA">
-    <span>GLADKOVKA</span>
-  </h1>
+  <div class="logo-wrap"><img src="https://i.imgur.com/S8mBPo9.png" alt="GLADKOVKA"><div class="logo-ring"></div></div>
+  <h1 class="hero-title glitch" data-text="GLADKOVKA"><span>GLADKOVKA</span></h1>
   <p class="hero-sub">// ESPORTS TEAM · EST. 2024</p>
-
   <div class="hero-stats">
-    <div class="stat-item">
-      <span class="stat-num" data-count="5">0</span>
-      <span class="stat-label">ПОБЕД</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num" data-count="1">0</span>
-      <span class="stat-label">ПОРАЖЕНИЙ</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num" data-count="9">0</span>
-      <span class="stat-label">ИГРОКОВ</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num" data-count="6">0</span>
-      <span class="stat-label">МАТЧЕЙ</span>
-    </div>
+    <div class="stat-item"><span class="stat-num" data-count="5">5</span><span class="stat-label">ПОБЕД</span></div>
+    <div class="stat-item"><span class="stat-num" data-count="3">3</span><span class="stat-label">ПОРАЖЕНИЙ</span></div>
+    <div class="stat-item"><span class="stat-num" data-count="14">14</span><span class="stat-label">ИГРОКОВ</span></div>
+    <div class="stat-item"><span class="stat-num" data-count="8">8</span><span class="stat-label">МАТЧЕЙ</span></div>
   </div>
-
   <div class="nav-grid">
-    <a href="https://t.me/gladkovkateam" target="_blank" class="nav-btn tg">
-      <span class="btn-icon">✈</span>ТЕЛЕГРАМ
-    </a>
-    <div class="nav-btn" onclick="openSection('main-roster')">
-      <span class="btn-icon">⚡</span>ОСНОВНОЙ СОСТАВ
-    </div>
-    <div class="nav-btn" onclick="openSection('sub-roster')">
-      <span class="btn-icon">🎬</span>ЗАПАС / МЕДИА
-    </div>
-    <div class="nav-btn" onclick="openSection('games')">
-      <span class="btn-icon">🏆</span>МАТЧИ
-    </div>
-    <a href="https://www.youtube.com/@gladkovkateam" target="_blank" class="nav-btn yt">
-      <span class="btn-icon">▶</span>YOUTUBE
-    </a>
-    <a href="https://www.tiktok.com/@gladkovka.team" target="_blank" class="nav-btn tt">
-      <span class="btn-icon">♪</span>TIKTOK
-    </a>
-    <div class="nav-btn" onclick="openSection('dota-roster')" style="border-color:rgba(180,60,255,0.3);color:#b43cff;">
-      <span class="btn-icon">🗡️</span>ДОТА 2 СОСТАВ
-    </div>
-    <div class="nav-btn donate" onclick="openSection('donate')">
-      <span class="btn-icon">💰</span>ПОДДЕРЖАТЬ КОМАНДУ
-    </div>
+    <a href="https://t.me/gladkovkateam" target="_blank" class="nav-btn tg"><span class="btn-icon">✈</span>ТЕЛЕГРАМ</a>
+    <div class="nav-btn" onclick="openSection('main-roster')"><span class="btn-icon">⚡</span>ОСНОВНОЙ СОСТАВ</div>
+    <div class="nav-btn" onclick="openSection('sub-roster')"><span class="btn-icon">🎬</span>ЗАПАС / МЕДИА</div>
+    <div class="nav-btn" onclick="openSection('games')"><span class="btn-icon">🏆</span>МАТЧИ</div>
+    <a href="https://www.youtube.com/@gladkovkateam" target="_blank" class="nav-btn yt"><span class="btn-icon">▶</span>YOUTUBE</a>
+    <a href="https://www.tiktok.com/@gladkovka.team" target="_blank" class="nav-btn tt"><span class="btn-icon">♪</span>TIKTOK</a>
+    <div class="nav-btn dota-btn" onclick="openSection('dota-roster')"><span class="btn-icon">🗡️</span>ДОТА 2 СОСТАВ</div>
+    <div class="nav-btn donate" onclick="openSection('donate')"><span class="btn-icon">💰</span>ПОДДЕРЖАТЬ КОМАНДУ</div>
   </div>
 </div>
 
-<!-- ============ MAIN ROSTER ============ -->
 <div id="main-roster" class="section">
-  <div class="sec-header">
-    <h2 class="sec-title">MAIN ROSTER</h2>
-    <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a>
-  </div>
-  <div class="roster-grid">
-    <div class="player-card">
-      <div class="player-img-wrap">
-        <img src="https://i.imgur.com/Q84c4k0.png" alt="ronik" loading="lazy">
-        <div class="player-overlay"></div>
-        <div class="player-scan"></div>
-        <div class="player-num">01</div>
-      </div>
-      <div class="player-info">
-        <div class="player-nick">ronik</div>
-        <div class="player-role">MAIN ROSTER</div>
-        <div class="player-tag">ACTIVE</div>
-      </div>
-    </div>
-    <div class="player-card">
-      <div class="player-img-wrap">
-        <img src="https://i.imgur.com/cjElvG2.png" alt="Danich" loading="lazy">
-        <div class="player-overlay"></div>
-        <div class="player-scan"></div>
-        <div class="player-num">02</div>
-      </div>
-      <div class="player-info">
-        <div class="player-nick">Danich</div>
-        <div class="player-role">MAIN ROSTER</div>
-        <div class="player-tag">ACTIVE</div>
-      </div>
-    </div>
-    <div class="player-card">
-      <div class="player-img-wrap">
-        <img src="https://i.imgur.com/F0E6bpT.png" alt="Malish-vasya" loading="lazy">
-        <div class="player-overlay"></div>
-        <div class="player-scan"></div>
-        <div class="player-num">03</div>
-      </div>
-      <div class="player-info">
-        <div class="player-nick">Malish-vasya</div>
-        <div class="player-role">MAIN ROSTER</div>
-        <div class="player-tag">ACTIVE</div>
-      </div>
-    </div>
-    <div class="player-card">
-      <div class="player-img-wrap">
-        <img src="https://i.imgur.com/lmde7mb.png" alt="d1mxcs" loading="lazy">
-        <div class="player-overlay"></div>
-        <div class="player-scan"></div>
-        <div class="player-num">04</div>
-      </div>
-      <div class="player-info">
-        <div class="player-nick">d1mxcs</div>
-        <div class="player-role">MAIN ROSTER</div>
-        <div class="player-tag">ACTIVE</div>
-      </div>
-    </div>
-    <div class="player-card">
-      <div class="player-img-wrap">
-        <img src="https://i.imgur.com/JjRHXcP.jpeg" alt="dxnisixs" loading="lazy">
-        <div class="player-overlay"></div>
-        <div class="player-scan"></div>
-        <div class="player-num">05</div>
-      </div>
-      <div class="player-info">
-        <div class="player-nick">dxnisixs</div>
-        <div class="player-role">MAIN ROSTER</div>
-        <div class="player-tag">ACTIVE</div>
-      </div>
-    </div>
-  </div>
+  <div class="sec-header"><h2 class="sec-title">MAIN ROSTER</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a></div>
+  <div class="roster-grid"><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/Q84c4k0.png" alt="ronik" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">01</div></div><div class="player-info"><div class="player-nick">ronik</div><div class="player-role">MAIN ROSTER</div><div class="player-tag" style="border-color:#00ff4144;color:#00ff41;">ACTIVE</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/cjElvG2.png" alt="Danich" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">02</div></div><div class="player-info"><div class="player-nick">Danich</div><div class="player-role">MAIN ROSTER</div><div class="player-tag" style="border-color:#00ff4144;color:#00ff41;">ACTIVE</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/F0E6bpT.png" alt="Malish-vasya" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">03</div></div><div class="player-info"><div class="player-nick">Malish-vasya</div><div class="player-role">MAIN ROSTER</div><div class="player-tag" style="border-color:#00ff4144;color:#00ff41;">ACTIVE</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/lmde7mb.png" alt="d1mxcs" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">04</div></div><div class="player-info"><div class="player-nick">d1mxcs</div><div class="player-role">MAIN ROSTER</div><div class="player-tag" style="border-color:#00ff4144;color:#00ff41;">ACTIVE</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/JjRHXcP.jpeg" alt="dxnisixs" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">05</div></div><div class="player-info"><div class="player-nick">dxnisixs</div><div class="player-role">MAIN ROSTER</div><div class="player-tag" style="border-color:#00ff4144;color:#00ff41;">ACTIVE</div></div></div></div>
 </div>
 
-<!-- ============ SUB ROSTER ============ -->
 <div id="sub-roster" class="section">
-  <div class="sec-header">
-    <h2 class="sec-title">RESERVE & MEDIA</h2>
-    <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a>
-  </div>
-  <div class="roster-grid">
-    <div class="player-card">
-      <div class="player-img-wrap">
-        <img src="https://i.imgur.com/HkdwmSZ.png" alt="Abeme" loading="lazy">
-        <div class="player-overlay"></div>
-        <div class="player-scan"></div>
-        <div class="player-num">06</div>
-      </div>
-      <div class="player-info">
-        <div class="player-nick">Abeme</div>
-        <div class="player-role">RESERVE</div>
-        <div class="player-tag" style="border-color:rgba(0,204,255,0.3);color:#00ccff;">SUB</div>
-      </div>
-    </div>
-    <div class="player-card">
-      <div class="player-img-wrap">
-        <img src="https://i.imgur.com/ywKudlq.jpeg" alt="synblyadi" loading="lazy">
-        <div class="player-overlay"></div>
-        <div class="player-scan"></div>
-        <div class="player-num">07</div>
-      </div>
-      <div class="player-info">
-        <div class="player-nick">synblyadi</div>
-        <div class="player-role">RESERVE</div>
-        <div class="player-tag" style="border-color:rgba(0,204,255,0.3);color:#00ccff;">SUB</div>
-      </div>
-    </div>
-    <div class="player-card">
-      <div class="player-img-wrap">
-        <img src="https://i.imgur.com/hRvCa4J.jpeg" alt="glenomessi" loading="lazy">
-        <div class="player-overlay"></div>
-        <div class="player-scan"></div>
-        <div class="player-num">08</div>
-      </div>
-      <div class="player-info">
-        <div class="player-nick">glenomessi</div>
-        <div class="player-role">MEDIA</div>
-        <div class="player-tag" style="border-color:rgba(255,100,0,0.3);color:#ff6400;">MEDIA</div>
-      </div>
-    </div>
-    <div class="player-card">
-      <div class="player-img-wrap">
-        <img src="https://i.imgur.com/Mh8V8Dq.jpeg" alt="Lominok" loading="lazy">
-        <div class="player-overlay"></div>
-        <div class="player-scan"></div>
-        <div class="player-num">09</div>
-      </div>
-      <div class="player-info">
-        <div class="player-nick">Lominok</div>
-        <div class="player-role">MEDIA</div>
-        <div class="player-tag" style="border-color:rgba(255,100,0,0.3);color:#ff6400;">MEDIA</div>
-      </div>
-    </div>
-  </div>
+  <div class="sec-header"><h2 class="sec-title">RESERVE & MEDIA</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a></div>
+  <div class="roster-grid"><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/HkdwmSZ.png" alt="Abeme" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">01</div></div><div class="player-info"><div class="player-nick">Abeme</div><div class="player-role">RESERVE</div><div class="player-tag" style="border-color:#00ccff44;color:#00ccff;">SUB</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/ywKudlq.jpeg" alt="synblyadi" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">02</div></div><div class="player-info"><div class="player-nick">synblyadi</div><div class="player-role">RESERVE</div><div class="player-tag" style="border-color:#00ccff44;color:#00ccff;">SUB</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/hRvCa4J.jpeg" alt="glenomessi" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">03</div></div><div class="player-info"><div class="player-nick">glenomessi</div><div class="player-role">MEDIA</div><div class="player-tag" style="border-color:#ff640044;color:#ff6400;">MEDIA</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/Mh8V8Dq.jpeg" alt="Lominok" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">04</div></div><div class="player-info"><div class="player-nick">Lominok</div><div class="player-role">MEDIA</div><div class="player-tag" style="border-color:#ff640044;color:#ff6400;">MEDIA</div></div></div></div>
 </div>
 
-<!-- ============ MATCH HISTORY ============ -->
 <div id="games" class="section">
-  <div class="sec-header">
-    <h2 class="sec-title">MATCH HISTORY</h2>
-    <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a>
-  </div>
-  <div class="matches-list">
-    <div class="match-card win">
-      <div class="match-left">
-        <span class="match-result-tag">WIN</span>
-        <div class="match-vs">
-          <span class="match-team-name">GLADKOVKA</span>
-          <span class="vs-dot">VS</span>
-          <span class="match-team-name" style="color:rgba(255,255,255,0.5)">THE INVICTUS</span>
-        </div>
-      </div>
-      <div class="match-score-wrap">2 : 1</div>
-    </div>
-    <div class="match-card loss">
-      <div class="match-left">
-        <span class="match-result-tag">LOSS</span>
-        <div class="match-vs">
-          <span class="match-team-name">GLADKOVKA</span>
-          <span class="vs-dot">VS</span>
-          <span class="match-team-name" style="color:rgba(255,255,255,0.5)">AUTSQUAD</span>
-        </div>
-      </div>
-      <div class="match-score-wrap">1 : 2</div>
-    </div>
-    <div class="match-card win">
-      <div class="match-left">
-        <span class="match-result-tag">WIN</span>
-        <div class="match-vs">
-          <span class="match-team-name">GLADKOVKA</span>
-          <span class="vs-dot">VS</span>
-          <span class="match-team-name" style="color:rgba(255,255,255,0.5)">VORTEX TEAM</span>
-        </div>
-      </div>
-      <div class="match-score-wrap">1 : 0</div>
-    </div>
-    <div class="match-card win">
-      <div class="match-left">
-        <span class="match-result-tag">WIN</span>
-        <div class="match-vs">
-          <span class="match-team-name">GLADKOVKA</span>
-          <span class="vs-dot">VS</span>
-          <span class="match-team-name" style="color:rgba(255,255,255,0.5)">TCGAMING</span>
-        </div>
-      </div>
-      <div class="match-score-wrap">2 : 0</div>
-    </div>
-    <div class="match-card win">
-      <div class="match-left">
-        <span class="match-result-tag">WIN</span>
-        <div class="match-vs">
-          <span class="match-team-name">GLADKOVKA</span>
-          <span class="vs-dot">VS</span>
-          <span class="match-team-name" style="color:rgba(255,255,255,0.5)">PZW</span>
-        </div>
-      </div>
-      <div class="match-score-wrap">1 : 0</div>
-    </div>
-    <div class="match-card win">
-      <div class="match-left">
-        <span class="match-result-tag">WIN</span>
-        <div class="match-vs">
-          <span class="match-team-name">GLADKOVKA</span>
-          <span class="vs-dot">VS</span>
-          <span class="match-team-name" style="color:rgba(255,255,255,0.5)">P1DRO TEAM</span>
-        </div>
-      </div>
-      <div class="match-score-wrap">1 : 0</div>
-    </div>
-  </div>
+  <div class="sec-header"><h2 class="sec-title">MATCH HISTORY</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a></div>
+  <div class="matches-list"><div class="match-card win"><div class="match-left"><span class="match-result-tag">WIN</span><div class="match-vs"><span class="match-team-name">GLADKOVKA</span><span class="vs-dot">VS</span><span class="match-team-name" style="color:rgba(255,255,255,0.5)">THE INVICTUS</span></div></div><div class="match-score-wrap" style="color:var(--primary)">2 : 1</div></div><div class="match-card loss"><div class="match-left"><span class="match-result-tag">LOSS</span><div class="match-vs"><span class="match-team-name">GLADKOVKA</span><span class="vs-dot">VS</span><span class="match-team-name" style="color:rgba(255,255,255,0.5)">AUTSQUAD</span></div></div><div class="match-score-wrap" style="color:var(--loss)">1 : 2</div></div><div class="match-card win"><div class="match-left"><span class="match-result-tag">WIN</span><div class="match-vs"><span class="match-team-name">GLADKOVKA</span><span class="vs-dot">VS</span><span class="match-team-name" style="color:rgba(255,255,255,0.5)">VORTEX TEAM</span></div></div><div class="match-score-wrap" style="color:var(--primary)">1 : 0</div></div><div class="match-card win"><div class="match-left"><span class="match-result-tag">WIN</span><div class="match-vs"><span class="match-team-name">GLADKOVKA</span><span class="vs-dot">VS</span><span class="match-team-name" style="color:rgba(255,255,255,0.5)">TCGAMING</span></div></div><div class="match-score-wrap" style="color:var(--primary)">2 : 0</div></div><div class="match-card win"><div class="match-left"><span class="match-result-tag">WIN</span><div class="match-vs"><span class="match-team-name">GLADKOVKA</span><span class="vs-dot">VS</span><span class="match-team-name" style="color:rgba(255,255,255,0.5)">PZW</span></div></div><div class="match-score-wrap" style="color:var(--primary)">1 : 0</div></div><div class="match-card win"><div class="match-left"><span class="match-result-tag">WIN</span><div class="match-vs"><span class="match-team-name">GLADKOVKA</span><span class="vs-dot">VS</span><span class="match-team-name" style="color:rgba(255,255,255,0.5)">P1DRO TEAM</span></div></div><div class="match-score-wrap" style="color:var(--primary)">1 : 0</div></div><div class="match-card loss"><div class="match-left"><span class="match-result-tag">LOSS</span><div class="match-vs"><span class="match-team-name">GLADKOVKA</span><span class="vs-dot">VS</span><span class="match-team-name" style="color:rgba(255,255,255,0.5)">Team Spirt</span></div></div><div class="match-score-wrap" style="color:var(--loss)">1 : 2</div></div><div class="match-card loss"><div class="match-left"><span class="match-result-tag">LOSS</span><div class="match-vs"><span class="match-team-name">GLADKOVKA</span><span class="vs-dot">VS</span><span class="match-team-name" style="color:rgba(255,255,255,0.5)">Team Homyak</span></div></div><div class="match-score-wrap" style="color:var(--loss)">0 : 2</div></div></div>
 </div>
 
-<!-- ============ DOTA 2 ROSTER ============ -->
 <div id="dota-roster" class="section">
-  <div class="sec-header">
-    <h2 class="sec-title" style="background:linear-gradient(90deg,#fff,#b43cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">DOTA 2 ROSTER</h2>
-    <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a>
-  </div>
+  <div class="sec-header"><h2 class="sec-title" style="background:linear-gradient(90deg,#fff,#b43cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">DOTA 2 ROSTER</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a></div>
   <div style="display:flex;justify-content:center;margin-bottom:30px;">
     <div style="position:relative;width:min(360px,90vw);height:min(360px,90vw);border:1px solid rgba(180,60,255,0.2);border-radius:8px;background:rgba(180,60,255,0.03);">
-      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12;" viewBox="0 0 360 360">
-        <line x1="0" y1="360" x2="360" y2="0" stroke="#b43cff" stroke-width="1.5"/>
-        <line x1="0" y1="180" x2="360" y2="180" stroke="#b43cff" stroke-width="1"/>
-        <line x1="180" y1="0" x2="180" y2="360" stroke="#b43cff" stroke-width="1"/>
-        <rect x="10" y="280" width="60" height="60" rx="4" stroke="#00ff41" fill="none" stroke-width="1.5"/>
-        <rect x="290" y="10" width="60" height="60" rx="4" stroke="#ff2244" fill="none" stroke-width="1.5"/>
-      </svg>
-      <div class="dota-pos" style="bottom:10%;right:8%;"><div class="dota-pos-num" style="border-color:rgba(0,255,65,0.6);color:#00ff41;background:rgba(0,255,65,0.1);">1</div><div class="dota-pos-name">Nad0EL</div><div class="dota-pos-role">CARRY</div></div>
-      <div class="dota-pos" style="top:50%;left:50%;transform:translate(-50%,-50%);"><div class="dota-pos-num" style="border-color:rgba(255,165,0,0.6);color:#ffa500;background:rgba(255,165,0,0.1);">2</div><div class="dota-pos-name">S0sa1bek</div><div class="dota-pos-role">MID</div></div>
-      <div class="dota-pos" style="top:10%;left:8%;"><div class="dota-pos-num" style="border-color:rgba(0,150,255,0.6);color:#0096ff;background:rgba(0,150,255,0.1);">3</div><div class="dota-pos-name">vov1k</div><div class="dota-pos-role">OFFLANE</div></div>
-      <div class="dota-pos" style="top:8%;right:6%;"><div class="dota-pos-num" style="border-color:rgba(180,60,255,0.6);color:#b43cff;background:rgba(180,60,255,0.1);">4</div><div class="dota-pos-name">Chyort.og</div><div class="dota-pos-role">SOFT SUPP</div></div>
-      <div class="dota-pos" style="bottom:8%;left:6%;"><div class="dota-pos-num" style="border-color:rgba(255,80,80,0.6);color:#ff5050;background:rgba(255,80,80,0.1);">5</div><div class="dota-pos-name">Ronik_Jr</div><div class="dota-pos-role">HARD SUPP</div></div>
+      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12;" viewBox="0 0 360 360"><line x1="0" y1="360" x2="360" y2="0" stroke="#b43cff" stroke-width="1.5"/><line x1="0" y1="180" x2="360" y2="180" stroke="#b43cff" stroke-width="1"/><line x1="180" y1="0" x2="180" y2="360" stroke="#b43cff" stroke-width="1"/><rect x="10" y="280" width="60" height="60" rx="4" stroke="#00ff41" fill="none" stroke-width="1.5"/><rect x="290" y="10" width="60" height="60" rx="4" stroke="#ff2244" fill="none" stroke-width="1.5"/></svg>
+      <div class="dota-pos" style="bottom:10%;right:8%;"><div class="dota-pos-num" style="border-color:rgba(0,255,65,0.6);color:#00ff41;background:rgba(0,255,65,0.1);">1</div><div class="dota-pos-name">Nad0EL</div><div class="dota-pos-role">CARRY</div></div><div class="dota-pos" style="top:50%;left:50%;transform:translate(-50%,-50%);"><div class="dota-pos-num" style="border-color:rgba(255,165,0,0.6);color:#ffa500;background:rgba(255,165,0,0.1);">2</div><div class="dota-pos-name">S0sa1bek</div><div class="dota-pos-role">MID</div></div><div class="dota-pos" style="top:10%;left:8%;"><div class="dota-pos-num" style="border-color:rgba(0,150,255,0.6);color:#0096ff;background:rgba(0,150,255,0.1);">3</div><div class="dota-pos-name">vov1k</div><div class="dota-pos-role">OFFLANE</div></div><div class="dota-pos" style="top:8%;right:6%;"><div class="dota-pos-num" style="border-color:rgba(180,60,255,0.6);color:#b43cff;background:rgba(180,60,255,0.1);">4</div><div class="dota-pos-name">Chyort.og</div><div class="dota-pos-role">SOFT SUPPORT</div></div><div class="dota-pos" style="bottom:8%;left:6%;"><div class="dota-pos-num" style="border-color:rgba(255,80,80,0.6);color:#ff5050;background:rgba(255,80,80,0.1);">5</div><div class="dota-pos-name">Ronik_Jr</div><div class="dota-pos-role">HARD SUPPORT</div></div>
     </div>
   </div>
-  <div class="roster-grid">
-    <div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/tsuPmmE.png" alt="Nad0EL" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">01</div><div class="pos-badge" style="border-color:#00ff41;color:#00ff41;">1</div></div><div class="player-info"><div class="player-nick">Nad0EL</div><div class="player-role">DOTA 2 · CARRY</div><div class="player-tag" style="border-color:rgba(0,255,65,0.4);color:#00ff41;">POS 1</div></div></div>
-    <div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/C7a7xWP.png" alt="S0sa1bek" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">02</div><div class="pos-badge" style="border-color:#ffa500;color:#ffa500;">2</div></div><div class="player-info"><div class="player-nick">S0sa1bek</div><div class="player-role">DOTA 2 · MID</div><div class="player-tag" style="border-color:rgba(255,165,0,0.4);color:#ffa500;">POS 2</div></div></div>
-    <div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/EzLuQwG.png" alt="vov1k" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">03</div><div class="pos-badge" style="border-color:#0096ff;color:#0096ff;">3</div></div><div class="player-info"><div class="player-nick">vov1k</div><div class="player-role">DOTA 2 · OFFLANE</div><div class="player-tag" style="border-color:rgba(0,150,255,0.4);color:#0096ff;">POS 3</div></div></div>
-    <div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/PhcMMCd.png" alt="Chyort.og" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">04</div><div class="pos-badge" style="border-color:#b43cff;color:#b43cff;">4</div></div><div class="player-info"><div class="player-nick">Chyort.og</div><div class="player-role">DOTA 2 · SUPPORT</div><div class="player-tag" style="border-color:rgba(180,60,255,0.4);color:#b43cff;">POS 4</div></div></div>
-    <div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/hR61KjA.png" alt="Ronik_Jr" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">05</div><div class="pos-badge" style="border-color:#ff5050;color:#ff5050;">5</div></div><div class="player-info"><div class="player-nick">Ronik_Jr</div><div class="player-role">DOTA 2 · HARD SUPP</div><div class="player-tag" style="border-color:rgba(255,80,80,0.4);color:#ff5050;">POS 5</div></div></div>
-  </div>
+  <div class="roster-grid"><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/tsuPmmE.png" alt="Nad0EL" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">01</div><div class="pos-badge" style="border-color:#00ff41;color:#00ff41;">1</div></div><div class="player-info"><div class="player-nick">Nad0EL</div><div class="player-role">DOTA 2 · CARRY</div><div class="player-tag" style="border-color:#00ff4144;color:#00ff41;">POS 1</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/C7a7xWP.png" alt="S0sa1bek" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">02</div><div class="pos-badge" style="border-color:#ffa500;color:#ffa500;">2</div></div><div class="player-info"><div class="player-nick">S0sa1bek</div><div class="player-role">DOTA 2 · MID</div><div class="player-tag" style="border-color:#ffa50044;color:#ffa500;">POS 2</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/EzLuQwG.png" alt="vov1k" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">03</div><div class="pos-badge" style="border-color:#0096ff;color:#0096ff;">3</div></div><div class="player-info"><div class="player-nick">vov1k</div><div class="player-role">DOTA 2 · OFFLANE</div><div class="player-tag" style="border-color:#0096ff44;color:#0096ff;">POS 3</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/PhcMMCd.png" alt="Chyort.og" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">04</div><div class="pos-badge" style="border-color:#b43cff;color:#b43cff;">4</div></div><div class="player-info"><div class="player-nick">Chyort.og</div><div class="player-role">DOTA 2 · SUPPORT</div><div class="player-tag" style="border-color:#b43cff44;color:#b43cff;">POS 4</div></div></div><div class="player-card"><div class="player-img-wrap"><img src="https://i.imgur.com/hR61KjA.png" alt="Ronik_Jr" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">05</div><div class="pos-badge" style="border-color:#ff5050;color:#ff5050;">5</div></div><div class="player-info"><div class="player-nick">Ronik_Jr</div><div class="player-role">DOTA 2 · HARD SUPP</div><div class="player-tag" style="border-color:#ff505044;color:#ff5050;">POS 5</div></div></div></div>
 </div>
 
-<!-- ============ DONATE ============ -->
 <div id="donate" class="section">
-  <div class="sec-header">
-    <h2 class="sec-title">DONATE</h2>
-    <a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a>
-  </div>
-  <div class="donate-wrap">
-    <div class="donate-box">
-      <div class="donate-title">ПОДДЕРЖИ КОМАНДУ</div>
-      <div class="donate-sub">// КАЖДЫЙ ДОНАТ ПОМОГАЕТ НАМ РАСТИ</div>
-      <a href="https://donatepay.eu/don/38734" target="_blank" class="donate-btn">
-        💰 ЗАДОНАТИТЬ
-      </a>
-    </div>
-  </div>
+  <div class="sec-header"><h2 class="sec-title">DONATE</h2><a href="javascript:void(0)" class="back-btn" onclick="closeSections()">← НАЗАД</a></div>
+  <div class="donate-wrap"><div class="donate-box">
+    <div class="donate-title">ПОДДЕРЖИ КОМАНДУ</div>
+    <div class="donate-sub">// КАЖДЫЙ ДОНАТ ПОМОГАЕТ НАМ РАСТИ</div>
+    <a href="https://donatepay.eu/don/38734" target="_blank" class="donate-btn">💰 ЗАДОНАТИТЬ</a>
+  </div></div>
 </div>
-
-</div><!-- /site -->
+</div>
 
 <script>
-// LOADER
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('loader').classList.add('hide');
-    animateCounters();
-  }, 1800);
-});
-
-// CURSOR
-const cursor = document.getElementById('cursor');
-const cursorRing = document.getElementById('cursorRing');
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loader').classList.add('hide');animateCounters();},1800);});
+const cursor=document.getElementById('cursor');const cursorRing=document.getElementById('cursorRing');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cursor.style.left=mx-6+'px';cursor.style.top=my-6+'px';
-});
-function animRing(){
-  rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
-  cursorRing.style.left=rx-18+'px';cursorRing.style.top=ry-18+'px';
-  requestAnimationFrame(animRing);
-}animRing();
-document.querySelectorAll('a,button,.nav-btn,.player-card,.match-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2)';cursorRing.style.transform='scale(1.5)';});
-  el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';cursorRing.style.transform='scale(1)';});
-});
-
-// PARTICLES
-const pCont = document.getElementById('particles');
-for(let i=0;i<25;i++){
-  const p=document.createElement('div');
-  p.className='p';
-  p.style.cssText=`
-    left:${Math.random()*100}%;
-    width:${Math.random()*2+1}px;
-    height:${Math.random()*2+1}px;
-    animation-duration:${5+Math.random()*15}s;
-    animation-delay:${-Math.random()*15}s;
-    opacity:${0.2+Math.random()*0.5};
-  `;
-  pCont.appendChild(p);
-}
-
-// CLOCK
-function updateTime(){
-  const now=new Date();
-  const t=[now.getHours(),now.getMinutes(),now.getSeconds()]
-    .map(v=>String(v).padStart(2,'0')).join(':');
-  document.getElementById('hudTime').textContent=t;
-}
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx-6+'px';cursor.style.top=my-6+'px';});
+function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;cursorRing.style.left=rx-18+'px';cursorRing.style.top=ry-18+'px';requestAnimationFrame(animRing);}animRing();
+document.querySelectorAll('a,button,.nav-btn,.player-card,.match-card').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2)';cursorRing.style.transform='scale(1.5)';});el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';cursorRing.style.transform='scale(1)';});});
+const pCont=document.getElementById('particles');
+for(let i=0;i<25;i++){const p=document.createElement('div');p.className='p';p.style.cssText='left:'+Math.random()*100+'%;width:'+(Math.random()*2+1)+'px;height:'+(Math.random()*2+1)+'px;animation-duration:'+(5+Math.random()*15)+'s;animation-delay:'+-Math.random()*15+'s;opacity:'+(0.2+Math.random()*0.5)+';';pCont.appendChild(p);}
+function updateTime(){const now=new Date();const t=[now.getHours(),now.getMinutes(),now.getSeconds()].map(v=>String(v).padStart(2,'0')).join(':');document.getElementById('hudTime').textContent=t;}
 setInterval(updateTime,1000);updateTime();
-
-// COUNTERS
-function animateCounters(){
-  document.querySelectorAll('[data-count]').forEach(el=>{
-    const target=parseInt(el.dataset.count);
-    let cur=0;const step=Math.max(1,Math.ceil(target/20));
-    const iv=setInterval(()=>{
-      cur=Math.min(cur+step,target);
-      el.textContent=cur;
-      if(cur>=target)clearInterval(iv);
-    },60);
-  });
-}
-
-// NAVIGATION
-function openSection(id){
-  document.getElementById('home').style.display='none';
-  document.querySelectorAll('.section').forEach(s=>{s.style.display='none';s.classList.remove('active');});
-  const t=document.getElementById(id);
-  if(t){t.style.display='block';setTimeout(()=>t.classList.add('active'),10);}
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function closeSections(){
-  document.querySelectorAll('.section').forEach(s=>{s.classList.remove('active');s.style.display='none';});
-  document.getElementById('home').style.display='flex';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-// MATCH CARD STAGGER
-document.querySelectorAll('.match-card').forEach((c,i)=>{
-  c.style.animationDelay=i*0.08+'s';
-  c.style.opacity='0';c.style.transform='translateX(-20px)';
-  c.style.transition='all 0.5s cubic-bezier(0.16,1,0.3,1)';
-  c.style.transitionDelay=i*0.08+'s';
-});
-const origOpen=window.openSection;
-window.openSection=function(id){
-  origOpen(id);
-  if(id==='games'){
-    setTimeout(()=>{
-      document.querySelectorAll('.match-card').forEach(c=>{
-        c.style.opacity='1';c.style.transform='translateX(0)';
-      });
-    },100);
-  }
-};
+function animateCounters(){document.querySelectorAll('[data-count]').forEach(el=>{const target=parseInt(el.dataset.count);let cur=0;const step=Math.max(1,Math.ceil(target/20));const iv=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur;if(cur>=target)clearInterval(iv);},60);});}
+function openSection(id){document.getElementById('home').style.display='none';document.querySelectorAll('.section').forEach(s=>{s.style.display='none';s.classList.remove('active');});const t=document.getElementById(id);if(t){t.style.display='block';setTimeout(()=>t.classList.add('active'),10);}window.scrollTo({top:0,behavior:'smooth'});}
+function closeSections(){document.querySelectorAll('.section').forEach(s=>{s.classList.remove('active');s.style.display='none';});document.getElementById('home').style.display='flex';window.scrollTo({top:0,behavior:'smooth'});}
 </script>
 </body>
 </html>
