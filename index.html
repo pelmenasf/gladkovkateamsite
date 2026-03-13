@@ -45,7 +45,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 @keyframes glitch2{0%,93%,100%{transform:none;opacity:0;}94%{transform:translate(2px,2px);opacity:0.6;filter:hue-rotate(-90deg);}96%{transform:translate(-2px,-1px);opacity:0.6;}98%{transform:none;opacity:0;}}
 
 /* NAV GRID */
-.nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:700px;}
+.nav-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%;max-width:560px;}
 .nav-btn{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--border);padding:clamp(12px,2.5vw,18px) 8px;color:#fff;font-family:'Rajdhani';font-weight:700;font-size:clamp(10px,1.8vw,13px);letter-spacing:1.5px;text-align:center;cursor:pointer;transition:all 0.3s;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;backdrop-filter:blur(10px);}
 .nav-btn .btn-icon{font-size:clamp(16px,3.5vw,22px);display:block;line-height:1;}
 .nav-btn .btn-img{width:clamp(22px,4vw,30px);height:clamp(22px,4vw,30px);object-fit:contain;display:block;filter:drop-shadow(0 0 4px var(--primary));transition:0.3s;}
@@ -55,7 +55,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav-btn:hover::before{opacity:1;}
 .nav-btn:hover::after{width:100%;}
 .nav-btn:hover .btn-img{filter:drop-shadow(0 0 8px var(--primary)) brightness(1.2);}
-.nav-btn.tg{grid-column:span 3;background:rgba(0,136,212,0.08);border-color:rgba(0,136,212,0.3);color:#29b6f6;}
+.nav-btn.tg{grid-column:span 2;background:rgba(0,136,212,0.08);border-color:rgba(0,136,212,0.3);color:#29b6f6;}
 .nav-btn.tg:hover{border-color:#29b6f6;color:#fff;}
 .nav-btn.tg::after{background:#29b6f6;}
 .nav-btn.yt{background:rgba(255,0,0,0.06);border-color:rgba(255,0,0,0.2);color:#ff4444;}
@@ -64,7 +64,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav-btn.tt{background:rgba(255,0,80,0.06);border-color:rgba(255,0,80,0.2);color:#ff0050;}
 .nav-btn.tt:hover{border-color:#ff0050;color:#fff;}
 .nav-btn.tt::after{background:#ff0050;}
-.nav-btn.donate{grid-column:span 2;background:rgba(255,194,0,0.06);border-color:rgba(255,194,0,0.3);color:var(--gold);}
+.nav-btn.donate{background:rgba(255,194,0,0.06);border-color:rgba(255,194,0,0.3);color:var(--gold);}
 .nav-btn.donate:hover{border-color:var(--gold);color:#fff;}
 .nav-btn.donate::after{background:var(--gold);}
 .nav-btn.dota-btn{background:rgba(180,60,255,0.06);border-color:rgba(180,60,255,0.2);color:#b43cff;}
@@ -174,9 +174,6 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .dota-pos-role{font-family:'Share Tech Mono';font-size:clamp(7px,1.5vw,9px);color:rgba(255,255,255,0.4);letter-spacing:1px;white-space:nowrap;}
 
 @media(max-width:640px){
-  .nav-grid{grid-template-columns:repeat(2,1fr);}
-  .nav-btn.tg{grid-column:span 2;}
-  .nav-btn.donate{grid-column:span 2;}
   .roster-grid{grid-template-columns:repeat(2,1fr);}
   .match-card{flex-direction:column;align-items:flex-start;}
   .sponsors-strip{gap:10px;padding:6px 10px;}
@@ -185,8 +182,93 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 @media(max-width:380px){
   .roster-grid{grid-template-columns:1fr;}
   .nav-grid{grid-template-columns:1fr;}
-  .nav-btn.tg,.nav-btn.donate{grid-column:span 1;}
+  .nav-btn.tg{grid-column:span 1;}
 }
+/* ROSTER PICKER OVERLAY */
+#roster-picker{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);
+  z-index:2000;align-items:center;justify-content:center;
+  padding:20px;
+}
+#roster-picker.open{display:flex;animation:fadeInOverlay 0.3s ease;}
+@keyframes fadeInOverlay{from{opacity:0;}to{opacity:1;}}
+.rp-modal{
+  background:#050d05;border:1px solid var(--border);border-radius:12px;
+  padding:clamp(24px,5vw,40px) clamp(20px,4vw,36px);
+  width:min(600px,95vw);max-height:90vh;overflow-y:auto;
+  animation:rpSlideIn 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes rpSlideIn{from{transform:translateY(30px) scale(0.96);opacity:0;}to{transform:none;opacity:1;}}
+.rp-title{
+  font-family:'Bebas Neue';font-size:clamp(28px,6vw,42px);letter-spacing:5px;
+  color:var(--primary);text-align:center;margin-bottom:4px;
+  text-shadow:0 0 20px rgba(0,255,65,0.4);
+}
+.rp-subtitle{font-family:'Share Tech Mono';font-size:11px;color:rgba(0,255,65,0.4);letter-spacing:3px;text-align:center;margin-bottom:28px;}
+.rp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px;}
+.rp-card{
+  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);
+  border-radius:8px;padding:clamp(16px,3vw,24px) 16px;
+  text-align:center;cursor:pointer;transition:all 0.3s;
+  display:flex;flex-direction:column;align-items:center;
+}
+.rp-card img{width:clamp(44px,8vw,60px);height:clamp(44px,8vw,60px);object-fit:contain;margin-bottom:10px;transition:0.3s;}
+.rp-card:hover{transform:translateY(-4px);}
+.rp-card:hover img{transform:scale(1.1);}
+.rp-card-name{font-family:'Bebas Neue';font-size:clamp(13px,2.5vw,17px);letter-spacing:2px;color:#fff;transition:0.3s;}
+.rp-card-sub{font-family:'Share Tech Mono';font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:2px;margin-top:3px;}
+.rp-card-count{font-family:'Share Tech Mono';font-size:9px;margin-top:8px;padding:3px 8px;border-radius:3px;border:1px solid;transition:0.3s;}
+
+/* DEFAULT card — green */
+.rp-card{border-color:rgba(0,255,65,0.1);}
+.rp-card:hover{background:rgba(0,255,65,0.05);border-color:rgba(0,255,65,0.4);}
+.rp-card:hover .rp-card-name{color:var(--primary);}
+.rp-card .rp-card-count{color:var(--primary);border-color:rgba(0,255,65,0.3);background:rgba(0,255,65,0.05);}
+.rp-card:hover img{filter:drop-shadow(0 0 10px var(--primary));}
+
+/* LEGION card */
+.rp-card.legion{border-color:rgba(255,106,0,0.1);}
+.rp-card.legion:hover{background:rgba(255,106,0,0.05);border-color:rgba(255,106,0,0.4);}
+.rp-card.legion:hover .rp-card-name{color:#ff6a00;}
+.rp-card.legion .rp-card-count{color:#ff6a00;border-color:rgba(255,106,0,0.3);background:rgba(255,106,0,0.05);}
+.rp-card.legion:hover img{filter:drop-shadow(0 0 10px #ff6a00);}
+
+/* ACADEMY card */
+.rp-card.academy{border-color:rgba(0,170,255,0.1);}
+.rp-card.academy:hover{background:rgba(0,170,255,0.05);border-color:rgba(0,170,255,0.4);}
+.rp-card.academy:hover .rp-card-name{color:#00aaff;}
+.rp-card.academy .rp-card-count{color:#00aaff;border-color:rgba(0,170,255,0.3);background:rgba(0,170,255,0.05);}
+
+/* SUB card */
+.rp-card.sub{border-color:rgba(0,204,255,0.1);}
+.rp-card.sub:hover{background:rgba(0,204,255,0.05);border-color:rgba(0,204,255,0.3);}
+.rp-card.sub:hover .rp-card-name{color:#00ccff;}
+.rp-card.sub .rp-card-count{color:#00ccff;border-color:rgba(0,204,255,0.3);background:rgba(0,204,255,0.05);}
+
+.rp-close{
+  display:block;width:100%;padding:12px;
+  background:transparent;border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.4);font-family:'Share Tech Mono';
+  font-size:11px;letter-spacing:3px;cursor:pointer;border-radius:6px;
+  transition:0.3s;
+}
+.rp-close:hover{border-color:var(--red);color:var(--red);}
+
+/* ACADEMY section */
+.sec-header.academy-header::after{background:#00aaff;}
+.player-card.academy:hover{border-color:#00aaff;box-shadow:0 20px 60px rgba(0,170,255,0.15),0 0 30px rgba(0,170,255,0.08);}
+.player-card.academy .player-scan{background:linear-gradient(90deg,transparent,#00aaff,transparent);}
+.player-card.academy:hover .player-nick{color:#00aaff;}
+.player-card.academy:hover .player-num{color:rgba(0,170,255,0.4);}
+.back-btn.academy{border-color:rgba(0,170,255,0.4);color:#00aaff;}
+.back-btn.academy:hover{background:#00aaff;color:#000;border-color:#00aaff;}
+
+/* nav roster-picker btn */
+.nav-btn.roster-picker-btn{border-color:rgba(0,255,65,0.3);color:var(--primary);}
+.nav-btn.roster-picker-btn:hover{border-color:var(--primary);background:rgba(0,255,65,0.08);}
+
+@media(max-width:480px){.rp-grid{grid-template-columns:repeat(2,1fr);gap:10px;}.rp-card{padding:14px 10px;}}
 </style>
 </head>
 <body>
@@ -226,28 +308,20 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
   </div>
 
   <div class="nav-grid">
-    <!-- Row 1: TG full width -->
+    <!-- Row 1: TG full width (span 2) -->
     <a href="https://t.me/gladkovkateam" target="_blank" class="nav-btn tg">
       <span class="btn-icon">✈</span>ТЕЛЕГРАМ
     </a>
 
-    <!-- Row 2: 3 roster buttons -->
-    <div class="nav-btn" onclick="openSection('main-roster')">
-      <img class="btn-img" src="https://i.imgur.com/S8mBPo9.png" alt="logo">
-      ОСНОВНОЙ СОСТАВ
+    <!-- Row 2: СОСТАВЫ | МАТЧИ -->
+    <div class="nav-btn roster-picker-btn" onclick="openRosterPicker()">
+      <span class="btn-icon">👥</span>СОСТАВЫ
     </div>
-    <div class="nav-btn legion-btn" onclick="openSection('legion-roster')">
-      <img class="btn-img" src="https://i.imgur.com/Mnokcea.png" alt="legion" style="filter:drop-shadow(0 0 6px #ff6a00);">
-      GLADKOVKA LEGION
-    </div>
-    <div class="nav-btn" onclick="openSection('sub-roster')">
-      <span class="btn-icon">🎬</span>ЗАПАС / МЕДИА
-    </div>
-
-    <!-- Row 3: matches + socials -->
     <div class="nav-btn" onclick="openSection('games')">
       <span class="btn-icon">🏆</span>МАТЧИ
     </div>
+
+    <!-- Row 3: YOUTUBE | TIKTOK -->
     <a href="https://www.youtube.com/@gladkovkateam" target="_blank" class="nav-btn yt">
       <span class="btn-icon">▶</span>YOUTUBE
     </a>
@@ -255,13 +329,48 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
       <span class="btn-icon">♪</span>TIKTOK
     </a>
 
-    <!-- Row 4: dota + donate -->
-    <div class="nav-btn dota-btn" onclick="openSection('dota-roster')">
-      <span class="btn-icon">🗡️</span>ДОТА 2 СОСТАВ
-    </div>
+    <!-- Row 4: ПОДДЕРЖАТЬ | ДОТА 2 -->
     <div class="nav-btn donate" onclick="openSection('donate')">
-      <span class="btn-icon">💰</span>ПОДДЕРЖАТЬ КОМАНДУ
+      <span class="btn-icon">💰</span>ПОДДЕРЖАТЬ
     </div>
+    <div class="nav-btn dota-btn" onclick="openSection('dota-roster')">
+      <span class="btn-icon">🗡️</span>ДОТА 2
+    </div>
+  </div>
+</div>
+
+<!-- ROSTER PICKER OVERLAY -->
+<div id="roster-picker" onclick="if(event.target===this)closeRosterPicker()">
+  <div class="rp-modal">
+    <div class="rp-title">ВЫБЕРИ СОСТАВ</div>
+    <div class="rp-subtitle">// SELECT ROSTER</div>
+    <div class="rp-grid">
+      <div class="rp-card" onclick="pickRoster('main-roster')">
+        <img src="https://i.imgur.com/S8mBPo9.png" alt="team">
+        <div class="rp-card-name">GLADKOVKA TEAM</div>
+        <div class="rp-card-sub">ОСНОВНОЙ СОСТАВ</div>
+        <div class="rp-card-count">5 игроков</div>
+      </div>
+      <div class="rp-card legion" onclick="pickRoster('legion-roster')">
+        <img src="https://i.imgur.com/Mnokcea.png" alt="legion">
+        <div class="rp-card-name">GLADKOVKA LEGION</div>
+        <div class="rp-card-sub">ВТОРОЙ СОСТАВ</div>
+        <div class="rp-card-count">5 игроков</div>
+      </div>
+      <div class="rp-card academy" onclick="pickRoster('academy-roster')">
+        <img src="https://i.imgur.com/S8mBPo9.png" alt="academy" style="filter:saturate(0.2) sepia(1) hue-rotate(190deg) brightness(0.8);">
+        <div class="rp-card-name">GLADKOVKA ACADEMY</div>
+        <div class="rp-card-sub">АКАДЕМИЯ</div>
+        <div class="rp-card-count">5 игроков</div>
+      </div>
+      <div class="rp-card sub" onclick="pickRoster('sub-roster')">
+        <span style="font-size:38px;display:block;margin-bottom:10px;line-height:1;">🎬</span>
+        <div class="rp-card-name">ЗАПАСНЫЕ</div>
+        <div class="rp-card-sub">РЕЗЕРВ И МЕДИА</div>
+        <div class="rp-card-count">4 игрока</div>
+      </div>
+    </div>
+    <button class="rp-close" onclick="closeRosterPicker()">✕ ЗАКРЫТЬ</button>
   </div>
 </div>
 
@@ -390,6 +499,39 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
   </div>
 </div>
 
+<!-- GLADKOVKA ACADEMY -->
+<div id="academy-roster" class="section">
+  <div class="sec-header academy-header">
+    <div class="sec-title-wrap">
+      <h2 class="sec-title" style="background:linear-gradient(90deg,#fff,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">GLADKOVKA ACADEMY</h2>
+      <img src="https://i.imgur.com/S8mBPo9.png" alt="Academy" style="width:38px;height:38px;object-fit:contain;filter:saturate(0.2) sepia(1) hue-rotate(190deg) brightness(0.9) drop-shadow(0 0 10px #00aaff);animation:logoFloat 3s ease-in-out infinite;">
+    </div>
+    <a href="javascript:void(0)" class="back-btn academy" onclick="closeSections()">← НАЗАД</a>
+  </div>
+  <div class="roster-grid">
+    <div class="player-card academy">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/W8JYRrq.png" alt="Efrat666" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">01</div></div>
+      <div class="player-info"><div class="player-nick">Efrat666</div><div class="player-role">GLADKOVKA ACADEMY</div><div class="player-tag" style="border-color:#00aaff44;color:#00aaff;">ACADEMY</div></div>
+    </div>
+    <div class="player-card academy">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/T08F24U.png" alt="Dan1kx" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">02</div></div>
+      <div class="player-info"><div class="player-nick">Dan1kx</div><div class="player-role">GLADKOVKA ACADEMY</div><div class="player-tag" style="border-color:#00aaff44;color:#00aaff;">ACADEMY</div></div>
+    </div>
+    <div class="player-card academy">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/XOcrhnZ.png" alt="Molodoy_Bogutsk1y" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">03</div></div>
+      <div class="player-info"><div class="player-nick">Molodoy_Bogutsk1y</div><div class="player-role">GLADKOVKA ACADEMY</div><div class="player-tag" style="border-color:#00aaff44;color:#00aaff;">ACADEMY</div></div>
+    </div>
+    <div class="player-card academy">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/5XWAq4f.png" alt="B3rsetko" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">04</div></div>
+      <div class="player-info"><div class="player-nick">B3rsetko</div><div class="player-role">GLADKOVKA ACADEMY</div><div class="player-tag" style="border-color:#00aaff44;color:#00aaff;">ACADEMY</div></div>
+    </div>
+    <div class="player-card academy">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/v0b0HaW.png" alt="Sergiy_PRO" loading="lazy"><div class="player-overlay"></div><div class="player-scan"></div><div class="player-num">05</div></div>
+      <div class="player-info"><div class="player-nick">Sergiy_PRO</div><div class="player-role">GLADKOVKA ACADEMY</div><div class="player-tag" style="border-color:#00aaff44;color:#00aaff;">ACADEMY</div></div>
+    </div>
+  </div>
+</div>
+
 <!-- DONATE -->
 <div id="donate" class="section">
   <div class="sec-header">
@@ -422,6 +564,9 @@ for(let i=0;i<25;i++){const p=document.createElement('div');p.className='p';p.st
 function updateTime(){const now=new Date();document.getElementById('hudTime').textContent=[now.getHours(),now.getMinutes(),now.getSeconds()].map(v=>String(v).padStart(2,'0')).join(':');}
 setInterval(updateTime,1000);updateTime();
 function animateCounters(){document.querySelectorAll('[data-count]').forEach(el=>{const target=parseInt(el.dataset.count);let cur=0;const step=Math.max(1,Math.ceil(target/20));const iv=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur;if(cur>=target)clearInterval(iv);},60);});}
+function openRosterPicker(){document.getElementById('roster-picker').classList.add('open');document.body.style.overflow='hidden';}
+function closeRosterPicker(){document.getElementById('roster-picker').classList.remove('open');document.body.style.overflow='';}
+function pickRoster(id){closeRosterPicker();setTimeout(()=>openSection(id),150);}
 function openSection(id){document.getElementById('home').style.display='none';document.querySelectorAll('.section').forEach(s=>{s.style.display='none';s.classList.remove('active');});const t=document.getElementById(id);if(t){t.style.display='block';setTimeout(()=>t.classList.add('active'),10);}window.scrollTo({top:0,behavior:'smooth'});}
 function closeSections(){document.querySelectorAll('.section').forEach(s=>{s.classList.remove('active');s.style.display='none';});document.getElementById('home').style.display='flex';window.scrollTo({top:0,behavior:'smooth'});}
 </script>
