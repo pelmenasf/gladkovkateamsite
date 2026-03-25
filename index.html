@@ -4,1114 +4,670 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GLADKOVKA</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Unbounded:wght@200;400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink: #e8e4dc;
-  --ink2: rgba(232,228,220,0.4);
-  --ink3: rgba(232,228,220,0.12);
-  --paper: #0e0e0f;
-  --paper2: #141415;
-  --line: rgba(232,228,220,0.08);
-  --accent: #e8e4dc;
-  --red: #d94f3d;
-  --green: #3dbd7a;
-  --gold: #c9a84c;
-  --blue: #4a9eff;
-  --orange: #e07840;
+:root{
+  --g:#0dff6e;--g2:#09cc55;--g3:rgba(13,255,110,0.12);--g4:rgba(13,255,110,0.04);
+  --k:#000;--k2:#080808;--k3:#0f0f0f;--k4:#141414;
+  --w:#f0ede6;--w2:rgba(240,237,230,0.5);--w3:rgba(240,237,230,0.15);
+  --r:#ff2b2b;--gold:#ffc130;--blue:#1af;--pur:#a855f7;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--k);color:var(--w);font-family:'Barlow Condensed',sans-serif;overflow-x:hidden;}
+
+/* ══ CURSOR ══ */
+#C{position:fixed;pointer-events:none;z-index:9999;mix-blend-mode:difference;}
+#C .dot{width:8px;height:8px;background:var(--g);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:transform .15s;}
+#C .ring{width:32px;height:32px;border:1px solid var(--g);border-radius:50%;position:absolute;transform:translate(-50%,-50%);opacity:.5;transition:all .25s;}
+body:has(a:hover) #C .dot,body:has(button:hover) #C .dot,body:has([onclick]:hover) #C .dot{transform:translate(-50%,-50%) scale(3);}
+
+/* ══ LOADER ══ */
+#LDR{position:fixed;inset:0;z-index:8888;background:var(--k);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
+.ldr-bar{width:0;height:1px;background:var(--g);box-shadow:0 0 8px var(--g);transition:width 1.4s cubic-bezier(.4,0,.2,1);}
+.ldr-txt{font-family:'Anton';font-size:clamp(40px,10vw,100px);letter-spacing:.05em;color:var(--g);text-shadow:0 0 40px rgba(13,255,110,.4);margin-bottom:16px;clip-path:inset(0 100% 0 0);transition:clip-path 1s .1s cubic-bezier(.16,1,.3,1);}
+#LDR.go .ldr-txt{clip-path:inset(0 0% 0 0);}
+#LDR.go .ldr-bar{width:280px;}
+#LDR.out{opacity:0;pointer-events:none;transition:opacity .6s .2s;}
+
+/* ══ HOME ══ */
+#HOME{min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+
+/* BG grid */
+#HOME::before{content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(13,255,110,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(13,255,110,.03) 1px,transparent 1px);
+  background-size:80px 80px;pointer-events:none;}
+
+/* diagonal accent */
+#HOME::after{content:'';position:absolute;top:-200px;right:-100px;width:600px;height:600px;
+  background:radial-gradient(ellipse,rgba(13,255,110,.07) 0%,transparent 70%);pointer-events:none;}
+
+/* ── TOP BAR ── */
+.hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:clamp(16px,3vw,28px) clamp(20px,5vw,56px);
+  border-bottom:1px solid rgba(13,255,110,.12);
+  position:relative;z-index:2;
+}
+.hdr-logo{display:flex;align-items:center;gap:14px;}
+.hdr-logo img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 0 8px var(--g));}
+.hdr-name{font-family:'Anton';font-size:22px;letter-spacing:.1em;color:var(--g);}
+.hdr-tag{font-family:'IBM Plex Mono';font-size:9px;color:var(--w2);letter-spacing:.25em;margin-top:2px;}
+.hdr-stats{display:flex;gap:clamp(20px,4vw,48px);}
+.hdr-stat-n{font-family:'Anton';font-size:clamp(18px,3vw,26px);color:var(--g);line-height:1;}
+.hdr-stat-l{font-family:'IBM Plex Mono';font-size:8px;color:var(--w2);letter-spacing:.2em;margin-top:2px;}
+
+/* ── HERO ── */
+.hero{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(20px,5vw,56px);position:relative;z-index:2;}
+.hero-eyebrow{font-family:'IBM Plex Mono';font-size:11px;color:var(--g);letter-spacing:.4em;margin-bottom:clamp(12px,2vw,20px);display:flex;align-items:center;gap:12px;}
+.hero-eyebrow::before{content:'';display:block;width:40px;height:1px;background:var(--g);}
+.hero-big{font-family:'Anton';font-size:clamp(80px,18vw,220px);line-height:.88;letter-spacing:-.01em;position:relative;}
+.hero-big .line1{display:block;color:var(--w);clip-path:inset(0 100% 0 0);transition:clip-path .9s .3s cubic-bezier(.16,1,.3,1);}
+.hero-big .line2{display:block;color:var(--g);text-shadow:0 0 60px rgba(13,255,110,.3);clip-path:inset(0 100% 0 0);transition:clip-path .9s .45s cubic-bezier(.16,1,.3,1);}
+.hero-big.show .line1,.hero-big.show .line2{clip-path:inset(0 0% 0 0);}
+
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;margin-top:clamp(24px,4vw,48px);gap:20px;flex-wrap:wrap;}
+.hero-desc{font-family:'Barlow Condensed';font-size:clamp(14px,2vw,18px);color:var(--w2);font-weight:300;letter-spacing:.05em;max-width:320px;line-height:1.5;}
+
+/* ── MAIN NAV ── */
+.main-nav{display:flex;gap:1px;background:rgba(13,255,110,.08);border:1px solid rgba(13,255,110,.12);}
+.mnav{
+  padding:clamp(14px,2.5vw,20px) clamp(16px,3vw,28px);
+  background:var(--k);cursor:pointer;transition:background .2s;
+  display:flex;flex-direction:column;gap:4px;
+  text-decoration:none;color:var(--w);position:relative;overflow:hidden;
+}
+.mnav::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--g);transition:width .3s cubic-bezier(.16,1,.3,1);}
+.mnav:hover{background:var(--k3);}
+.mnav:hover::after{width:100%;}
+.mnav-n{font-family:'IBM Plex Mono';font-size:9px;color:rgba(13,255,110,.5);letter-spacing:.2em;}
+.mnav-l{font-family:'Anton';font-size:clamp(11px,2vw,15px);letter-spacing:.08em;}
+.mnav.accent{background:var(--g3);}
+.mnav.accent .mnav-l{color:var(--g);}
+
+/* ══ SECTION BASE ══ */
+.SEC{display:none;min-height:100vh;animation:secIN .4s cubic-bezier(.16,1,.3,1);}
+.SEC.on{display:block;}
+@keyframes secIN{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── SECTION HEADER ── */
+.sh{
+  display:grid;grid-template-columns:1fr auto;align-items:end;
+  padding:clamp(24px,4vw,48px) clamp(20px,5vw,56px) clamp(16px,3vw,32px);
+  border-bottom:1px solid rgba(13,255,110,.1);
+  position:relative;
+}
+.sh::after{content:'';position:absolute;bottom:0;left:clamp(20px,5vw,56px);width:60px;height:2px;background:var(--g);}
+.sh-pre{font-family:'IBM Plex Mono';font-size:10px;color:var(--g);letter-spacing:.3em;margin-bottom:8px;}
+.sh-title{font-family:'Anton';font-size:clamp(36px,8vw,88px);line-height:.92;letter-spacing:.02em;}
+.sh-back{
+  font-family:'IBM Plex Mono';font-size:10px;color:var(--w2);letter-spacing:.2em;
+  cursor:pointer;border:none;background:none;display:flex;align-items:center;gap:8px;
+  transition:color .2s;padding-bottom:6px;
+}
+.sh-back:hover{color:var(--g);}
+.sh-back::before{content:'←';}
+
+/* ══ ROSTER PICKER ══ */
+.rp{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(13,255,110,.06);margin:clamp(20px,4vw,40px) clamp(20px,5vw,56px);}
+.rp-c{
+  background:var(--k);padding:clamp(24px,4vw,44px) clamp(20px,3vw,32px);
+  cursor:pointer;transition:background .2s;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:10px;
+}
+.rp-c:hover{background:var(--k3);}
+.rp-c::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--g);transform:scaleY(0);transition:transform .3s cubic-bezier(.16,1,.3,1);transform-origin:bottom;}
+.rp-c:hover::before{transform:scaleY(1);}
+.rp-bg{position:absolute;bottom:-20px;right:10px;font-family:'Anton';font-size:clamp(60px,10vw,120px);color:rgba(13,255,110,.04);line-height:1;pointer-events:none;transition:color .2s;}
+.rp-c:hover .rp-bg{color:rgba(13,255,110,.07);}
+.rp-tag{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.3em;color:var(--w2);}
+.rp-logo{width:32px;height:32px;object-fit:contain;opacity:.7;transition:opacity .2s;}
+.rp-c:hover .rp-logo{opacity:1;}
+.rp-name{font-family:'Anton';font-size:clamp(16px,2.5vw,24px);letter-spacing:.04em;line-height:1.1;position:relative;z-index:1;}
+.rp-arrow{font-size:20px;color:rgba(13,255,110,.3);transition:all .2s;margin-top:auto;}
+.rp-c:hover .rp-arrow{color:var(--g);transform:translateX(6px);}
+/* roster accent colors */
+.rp-c.lg .rp-name{color:var(--gold);}
+.rp-c.lg::before{background:var(--gold);}
+.rp-c.ac .rp-name{color:var(--blue);}
+.rp-c.ac::before{background:var(--blue);}
+.rp-c.bs .rp-name{color:#ffce00;}
+.rp-c.bs::before{background:#ffce00;}
+.rp-c.sv .rp-name{color:var(--w2);}
+.rp-c.sv::before{background:var(--w3);}
+/* span full row for last tile if odd */
+.rp-c.full{grid-column:span 3;}
+
+/* ══ PLAYER ROWS ══ */
+.players{margin:0 clamp(20px,5vw,56px);padding-bottom:80px;}
+.prow{
+  display:grid;grid-template-columns:48px clamp(70px,12vw,100px) 1fr auto auto;
+  align-items:center;gap:clamp(12px,2vw,24px);
+  padding:clamp(12px,2vw,20px) 0;
+  border-bottom:1px solid rgba(240,237,230,.06);
+  transition:background .15s;cursor:default;
+  margin:0 clamp(-20px,-5vw,-56px);
+  padding-left:clamp(20px,5vw,56px);
+  padding-right:clamp(20px,5vw,56px);
+}
+.prow:first-child{border-top:1px solid rgba(240,237,230,.06);}
+.prow:hover{background:var(--k3);}
+.pn{font-family:'IBM Plex Mono';font-size:10px;color:rgba(13,255,110,.4);letter-spacing:.15em;}
+.pimg{width:clamp(70px,12vw,100px);height:clamp(70px,12vw,100px);object-fit:contain;display:block;background:var(--k2);filter:grayscale(.3);transition:filter .3s;}
+.prow:hover .pimg{filter:grayscale(0);}
+.pname{font-family:'Anton';font-size:clamp(20px,4vw,36px);letter-spacing:.02em;transition:color .2s;}
+.prow:hover .pname{color:var(--g);}
+.prole{font-family:'IBM Plex Mono';font-size:9px;color:var(--w2);letter-spacing:.2em;margin-top:4px;}
+.ptag{
+  font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.2em;
+  padding:4px 12px;border:1px solid;white-space:nowrap;
+}
+.ptag.active{border-color:rgba(13,255,110,.4);color:var(--g);}
+.ptag.lg{border-color:rgba(255,193,48,.4);color:var(--gold);}
+.ptag.ac{border-color:rgba(17,170,255,.4);color:var(--blue);}
+.ptag.sub{border-color:rgba(0,200,255,.3);color:#00c8ff;}
+.ptag.med{border-color:rgba(255,100,0,.3);color:#ff6400;}
+.ptag.bs{border-color:rgba(255,206,0,.4);color:#ffce00;}
+.parr{color:rgba(13,255,110,.2);font-size:18px;transition:all .2s;}
+.prow:hover .parr{color:var(--g);transform:translateX(4px);}
+.pph{
+  width:clamp(70px,12vw,100px);height:clamp(70px,12vw,100px);
+  background:var(--k2);border:1px solid rgba(13,255,110,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Anton';font-size:22px;color:rgba(13,255,110,.2);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ══ MATCHES ══ */
+.matches{margin:0 clamp(20px,5vw,56px);padding-bottom:80px;}
+.mrow{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:clamp(14px,2.5vw,22px) 0;
+  border-bottom:1px solid rgba(240,237,230,.06);
+  flex-wrap:wrap;
+  margin:0 clamp(-20px,-5vw,-56px);
+  padding-left:clamp(20px,5vw,56px);
+  padding-right:clamp(20px,5vw,56px);
+  transition:background .15s;
+}
+.mrow:first-child{border-top:1px solid rgba(240,237,230,.06);}
+.mrow:hover{background:var(--k3);}
+.mbadge{
+  font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.25em;
+  padding:5px 12px;border:1px solid;min-width:56px;text-align:center;flex-shrink:0;
+}
+.mbadge.w{border-color:rgba(13,255,110,.5);color:var(--g);}
+.mbadge.l{border-color:rgba(255,43,43,.4);color:var(--r);}
+.mteams{flex:1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.mself{font-family:'Anton';font-size:clamp(14px,3vw,22px);letter-spacing:.04em;}
+.mvs{font-family:'IBM Plex Mono';font-size:10px;color:var(--w2);}
+.mopp{font-family:'Anton';font-size:clamp(14px,3vw,22px);letter-spacing:.04em;color:var(--w2);}
+.mscore{
+  font-family:'Anton';font-size:clamp(20px,4vw,32px);letter-spacing:.04em;
+  min-width:72px;text-align:right;flex-shrink:0;
+}
+.mscore.w{color:var(--g);text-shadow:0 0 20px rgba(13,255,110,.3);}
+.mscore.l{color:var(--r);}
 
-html { scroll-behavior: smooth; }
+/* ══ SOCIALS ══ */
+.soc-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;background:rgba(13,255,110,.06);
+  margin:clamp(20px,4vw,40px) clamp(20px,5vw,56px);
+  padding-bottom:0;
+}
+.sc{
+  background:var(--k);padding:clamp(28px,5vw,52px) clamp(24px,4vw,40px);
+  text-decoration:none;color:var(--w);
+  display:flex;flex-direction:column;gap:12px;
+  transition:background .2s;position:relative;overflow:hidden;
+}
+.sc:hover{background:var(--k3);}
+.sc::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;transition:width .35s cubic-bezier(.16,1,.3,1);}
+.sc:hover::after{width:100%;}
+.sc.tg::after{background:var(--blue);}
+.sc.tt::after{background:#ff0050;}
+.sc.ig::after{background:#e1306c;}
+.sc.tw::after{background:#9147ff;}
+.sc.yt::after{background:#ff4444;}.sc.yt{grid-column:span 2;}
+.sc-plat{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.35em;color:var(--w2);}
+.sc-handle{font-family:'Anton';font-size:clamp(18px,4vw,36px);letter-spacing:.02em;transition:color .2s;}
+.sc.tg:hover .sc-handle{color:var(--blue);}
+.sc.tt:hover .sc-handle{color:#ff0050;}
+.sc.ig:hover .sc-handle{color:#e1306c;}
+.sc.tw:hover .sc-handle{color:#9147ff;}
+.sc.yt:hover .sc-handle{color:#ff4444;}
+.sc-url{font-family:'IBM Plex Mono';font-size:10px;color:var(--w2);letter-spacing:.1em;margin-top:auto;}
+.sc-arr{font-size:22px;color:rgba(13,255,110,.2);transition:all .2s;margin-top:8px;}
+.sc:hover .sc-arr{color:var(--g);transform:translateX(6px);}
+.sc-bg{position:absolute;bottom:-16px;right:12px;font-family:'Anton';font-size:clamp(56px,12vw,100px);color:rgba(13,255,110,.03);line-height:1;pointer-events:none;}
 
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: 'DM Mono', monospace;
-  overflow-x: hidden;
-  cursor: crosshair;
+/* ══ DONATE ══ */
+.don-wrap{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:rgba(13,255,110,.06);
+  margin:clamp(20px,4vw,40px) clamp(20px,5vw,56px);
 }
+.don-l{background:var(--k);padding:clamp(40px,7vw,80px) clamp(24px,5vw,48px);}
+.don-r{background:var(--k2);padding:clamp(40px,7vw,80px) clamp(24px,5vw,48px);display:flex;flex-direction:column;gap:28px;justify-content:center;}
+.don-big{font-family:'Anton';font-size:clamp(40px,10vw,100px);line-height:.9;letter-spacing:.02em;color:var(--g);text-shadow:0 0 60px rgba(13,255,110,.25);margin-bottom:20px;}
+.don-note{font-family:'IBM Plex Mono';font-size:11px;color:var(--w2);letter-spacing:.1em;line-height:1.8;}
+.don-btn{
+  display:inline-flex;align-items:center;gap:14px;
+  font-family:'Anton';font-size:clamp(14px,2.5vw,20px);letter-spacing:.08em;
+  text-decoration:none;background:var(--g);color:var(--k);
+  padding:clamp(14px,2.5vw,20px) clamp(24px,4vw,40px);
+  transition:all .2s;border:none;cursor:pointer;
+}
+.don-btn:hover{background:var(--w);transform:translateX(4px);}
+.don-btn::after{content:'→';}
+.don-meta{font-family:'IBM Plex Mono';font-size:9px;color:var(--w2);letter-spacing:.2em;line-height:1.8;}
 
-/* ─── NOISE OVERLAY ─── */
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 9000; opacity: 0.6;
+/* ══ SPONSORS BAR ══ */
+.spbar{
+  position:fixed;bottom:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:center;gap:24px;
+  background:rgba(0,0,0,.92);border-top:1px solid rgba(13,255,110,.08);
+  padding:8px 24px;backdrop-filter:blur(12px);
 }
+.sp-lbl{font-family:'IBM Plex Mono';font-size:8px;color:rgba(13,255,110,.4);letter-spacing:.3em;}
+.sp-img{height:22px;width:auto;opacity:.45;filter:grayscale(1);transition:.2s;}
+.sp-img:hover{opacity:.9;filter:grayscale(0);}
+.sp-div{width:1px;height:14px;background:rgba(240,237,230,.06);}
 
-/* ─── CUSTOM CURSOR ─── */
-.cur {
-  position: fixed; width: 1px; height: 20px;
-  background: var(--ink); pointer-events: none;
-  z-index: 9999; transform: translate(-50%, -50%);
-  transition: height 0.2s, opacity 0.2s;
+/* ══ SCROLL TICKER ══ */
+.ticker{
+  border-top:1px solid rgba(13,255,110,.1);border-bottom:1px solid rgba(13,255,110,.1);
+  overflow:hidden;white-space:nowrap;padding:10px 0;
+  background:var(--k2);
 }
-.cur::after {
-  content: ''; position: absolute; top: 50%; left: -9px;
-  width: 20px; height: 1px; background: var(--ink);
-  transform: translateY(-50%);
+.ticker-inner{display:inline-block;animation:tick 25s linear infinite;}
+.ticker-inner span{
+  font-family:'IBM Plex Mono';font-size:10px;color:rgba(13,255,110,.4);
+  letter-spacing:.25em;padding:0 40px;
 }
+.ticker-inner span::before{content:'✦';margin-right:40px;opacity:.3;}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-/* ─── INTRO LOADER ─── */
-#intro {
-  position: fixed; inset: 0; background: var(--paper);
-  z-index: 8000; display: flex; align-items: center; justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s;
-}
-#intro.gone { opacity: 0; visibility: hidden; pointer-events: none; }
-.intro-word {
-  font-family: 'Unbounded'; font-size: clamp(28px, 8vw, 72px);
-  font-weight: 900; letter-spacing: -0.02em;
-  overflow: hidden;
-}
-.intro-word span {
-  display: inline-block;
-  animation: introReveal 0.6s cubic-bezier(0.16,1,0.3,1) both;
-}
-@keyframes introReveal {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-.intro-sub {
-  font-family: 'DM Mono'; font-size: 11px;
-  color: var(--ink2); letter-spacing: 0.3em;
-  margin-top: 12px; text-align: center;
-  animation: fadeUp 0.5s 0.4s both;
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── HOME ─── */
-#home {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  padding: clamp(24px, 5vw, 56px);
-  gap: 0;
-}
-
-/* TOP BAR */
-.topbar {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  padding-bottom: clamp(24px, 4vw, 40px);
-  border-bottom: 1px solid var(--line);
-  margin-bottom: clamp(24px, 4vw, 40px);
-}
-.tb-logo { display: flex; align-items: center; gap: 14px; }
-.tb-logo img {
-  width: 36px; height: 36px; object-fit: contain;
-  filter: brightness(0.9) grayscale(0.3);
-}
-.tb-name {
-  font-family: 'Unbounded'; font-size: 13px; font-weight: 700;
-  letter-spacing: 0.1em; line-height: 1.2;
-}
-.tb-tag {
-  font-size: 9px; color: var(--ink2); letter-spacing: 0.25em; margin-top: 2px;
-}
-.tb-right {
-  display: flex; align-items: center; gap: 24px;
-}
-.tb-stat { text-align: right; }
-.tb-stat-n { font-family: 'Unbounded'; font-size: 18px; font-weight: 700; line-height: 1; }
-.tb-stat-l { font-size: 8px; color: var(--ink2); letter-spacing: 0.2em; margin-top: 3px; }
-.tb-sep { width: 1px; height: 32px; background: var(--line); }
-
-/* MAIN HERO */
-.hero {
-  display: flex; flex-direction: column; justify-content: center;
-  position: relative;
-}
-.hero-index {
-  font-family: 'DM Mono'; font-size: 10px;
-  color: var(--ink2); letter-spacing: 0.3em; margin-bottom: 16px;
-}
-.hero-h {
-  font-family: 'Unbounded';
-  font-size: clamp(52px, 14vw, 160px);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
-  position: relative;
-  overflow: hidden;
-}
-.hero-h .line { display: block; overflow: hidden; }
-.hero-h .line span {
-  display: block;
-  animation: lineReveal 0.9s cubic-bezier(0.16,1,0.3,1) both;
-}
-.hero-h .line:nth-child(2) span { animation-delay: 0.08s; }
-@keyframes lineReveal {
-  from { transform: translateY(105%); }
-  to { transform: translateY(0); }
-}
-.hero-sub-row {
-  display: flex; align-items: center; gap: 20px;
-  margin-top: clamp(20px, 3vw, 32px);
-}
-.hero-sub-text {
-  font-size: 11px; color: var(--ink2); letter-spacing: 0.25em;
-  text-transform: uppercase;
-}
-.hero-sub-line { flex: 1; height: 1px; background: var(--line); }
-
-/* NAV */
-.nav-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--line);
-  margin-top: clamp(24px, 4vw, 48px);
-}
-.nav-item {
-  padding: clamp(16px, 3vw, 24px) clamp(12px, 2vw, 20px);
-  border-right: 1px solid var(--line);
-  cursor: pointer;
-  transition: background 0.2s;
-  text-decoration: none; color: var(--ink);
-  display: flex; flex-direction: column; gap: 6px;
-  position: relative; overflow: hidden;
-}
-.nav-item:last-child { border-right: none; }
-.nav-item::after {
-  content: ''; position: absolute; bottom: 0; left: 0;
-  width: 0; height: 2px; background: var(--ink);
-  transition: width 0.3s cubic-bezier(0.16,1,0.3,1);
-}
-.nav-item:hover { background: var(--paper2); }
-.nav-item:hover::after { width: 100%; }
-.nav-num {
-  font-family: 'DM Mono'; font-size: 9px;
-  color: var(--ink2); letter-spacing: 0.2em;
-}
-.nav-label {
-  font-family: 'Unbounded'; font-size: clamp(9px, 1.5vw, 12px);
-  font-weight: 700; letter-spacing: 0.05em;
-  text-transform: uppercase; line-height: 1.2;
-}
-.nav-arrow { margin-top: auto; font-size: 14px; color: var(--ink2); transition: 0.2s; }
-.nav-item:hover .nav-arrow { color: var(--ink); transform: translateX(4px); }
-
-/* Accent nav items */
-.nav-item.socials-nav .nav-label { color: var(--green); }
-.nav-item.socials-nav::after { background: var(--green); }
-
-/* ─── SOCIALS PAGE ─── */
-.socials-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-}
-.soc-card {
-  background: var(--paper);
-  padding: clamp(28px, 5vw, 52px) clamp(24px, 4vw, 40px);
-  text-decoration: none; color: var(--ink);
-  display: flex; flex-direction: column; gap: 14px;
-  transition: background 0.2s; position: relative; overflow: hidden;
-}
-.soc-card:hover { background: var(--paper2); }
-.soc-card::after {
-  content: ''; position: absolute; bottom: 0; left: 0;
-  width: 0; height: 2px;
-  transition: width 0.35s cubic-bezier(0.16,1,0.3,1);
-}
-.soc-card:hover::after { width: 100%; }
-.soc-card.tg::after  { background: var(--blue); }
-.soc-card.tt::after  { background: #ff0050; }
-.soc-card.ig::after  { background: #e1306c; }
-.soc-card.tw::after  { background: #9147ff; }
-.soc-card.yt::after  { background: #ff4444; }
-.soc-platform {
-  font-family: 'DM Mono'; font-size: 9px;
-  letter-spacing: 0.35em; color: var(--ink2);
-}
-.soc-handle {
-  font-family: 'Unbounded'; font-size: clamp(16px, 3vw, 28px);
-  font-weight: 700; letter-spacing: -0.02em; line-height: 1;
-  transition: color 0.2s;
-}
-.soc-card.tg:hover .soc-handle  { color: var(--blue); }
-.soc-card.tt:hover .soc-handle  { color: #ff0050; }
-.soc-card.ig:hover .soc-handle  { color: #e1306c; }
-.soc-card.tw:hover .soc-handle  { color: #9147ff; }
-.soc-card.yt:hover .soc-handle  { color: #ff4444; }
-.soc-url {
-  font-family: 'DM Mono'; font-size: 10px;
-  color: var(--ink2); letter-spacing: 0.1em;
-  margin-top: auto;
-}
-.soc-arrow {
-  font-size: 20px; color: var(--ink2); transition: 0.2s;
-  margin-top: 8px;
-}
-.soc-card:hover .soc-arrow { color: var(--ink); transform: translateX(6px); }
-.soc-bg-num {
-  position: absolute; bottom: -16px; right: 12px;
-  font-family: 'Unbounded'; font-size: clamp(56px, 12vw, 96px);
-  font-weight: 900; color: var(--ink3); line-height: 1;
-  pointer-events: none; transition: color 0.2s;
-}
-.soc-card:hover .soc-bg-num { color: rgba(232,228,220,0.06); }
-@media(max-width:700px){.socials-grid{grid-template-columns:1fr;}}
-
-/* ─── SECTIONS ─── */
-.section {
-  display: none; min-height: 100vh;
-  padding: clamp(24px, 5vw, 56px);
-  animation: secIn 0.5s cubic-bezier(0.16,1,0.3,1);
-}
-.section.active { display: block; }
-@keyframes secIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* SECTION HEADER */
-.sec-top {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  padding-bottom: clamp(16px, 3vw, 28px);
-  border-bottom: 1px solid var(--line);
-  margin-bottom: clamp(24px, 4vw, 48px);
-  gap: 16px; flex-wrap: wrap;
-}
-.sec-num {
-  font-family: 'DM Mono'; font-size: 10px;
-  color: var(--ink2); letter-spacing: 0.25em; margin-bottom: 8px;
-}
-.sec-h {
-  font-family: 'Unbounded'; font-size: clamp(28px, 7vw, 72px);
-  font-weight: 900; letter-spacing: -0.03em; line-height: 0.95;
-}
-.back {
-  font-family: 'DM Mono'; font-size: 11px; letter-spacing: 0.2em;
-  color: var(--ink2); cursor: pointer; text-decoration: none;
-  display: flex; align-items: center; gap: 8px;
-  transition: color 0.2s; white-space: nowrap; padding-bottom: 4px;
-  border: none; background: none;
-}
-.back:hover { color: var(--ink); }
-.back::before { content: '←'; }
-
-/* ─── ROSTER PICKER ─── */
-.rp-wrap {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  margin-bottom: 1px;
-}
-.rp-tile {
-  background: var(--paper);
-  padding: clamp(24px, 5vw, 48px) clamp(20px, 4vw, 40px);
-  cursor: pointer; transition: background 0.2s;
-  display: flex; flex-direction: column; gap: 12px;
-  position: relative; overflow: hidden;
-  text-decoration: none; color: var(--ink);
-}
-.rp-tile:hover { background: var(--paper2); }
-.rp-tile-num {
-  font-family: 'Unbounded'; font-size: clamp(48px, 10vw, 96px);
-  font-weight: 900; line-height: 1; color: var(--ink3);
-  position: absolute; bottom: -10px; right: 16px;
-  transition: color 0.3s, transform 0.3s;
-}
-.rp-tile:hover .rp-tile-num { color: rgba(232,228,220,0.08); transform: scale(1.05); }
-.rp-tile-tag {
-  font-family: 'DM Mono'; font-size: 9px;
-  letter-spacing: 0.3em; color: var(--ink2);
-}
-.rp-tile-name {
-  font-family: 'Unbounded'; font-size: clamp(14px, 2.5vw, 20px);
-  font-weight: 700; letter-spacing: -0.01em; line-height: 1.1;
-  position: relative; z-index: 1;
-}
-.rp-tile-logo {
-  width: 28px; height: 28px; object-fit: contain;
-  opacity: 0.7; transition: opacity 0.2s;
-}
-.rp-tile:hover .rp-tile-logo { opacity: 1; }
-.rp-tile-arrow {
-  font-size: 18px; color: var(--ink2); transition: 0.2s;
-  position: relative; z-index: 1; margin-top: auto;
-}
-.rp-tile:hover .rp-tile-arrow { color: var(--ink); transform: translateX(6px); }
-.rp-tile.leg .rp-tile-name { color: var(--orange); }
-.rp-tile.leg:hover { background: rgba(224,120,64,0.04); }
-.rp-tile.acad .rp-tile-name { color: var(--blue); }
-.rp-tile.acad:hover { background: rgba(74,158,255,0.04); }
-.rp-tile.sub .rp-tile-name { color: var(--ink2); }
-
-/* ─── PLAYERS ─── */
-.players-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.players-table tr {
-  border-bottom: 1px solid var(--line);
-  cursor: pointer; transition: background 0.15s;
-}
-.players-table tr:first-child { border-top: 1px solid var(--line); }
-.players-table tr:hover { background: var(--paper2); }
-.players-table td {
-  padding: clamp(14px, 2.5vw, 22px) clamp(10px, 2vw, 20px);
-  vertical-align: middle;
-}
-.pt-num {
-  font-family: 'DM Mono'; font-size: 10px; color: var(--ink2);
-  letter-spacing: 0.15em; width: 40px;
-}
-.pt-avatar {
-  width: clamp(44px, 8vw, 64px); padding-right: 16px;
-}
-.pt-avatar img {
-  width: clamp(44px, 8vw, 64px); height: clamp(44px, 8vw, 64px);
-  object-fit: cover; display: block;
-  filter: grayscale(0.4) contrast(1.05);
-  transition: filter 0.3s;
-}
-tr:hover .pt-avatar img { filter: grayscale(0) contrast(1.1); }
-.pt-name {
-  font-family: 'Unbounded'; font-size: clamp(14px, 2.5vw, 20px);
-  font-weight: 700; letter-spacing: -0.01em;
-}
-.pt-role {
-  font-family: 'DM Mono'; font-size: 10px;
-  color: var(--ink2); letter-spacing: 0.2em; margin-top: 4px;
-}
-.pt-tag {
-  font-family: 'DM Mono'; font-size: 9px; letter-spacing: 0.2em;
-  padding: 4px 10px; border: 1px solid var(--ink3);
-  text-align: center; white-space: nowrap;
-  color: var(--ink2);
-}
-.pt-tag.active { border-color: rgba(61,189,122,0.4); color: var(--green); }
-.pt-tag.legion { border-color: rgba(224,120,64,0.4); color: var(--orange); }
-.pt-tag.acad { border-color: rgba(74,158,255,0.4); color: var(--blue); }
-.pt-tag.sub { border-color: rgba(0,204,255,0.3); color: #00ccff; }
-.pt-tag.media { border-color: rgba(255,100,0,0.3); color: #ff6400; }
-.pt-tag.pos1 { border-color: rgba(61,189,122,0.4); color: var(--green); }
-.pt-tag.pos2 { border-color: rgba(201,168,76,0.4); color: var(--gold); }
-.pt-tag.pos3 { border-color: rgba(74,158,255,0.4); color: var(--blue); }
-.pt-tag.pos4 { border-color: rgba(180,60,255,0.4); color: #b43cff; }
-.pt-tag.pos5 { border-color: rgba(213,61,61,0.4); color: #d53d3d; }
-.pt-arr { color: var(--ink3); font-size: 16px; text-align: right; transition: 0.2s; }
-tr:hover .pt-arr { color: var(--ink2); }
-
-/* Placeholder avatar */
-.pt-placeholder {
-  width: clamp(44px, 8vw, 64px); height: clamp(44px, 8vw, 64px);
-  background: var(--paper2);
-  border: 1px solid var(--line);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Unbounded'; font-size: 16px; font-weight: 700;
-  color: var(--ink3);
-}
-
-/* ─── MATCHES ─── */
-.matches-list { display: flex; flex-direction: column; }
-.match-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: clamp(16px, 2.5vw, 24px) 0;
-  border-bottom: 1px solid var(--line);
-  gap: 16px; flex-wrap: wrap;
-  transition: background 0.15s;
-}
-.match-row:first-child { border-top: 1px solid var(--line); }
-.match-row:hover { background: var(--paper2); padding-left: 12px; padding-right: 12px; margin: 0 -12px; }
-.match-res {
-  font-family: 'DM Mono'; font-size: 9px; letter-spacing: 0.3em;
-  padding: 4px 10px; border: 1px solid;
-  min-width: 52px; text-align: center;
-}
-.match-res.win { border-color: rgba(61,189,122,0.5); color: var(--green); }
-.match-res.loss { border-color: rgba(213,61,61,0.4); color: var(--red); }
-.match-teams {
-  flex: 1;
-  font-family: 'Unbounded'; font-size: clamp(13px, 2.5vw, 18px);
-  font-weight: 700; letter-spacing: -0.01em;
-}
-.match-vs { color: var(--ink2); font-weight: 200; margin: 0 8px; }
-.match-opp { color: var(--ink2); }
-.match-score {
-  font-family: 'Unbounded'; font-size: clamp(18px, 4vw, 28px);
-  font-weight: 900; letter-spacing: -0.02em;
-  min-width: 70px; text-align: right;
-}
-.match-score.win { color: var(--green); }
-.match-score.loss { color: var(--red); }
-
-/* ─── DOTA ─── */
-.dota-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 32px; }
-.dota-map-cell { background: var(--paper); padding: clamp(16px, 3vw, 28px); display: flex; align-items: center; gap: 16px; }
-.dota-map-cell:hover { background: var(--paper2); }
-.dota-pos-badge {
-  font-family: 'Unbounded'; font-size: 28px; font-weight: 900;
-  width: 48px; height: 48px; display: flex; align-items: center;
-  justify-content: center; border: 1px solid;
-  flex-shrink: 0; line-height: 1;
-}
-.dp1 { border-color: rgba(61,189,122,0.4); color: var(--green); }
-.dp2 { border-color: rgba(201,168,76,0.4); color: var(--gold); }
-.dp3 { border-color: rgba(74,158,255,0.4); color: var(--blue); }
-.dp4 { border-color: rgba(180,60,255,0.4); color: #b43cff; }
-.dp5 { border-color: rgba(213,61,61,0.4); color: var(--red); }
-.dota-cell-info {}
-.dota-cell-name { font-family: 'Unbounded'; font-size: clamp(14px,2.5vw,18px); font-weight: 700; letter-spacing: -0.01em; }
-.dota-cell-role { font-family: 'DM Mono'; font-size: 9px; color: var(--ink2); letter-spacing: 0.2em; margin-top: 4px; }
-.dota-cell-img { width: 56px; height: 56px; object-fit: cover; filter: grayscale(0.5); margin-left: auto; flex-shrink: 0; }
-
-/* ─── DONATE ─── */
-.donate-block {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1px; background: var(--line); border: 1px solid var(--line);
-}
-.donate-left { background: var(--paper); padding: clamp(32px, 6vw, 64px) clamp(24px, 5vw, 48px); }
-.donate-right {
-  background: var(--paper2); padding: clamp(32px, 6vw, 64px) clamp(24px, 5vw, 48px);
-  display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 24px;
-}
-.donate-big {
-  font-family: 'Unbounded'; font-size: clamp(32px, 8vw, 80px);
-  font-weight: 900; letter-spacing: -0.03em; line-height: 0.95;
-  color: var(--gold); margin-bottom: 16px;
-}
-.donate-note { font-family: 'DM Mono'; font-size: 11px; color: var(--ink2); letter-spacing: 0.15em; line-height: 1.6; }
-.donate-link {
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: 'Unbounded'; font-size: 13px; font-weight: 700;
-  letter-spacing: 0.05em; text-decoration: none; color: var(--paper);
-  background: var(--gold); padding: 16px 28px;
-  transition: all 0.2s;
-}
-.donate-link:hover { background: var(--ink); transform: translateX(4px); }
-.donate-link::after { content: '→'; }
-
-/* ─── SPONSORS ─── */
-.sponsors {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  display: flex; align-items: center; justify-content: center; gap: 28px;
-  padding: 10px 24px;
-  background: rgba(14,14,15,0.95);
-  border-top: 1px solid var(--line);
-  z-index: 500; backdrop-filter: blur(12px);
-}
-.sp-label { font-family: 'DM Mono'; font-size: 8px; color: var(--ink2); letter-spacing: 0.3em; }
-.sp-item img { height: 22px; width: auto; opacity: 0.5; filter: grayscale(1); transition: 0.2s; }
-.sp-item:hover img { opacity: 0.9; filter: grayscale(0); }
-.sp-div { width: 1px; height: 16px; background: var(--line); }
-
-/* ─── SOCIAL LINKS ─── */
-.socials-row {
-  display: flex; gap: 1px; background: var(--line);
-  border: 1px solid var(--line); border-top: none; margin-bottom: 48px;
-}
-.soc-link {
-  flex: 1; padding: clamp(12px, 2vw, 18px) 16px;
-  background: var(--paper); text-decoration: none; color: var(--ink2);
-  font-family: 'DM Mono'; font-size: 10px; letter-spacing: 0.2em;
-  display: flex; align-items: center; justify-content: space-between;
-  transition: 0.2s;
-}
-.soc-link:hover { background: var(--paper2); color: var(--ink); }
-.soc-link.tg:hover { color: var(--blue); }
-.soc-link.yt:hover { color: #ff4444; }
-.soc-link.tt:hover { color: #ff0050; }
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 700px) {
-  .nav-row { grid-template-columns: repeat(2, 1fr); }
-  .nav-item:nth-child(2) { border-right: none; }
-  .nav-item:nth-child(3) { border-right: 1px solid var(--line); }
-  .rp-wrap { grid-template-columns: 1fr; }
-  .dota-grid { grid-template-columns: 1fr; }
-  .donate-block { grid-template-columns: 1fr; }
-  .tb-right { display: none; }
-  .players-table .pt-tag { display: none; }
-  .players-table .pt-arr { display: none; }
-  .socials-row { flex-direction: column; }
-}
-@media (max-width: 480px) {
-  .nav-row { grid-template-columns: 1fr 1fr; }
-  .match-row:hover { padding-left: 0; padding-right: 0; margin: 0; }
+/* ══ RESPONSIVE ══ */
+@media(max-width:768px){
+  .hdr-stats{display:none;}
+  .rp{grid-template-columns:1fr 1fr;}
+  .rp-c.full{grid-column:span 2;}
+  .soc-grid{grid-template-columns:1fr;}
+  .sc.yt{grid-column:span 1;}
+  .don-wrap{grid-template-columns:1fr;}
+  .prow{grid-template-columns:36px clamp(56px,15vw,80px) 1fr auto;}
+  .parr{display:none;}
+}
+@media(max-width:520px){
+  .main-nav{flex-direction:column;}
+  .rp{grid-template-columns:1fr;}
+  .rp-c.full{grid-column:span 1;}
 }
 </style>
 </head>
 <body>
 
-<div class="cur" id="cur"></div>
+<!-- cursor -->
+<div id="C"><div class="dot"></div><div class="ring"></div></div>
 
-<!-- INTRO -->
-<div id="intro">
-  <div style="text-align:center;">
-    <div class="intro-word">
-      <span style="animation-delay:0s">GLADKOVKA</span>
-    </div>
-    <div class="intro-sub">ESPORTS · EST. 2024</div>
-  </div>
+<!-- loader -->
+<div id="LDR">
+  <div class="ldr-txt">GLADKOVKA</div>
+  <div class="ldr-bar" id="LBAR"></div>
 </div>
 
-<!-- SPONSORS -->
-<div class="sponsors">
-  <span class="sp-label">SPONSORS</span>
+<!-- sponsors -->
+<div class="spbar">
+  <span class="sp-lbl">PARTNERS</span>
   <div class="sp-div"></div>
-  <div class="sp-item"><img src="https://i.imgur.com/AT0ZCfb.png" alt="sp1"></div>
-  <div class="sp-item"><img src="https://i.imgur.com/hNWsLDJ.png" alt="sp2"></div>
+  <img class="sp-img" src="https://i.imgur.com/AT0ZCfb.png" alt="s1">
+  <img class="sp-img" src="https://i.imgur.com/hNWsLDJ.png" alt="s2">
 </div>
 
-<!-- ════════════════════════════════ HOME ════════════════════════════════ -->
-<div id="home">
+<!-- ══════════════════ HOME ══════════════════ -->
+<div id="HOME">
 
-  <div class="topbar">
-    <div class="tb-logo">
+  <header class="hdr">
+    <div class="hdr-logo">
       <img src="https://i.imgur.com/S8mBPo9.png" alt="logo">
       <div>
-        <div class="tb-name">GLADKOVKA</div>
-        <div class="tb-tag">// ESPORTS TEAM</div>
+        <div class="hdr-name">GLADKOVKA</div>
+        <div class="hdr-tag">// ESPORTS · 2024</div>
       </div>
     </div>
-    <div class="tb-right">
-      <div class="tb-stat">
-        <div class="tb-stat-n">6</div>
-        <div class="tb-stat-l">ПОБЕД</div>
+    <div class="hdr-stats">
+      <div>
+        <div class="hdr-stat-n">6</div>
+        <div class="hdr-stat-l">ПОБЕД</div>
       </div>
-      <div class="tb-sep"></div>
-      <div class="tb-stat">
-        <div class="tb-stat-n">3</div>
-        <div class="tb-stat-l">ПОРАЖ.</div>
+      <div>
+        <div class="hdr-stat-n">3</div>
+        <div class="hdr-stat-l">ПОРАЖ.</div>
       </div>
-      <div class="tb-sep"></div>
-      <div class="tb-stat">
-        <div class="tb-stat-n">14</div>
-        <div class="tb-stat-l">ИГРОКОВ</div>
+      <div>
+        <div class="hdr-stat-n">14</div>
+        <div class="hdr-stat-l">ИГРОКОВ</div>
       </div>
-      <div class="tb-sep"></div>
-      <div class="tb-stat">
-        <div class="tb-stat-n">10</div>
-        <div class="tb-stat-l">МАТЧЕЙ</div>
+      <div>
+        <div class="hdr-stat-n">10</div>
+        <div class="hdr-stat-l">МАТЧЕЙ</div>
       </div>
     </div>
-  </div>
+  </header>
 
   <div class="hero">
-    <div class="hero-index">— 001</div>
-    <div class="hero-h">
-      <div class="line"><span>GLAD</span></div>
-      <div class="line"><span>KOVKA</span></div>
+    <div class="hero-eyebrow">UKRAINIAN ESPORTS COLLECTIVE</div>
+    <div class="hero-big" id="HB">
+      <span class="line1">GLAD</span>
+      <span class="line2">KOVKA</span>
     </div>
-    <div class="hero-sub-row">
-      <span class="hero-sub-text">Ukrainian Esports Collective</span>
-      <div class="hero-sub-line"></div>
-      <span class="hero-sub-text">2024</span>
+    <div class="hero-bottom">
+      <div class="hero-desc">Киберспортивная организация.<br>Несколько дисциплин. Один дух.</div>
+      <nav class="main-nav">
+        <div class="mnav accent" onclick="openSection('rosters')">
+          <div class="mnav-n">01</div>
+          <div class="mnav-l">СОСТАВЫ</div>
+        </div>
+        <div class="mnav" onclick="openSection('matches')">
+          <div class="mnav-n">02</div>
+          <div class="mnav-l">МАТЧИ</div>
+        </div>
+        <div class="mnav" onclick="openSection('socials')">
+          <div class="mnav-n">03</div>
+          <div class="mnav-l">СОЦСЕТИ</div>
+        </div>
+        <div class="mnav" onclick="openSection('donate')">
+          <div class="mnav-n">04</div>
+          <div class="mnav-l">ДОНАТ</div>
+        </div>
+      </nav>
     </div>
   </div>
 
-  <div class="nav-row">
-    <div class="nav-item" onclick="openSection('rosters')">
-      <div class="nav-num">01</div>
-      <div class="nav-label">Составы</div>
-      <div class="nav-arrow">→</div>
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>GLADKOVKA TEAM</span><span>GLADKOVKA LEGION</span><span>GLADKOVKA ACADEMY</span><span>BRAWL STARS</span><span>ESPORTS 2024</span><span>GLADKOVKA TEAM</span><span>GLADKOVKA LEGION</span><span>GLADKOVKA ACADEMY</span><span>BRAWL STARS</span><span>ESPORTS 2024</span>
     </div>
-    <div class="nav-item" onclick="openSection('games')">
-      <div class="nav-num">02</div>
-      <div class="nav-label">Матчи</div>
-      <div class="nav-arrow">→</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ ROSTERS ══════════════════ -->
+<div id="rosters" class="SEC">
+  <div class="sh">
+    <div>
+      <div class="sh-pre">— 002 / СОСТАВЫ</div>
+      <div class="sh-title">ROSTERS</div>
     </div>
-    <div class="nav-item socials-nav" onclick="openSection('socials')">
-      <div class="nav-num">03</div>
-      <div class="nav-label">Соцсети</div>
-      <div class="nav-arrow">→</div>
+    <button class="sh-back" onclick="goHome()">Главная</button>
+  </div>
+
+  <div class="rp">
+    <div class="rp-c" onclick="openSection('roster-main')">
+      <div class="rp-tag">ОСНОВНОЙ СОСТАВ</div>
+      <img class="rp-logo" src="https://i.imgur.com/S8mBPo9.png" alt="">
+      <div class="rp-name">GLADKOVKA<br>TEAM</div>
+      <div class="rp-arrow">→</div>
+      <div class="rp-bg">01</div>
     </div>
-    <div class="nav-item donate" onclick="openSection('donate')">
-      <div class="nav-num">04</div>
-      <div class="nav-label">Донат</div>
-      <div class="nav-arrow">→</div>
+    <div class="rp-c lg" onclick="openSection('roster-legion')">
+      <div class="rp-tag">ВТОРОЙ СОСТАВ</div>
+      <img class="rp-logo" src="https://i.imgur.com/Mnokcea.png" alt="" style="filter:sepia(.4) brightness(.9);">
+      <div class="rp-name">GLADKOVKA<br>LEGION</div>
+      <div class="rp-arrow">→</div>
+      <div class="rp-bg">02</div>
+    </div>
+    <div class="rp-c ac" onclick="openSection('roster-acad')">
+      <div class="rp-tag">АКАДЕМИЯ</div>
+      <img class="rp-logo" src="https://i.imgur.com/S8mBPo9.png" alt="" style="filter:grayscale(1) brightness(.6);">
+      <div class="rp-name">GLADKOVKA<br>ACADEMY</div>
+      <div class="rp-arrow">→</div>
+      <div class="rp-bg">03</div>
+    </div>
+    <div class="rp-c bs" onclick="openSection('roster-bs')">
+      <div class="rp-tag">BRAWL STARS</div>
+      <div style="font-size:28px;line-height:1;">🏆</div>
+      <div class="rp-name">GLADKOVKA<br>BRAWL STARS</div>
+      <div class="rp-arrow">→</div>
+      <div class="rp-bg">04</div>
+    </div>
+    <div class="rp-c sv" onclick="openSection('roster-sub')">
+      <div class="rp-tag">РЕЗЕРВ И МЕДИА</div>
+      <div style="font-size:28px;line-height:1;">🎬</div>
+      <div class="rp-name">ЗАПАСНЫЕ</div>
+      <div class="rp-arrow">→</div>
+      <div class="rp-bg">05</div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════ ROSTERS ════════════════════════════════ -->
-<div id="rosters" class="section">
-  <div class="sec-top">
+<!-- ── MAIN TEAM ── -->
+<div id="roster-main" class="SEC">
+  <div class="sh">
     <div>
-      <div class="sec-num">— 002</div>
-      <div class="sec-h">СОСТАВЫ</div>
+      <div class="sh-pre">— 002.1 / ОСНОВНОЙ СОСТАВ</div>
+      <div class="sh-title">GLADKOVKA<br>TEAM</div>
     </div>
-    <button class="back" onclick="closeSections()">Главная</button>
+    <button class="sh-back" onclick="openSection('rosters')">Составы</button>
   </div>
-
-  <div class="rp-wrap">
-    <div class="rp-tile" onclick="openSection('main-roster')">
-      <div class="rp-tile-tag">ОСНОВНОЙ СОСТАВ</div>
-      <img class="rp-tile-logo" src="https://i.imgur.com/S8mBPo9.png" alt="team">
-      <div class="rp-tile-name">GLADKOVKA<br>TEAM</div>
-      <div class="rp-tile-arrow">→</div>
-      <div class="rp-tile-num">01</div>
-    </div>
-    <div class="rp-tile leg" onclick="openSection('legion-roster')">
-      <div class="rp-tile-tag">ВТОРОЙ СОСТАВ</div>
-      <img class="rp-tile-logo" src="https://i.imgur.com/Mnokcea.png" alt="legion" style="filter:brightness(0.8) sepia(0.3);">
-      <div class="rp-tile-name">GLADKOVKA<br>LEGION</div>
-      <div class="rp-tile-arrow">→</div>
-      <div class="rp-tile-num">02</div>
-    </div>
-    <div class="rp-tile acad" onclick="openSection('academy-roster')">
-      <div class="rp-tile-tag">АКАДЕМИЯ</div>
-      <img class="rp-tile-logo" src="https://i.imgur.com/S8mBPo9.png" alt="acad" style="filter:grayscale(1) brightness(0.6);">
-      <div class="rp-tile-name">GLADKOVKA<br>ACADEMY</div>
-      <div class="rp-tile-arrow">→</div>
-      <div class="rp-tile-num">03</div>
-    </div>
-    <div class="rp-tile sub" onclick="openSection('sub-roster')">
-      <div class="rp-tile-tag">РЕЗЕРВ И МЕДИА</div>
-      <div style="height:28px;"></div>
-      <div class="rp-tile-name">ЗАПАСНЫЕ</div>
-      <div class="rp-tile-arrow">→</div>
-      <div class="rp-tile-num">04</div>
-    </div>
+  <div class="players">
+    <div class="prow"><span class="pn">01</span><img class="pimg" src="https://i.imgur.com/Q84c4k0.png" alt="ronik"><div><div class="pname">ronik</div><div class="prole">MAIN ROSTER</div></div><span class="ptag active">ACTIVE</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">02</span><img class="pimg" src="https://i.imgur.com/cjElvG2.png" alt="Danich"><div><div class="pname">Danich</div><div class="prole">MAIN ROSTER</div></div><span class="ptag active">ACTIVE</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">03</span><img class="pimg" src="https://i.imgur.com/F0E6bpT.png" alt="Malish-vasya"><div><div class="pname">Malish-vasya</div><div class="prole">MAIN ROSTER</div></div><span class="ptag active">ACTIVE</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">04</span><img class="pimg" src="https://i.imgur.com/lmde7mb.png" alt="d1mxcs"><div><div class="pname">d1mxcs</div><div class="prole">MAIN ROSTER</div></div><span class="ptag active">ACTIVE</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">05</span><img class="pimg" src="https://i.imgur.com/JjRHXcP.jpeg" alt="dxnisixs"><div><div class="pname">dxnisixs</div><div class="prole">MAIN ROSTER</div></div><span class="ptag active">ACTIVE</span><span class="parr">→</span></div>
   </div>
+</div>
 
-  <!-- Social links inside rosters page -->
-  <div class="socials-row">
-    <a href="https://www.youtube.com/@gladkovkateam" target="_blank" class="soc-link yt">
-      <span>YOUTUBE</span><span>→</span>
+<!-- ── LEGION ── -->
+<div id="roster-legion" class="SEC">
+  <div class="sh" style="--sh-c:var(--gold)">
+    <div>
+      <div class="sh-pre">— 002.2 / ВТОРОЙ СОСТАВ</div>
+      <div class="sh-title" style="color:var(--gold)">GLADKOVKA<br>LEGION</div>
+    </div>
+    <button class="sh-back" onclick="openSection('rosters')">Составы</button>
+  </div>
+  <div class="players">
+    <div class="prow"><span class="pn">01</span><img class="pimg" src="https://i.imgur.com/gdl64tC.png" alt="s1s1"><div><div class="pname" style="color:var(--gold)">s1s1</div><div class="prole">GLADKOVKA LEGION</div></div><span class="ptag lg">LEGION</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">02</span><img class="pimg" src="https://i.imgur.com/79TJ5BY.png" alt="seksoeb2"><div><div class="pname" style="color:var(--gold)">seksoeb2</div><div class="prole">GLADKOVKA LEGION</div></div><span class="ptag lg">LEGION</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">03</span><div class="pph">SK</div><div><div class="pname" style="color:var(--gold)">skorostrel</div><div class="prole">GLADKOVKA LEGION</div></div><span class="ptag lg">LEGION</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">04</span><img class="pimg" src="https://i.imgur.com/yL9R3ge.png" alt="emotionqcold"><div><div class="pname" style="color:var(--gold)">emotionqcold</div><div class="prole">GLADKOVKA LEGION</div></div><span class="ptag lg">LEGION</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">05</span><div class="pph">V7</div><div><div class="pname" style="color:var(--gold)">Vlados67</div><div class="prole">GLADKOVKA LEGION</div></div><span class="ptag lg">LEGION</span><span class="parr">→</span></div>
+  </div>
+</div>
+
+<!-- ── ACADEMY ── -->
+<div id="roster-acad" class="SEC">
+  <div class="sh">
+    <div>
+      <div class="sh-pre">— 002.3 / АКАДЕМИЯ</div>
+      <div class="sh-title" style="color:var(--blue)">GLADKOVKA<br>ACADEMY</div>
+    </div>
+    <button class="sh-back" onclick="openSection('rosters')">Составы</button>
+  </div>
+  <div class="players">
+    <div class="prow"><span class="pn">01</span><img class="pimg" src="https://i.imgur.com/W8JYRrq.png" alt="Efrat666"><div><div class="pname" style="color:var(--blue)">Efrat666</div><div class="prole">GLADKOVKA ACADEMY</div></div><span class="ptag ac">ACADEMY</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">02</span><img class="pimg" src="https://i.imgur.com/T08F24U.png" alt="Dan1kx"><div><div class="pname" style="color:var(--blue)">Dan1kx</div><div class="prole">GLADKOVKA ACADEMY</div></div><span class="ptag ac">ACADEMY</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">03</span><img class="pimg" src="https://i.imgur.com/XOcrhnZ.png" alt="Molodoy_Bogutsk1y"><div><div class="pname" style="color:var(--blue)">Molodoy_Bogutsk1y</div><div class="prole">GLADKOVKA ACADEMY</div></div><span class="ptag ac">ACADEMY</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">04</span><img class="pimg" src="https://i.imgur.com/5XWAq4f.png" alt="B3rsetko"><div><div class="pname" style="color:var(--blue)">B3rsetko</div><div class="prole">GLADKOVKA ACADEMY</div></div><span class="ptag ac">ACADEMY</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">05</span><img class="pimg" src="https://i.imgur.com/v0b0HaW.png" alt="Sergiy_PRO"><div><div class="pname" style="color:var(--blue)">Sergiy_PRO</div><div class="prole">GLADKOVKA ACADEMY</div></div><span class="ptag ac">ACADEMY</span><span class="parr">→</span></div>
+  </div>
+</div>
+
+<!-- ── BRAWL STARS ── -->
+<div id="roster-bs" class="SEC">
+  <div class="sh">
+    <div>
+      <div class="sh-pre">— 002.4 / BRAWL STARS</div>
+      <div class="sh-title" style="color:#ffce00">BRAWL<br>STARS</div>
+    </div>
+    <button class="sh-back" onclick="openSection('rosters')">Составы</button>
+  </div>
+  <div class="players">
+    <div class="prow"><span class="pn">01</span><img class="pimg" src="https://i.imgur.com/I30xoWI.png" alt="chebyksar"><div><div class="pname" style="color:#ffce00">chebyksar</div><div class="prole">BRAWL STARS</div></div><span class="ptag bs">BS</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">02</span><img class="pimg" src="https://i.imgur.com/Tn748eK.png" alt="V4mpXx"><div><div class="pname" style="color:#ffce00">V4mpXx</div><div class="prole">BRAWL STARS</div></div><span class="ptag bs">BS</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">03</span><img class="pimg" src="https://i.imgur.com/yrlOpI5.png" alt="Дмитро"><div><div class="pname" style="color:#ffce00">Дмитро</div><div class="prole">BRAWL STARS</div></div><span class="ptag bs">BS</span><span class="parr">→</span></div>
+  </div>
+</div>
+
+<!-- ── SUB/MEDIA ── -->
+<div id="roster-sub" class="SEC">
+  <div class="sh">
+    <div>
+      <div class="sh-pre">— 002.5 / РЕЗЕРВ</div>
+      <div class="sh-title">RESERVE<br>& MEDIA</div>
+    </div>
+    <button class="sh-back" onclick="openSection('rosters')">Составы</button>
+  </div>
+  <div class="players">
+    <div class="prow"><span class="pn">01</span><img class="pimg" src="https://i.imgur.com/HkdwmSZ.png" alt="Abeme"><div><div class="pname">Abeme</div><div class="prole">RESERVE</div></div><span class="ptag sub">SUB</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">02</span><img class="pimg" src="https://i.imgur.com/ywKudlq.jpeg" alt="synblyadi"><div><div class="pname">synblyadi</div><div class="prole">RESERVE</div></div><span class="ptag sub">SUB</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">03</span><img class="pimg" src="https://i.imgur.com/hRvCa4J.jpeg" alt="glenomessi"><div><div class="pname">glenomessi</div><div class="prole">MEDIA</div></div><span class="ptag med">MEDIA</span><span class="parr">→</span></div>
+    <div class="prow"><span class="pn">04</span><img class="pimg" src="https://i.imgur.com/Mh8V8Dq.jpeg" alt="Lominok"><div><div class="pname">Lominok</div><div class="prole">MEDIA</div></div><span class="ptag med">MEDIA</span><span class="parr">→</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════ MATCHES ══════════════════ -->
+<div id="matches" class="SEC">
+  <div class="sh">
+    <div>
+      <div class="sh-pre">— 003 / ИСТОРИЯ</div>
+      <div class="sh-title">MATCH<br>HISTORY</div>
+    </div>
+    <button class="sh-back" onclick="goHome()">Главная</button>
+  </div>
+  <div class="matches">
+    <div class="mrow"><span class="mbadge w">WIN</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">THE INVICTUS</span></div><span class="mscore w">2:1</span></div>
+    <div class="mrow"><span class="mbadge w">WIN</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">AUTSQUAD ACADEMY</span></div><span class="mscore w">2:0</span></div>
+    <div class="mrow"><span class="mbadge l">LOSS</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">AUTSQUAD</span></div><span class="mscore l">1:2</span></div>
+    <div class="mrow"><span class="mbadge w">WIN</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">VORTEX TEAM</span></div><span class="mscore w">1:0</span></div>
+    <div class="mrow"><span class="mbadge w">WIN</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">TCGAMING</span></div><span class="mscore w">2:0</span></div>
+    <div class="mrow"><span class="mbadge w">WIN</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">PZW</span></div><span class="mscore w">1:0</span></div>
+    <div class="mrow"><span class="mbadge w">WIN</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">P1DRO TEAM</span></div><span class="mscore w">1:0</span></div>
+    <div class="mrow"><span class="mbadge l">LOSS</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">TEAM SPIRIT</span></div><span class="mscore l">1:2</span></div>
+    <div class="mrow"><span class="mbadge l">LOSS</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">TEAM HOMYAK</span></div><span class="mscore l">0:2</span></div>
+    <div class="mrow"><span class="mbadge l">LOSS</span><div class="mteams"><span class="mself">GLADKOVKA</span><span class="mvs">—</span><span class="mopp">TEAM SPIRIT</span></div><span class="mscore l">1:2</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════ SOCIALS ══════════════════ -->
+<div id="socials" class="SEC">
+  <div class="sh">
+    <div>
+      <div class="sh-pre">— 005 / СОЦСЕТИ</div>
+      <div class="sh-title">FOLLOW<br>US</div>
+    </div>
+    <button class="sh-back" onclick="goHome()">Главная</button>
+  </div>
+  <div class="soc-grid">
+    <a href="https://t.me/gladkovkateam" target="_blank" class="sc tg">
+      <div class="sc-plat">TELEGRAM</div>
+      <div class="sc-handle">gladkovkateam</div>
+      <div class="sc-url">t.me/gladkovkateam</div>
+      <div class="sc-arr">→</div>
+      <div class="sc-bg">TG</div>
     </a>
-    <a href="https://www.tiktok.com/@gladkovka.team" target="_blank" class="soc-link tt">
-      <span>TIKTOK</span><span>→</span>
+    <a href="https://www.tiktok.com/@gladkovka.team" target="_blank" class="sc tt">
+      <div class="sc-plat">TIKTOK</div>
+      <div class="sc-handle">@gladkovka.team</div>
+      <div class="sc-url">tiktok.com/@gladkovka.team</div>
+      <div class="sc-arr">→</div>
+      <div class="sc-bg">TT</div>
     </a>
-    <div class="soc-link" onclick="openSection('dota-roster')" style="cursor:pointer;">
-      <span>ДОТА 2 СОСТАВ</span><span>→</span>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════════════════ MAIN ROSTER ════════════════════════════════ -->
-<div id="main-roster" class="section">
-  <div class="sec-top">
-    <div>
-      <div class="sec-num">— 002.1</div>
-      <div class="sec-h">MAIN<br>ROSTER</div>
-    </div>
-    <button class="back" onclick="openSection('rosters')">Составы</button>
-  </div>
-  <table class="players-table">
-    <tr>
-      <td class="pt-num">01</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/Q84c4k0.png" alt="ronik"></td>
-      <td><div class="pt-name">ronik</div><div class="pt-role">MAIN ROSTER</div></td>
-      <td><span class="pt-tag active">ACTIVE</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">02</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/cjElvG2.png" alt="Danich"></td>
-      <td><div class="pt-name">Danich</div><div class="pt-role">MAIN ROSTER</div></td>
-      <td><span class="pt-tag active">ACTIVE</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">03</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/F0E6bpT.png" alt="Malish-vasya"></td>
-      <td><div class="pt-name">Malish-vasya</div><div class="pt-role">MAIN ROSTER</div></td>
-      <td><span class="pt-tag active">ACTIVE</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">04</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/lmde7mb.png" alt="d1mxcs"></td>
-      <td><div class="pt-name">d1mxcs</div><div class="pt-role">MAIN ROSTER</div></td>
-      <td><span class="pt-tag active">ACTIVE</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">05</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/JjRHXcP.jpeg" alt="dxnisixs"></td>
-      <td><div class="pt-name">dxnisixs</div><div class="pt-role">MAIN ROSTER</div></td>
-      <td><span class="pt-tag active">ACTIVE</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-  </table>
-</div>
-
-<!-- ════════════════════════════════ LEGION ════════════════════════════════ -->
-<div id="legion-roster" class="section">
-  <div class="sec-top">
-    <div>
-      <div class="sec-num">— 002.2</div>
-      <div class="sec-h" style="color:var(--orange)">GLADKOVKA<br>LEGION</div>
-    </div>
-    <button class="back" onclick="openSection('rosters')">Составы</button>
-  </div>
-  <table class="players-table">
-    <tr>
-      <td class="pt-num">01</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/gdl64tC.png" alt="s1s1"></td>
-      <td><div class="pt-name">s1s1</div><div class="pt-role">GLADKOVKA LEGION</div></td>
-      <td><span class="pt-tag legion">LEGION</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">02</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/79TJ5BY.png" alt="seksoeb2"></td>
-      <td><div class="pt-name">seksoeb2</div><div class="pt-role">GLADKOVKA LEGION</div></td>
-      <td><span class="pt-tag legion">LEGION</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">03</td>
-      <td class="pt-avatar">
-        <div class="pt-placeholder">SK</div>
-      </td>
-      <td><div class="pt-name">skorostrel</div><div class="pt-role">GLADKOVKA LEGION</div></td>
-      <td><span class="pt-tag legion">LEGION</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">04</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/yL9R3ge.png" alt="emotionqcold"></td>
-      <td><div class="pt-name">emotionqcold</div><div class="pt-role">GLADKOVKA LEGION</div></td>
-      <td><span class="pt-tag legion">LEGION</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">05</td>
-      <td class="pt-avatar">
-        <div class="pt-placeholder">V7</div>
-      </td>
-      <td><div class="pt-name">Vlados67</div><div class="pt-role">GLADKOVKA LEGION</div></td>
-      <td><span class="pt-tag legion">LEGION</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-  </table>
-</div>
-
-<!-- ════════════════════════════════ ACADEMY ════════════════════════════════ -->
-<div id="academy-roster" class="section">
-  <div class="sec-top">
-    <div>
-      <div class="sec-num">— 002.3</div>
-      <div class="sec-h" style="color:var(--blue)">GLADKOVKA<br>ACADEMY</div>
-    </div>
-    <button class="back" onclick="openSection('rosters')">Составы</button>
-  </div>
-  <table class="players-table">
-    <tr>
-      <td class="pt-num">01</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/W8JYRrq.png" alt="Efrat666"></td>
-      <td><div class="pt-name">Efrat666</div><div class="pt-role">GLADKOVKA ACADEMY</div></td>
-      <td><span class="pt-tag acad">ACADEMY</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">02</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/T08F24U.png" alt="Dan1kx"></td>
-      <td><div class="pt-name">Dan1kx</div><div class="pt-role">GLADKOVKA ACADEMY</div></td>
-      <td><span class="pt-tag acad">ACADEMY</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">03</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/XOcrhnZ.png" alt="Molodoy_Bogutsk1y"></td>
-      <td><div class="pt-name">Molodoy_Bogutsk1y</div><div class="pt-role">GLADKOVKA ACADEMY</div></td>
-      <td><span class="pt-tag acad">ACADEMY</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">04</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/5XWAq4f.png" alt="B3rsetko"></td>
-      <td><div class="pt-name">B3rsetko</div><div class="pt-role">GLADKOVKA ACADEMY</div></td>
-      <td><span class="pt-tag acad">ACADEMY</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">05</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/v0b0HaW.png" alt="Sergiy_PRO"></td>
-      <td><div class="pt-name">Sergiy_PRO</div><div class="pt-role">GLADKOVKA ACADEMY</div></td>
-      <td><span class="pt-tag acad">ACADEMY</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-  </table>
-</div>
-
-<!-- ════════════════════════════════ SUB ROSTER ════════════════════════════════ -->
-<div id="sub-roster" class="section">
-  <div class="sec-top">
-    <div>
-      <div class="sec-num">— 002.4</div>
-      <div class="sec-h">RESERVE<br>& MEDIA</div>
-    </div>
-    <button class="back" onclick="openSection('rosters')">Составы</button>
-  </div>
-  <table class="players-table">
-    <tr>
-      <td class="pt-num">01</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/HkdwmSZ.png" alt="Abeme"></td>
-      <td><div class="pt-name">Abeme</div><div class="pt-role">RESERVE</div></td>
-      <td><span class="pt-tag sub">SUB</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">02</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/ywKudlq.jpeg" alt="synblyadi"></td>
-      <td><div class="pt-name">synblyadi</div><div class="pt-role">RESERVE</div></td>
-      <td><span class="pt-tag sub">SUB</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">03</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/hRvCa4J.jpeg" alt="glenomessi"></td>
-      <td><div class="pt-name">glenomessi</div><div class="pt-role">MEDIA</div></td>
-      <td><span class="pt-tag media">MEDIA</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-    <tr>
-      <td class="pt-num">04</td>
-      <td class="pt-avatar"><img src="https://i.imgur.com/Mh8V8Dq.jpeg" alt="Lominok"></td>
-      <td><div class="pt-name">Lominok</div><div class="pt-role">MEDIA</div></td>
-      <td><span class="pt-tag media">MEDIA</span></td>
-      <td class="pt-arr">→</td>
-    </tr>
-  </table>
-</div>
-
-<!-- ════════════════════════════════ MATCHES ════════════════════════════════ -->
-<div id="games" class="section">
-  <div class="sec-top">
-    <div>
-      <div class="sec-num">— 003</div>
-      <div class="sec-h">MATCH<br>HISTORY</div>
-    </div>
-    <button class="back" onclick="closeSections()">Главная</button>
-  </div>
-  <div class="matches-list">
-    <div class="match-row">
-      <span class="match-res win">WIN</span>
-      <div class="match-teams">GLADKOVKA <span class="match-vs">—</span> <span class="match-opp">THE INVICTUS</span></div>
-      <div class="match-score win">2 : 1</div>
-    </div>
-    <div class="match-row">
-      <span class="match-res win">WIN</span>
-      <div class="match-teams">GLADKOVKA <span class="match-vs">—</span> <span class="match-opp">AUTSQUAD ACADEMY</span></div>
-      <div class="match-score win">2 : 0</div>
-    </div>
-    <div class="match-row">
-      <span class="match-res loss">LOSS</span>
-      <div class="match-teams">GLADKOVKA <span class="match-vs">—</span> <span class="match-opp">AUTSQUAD</span></div>
-      <div class="match-score loss">1 : 2</div>
-    </div>
-    <div class="match-row">
-      <span class="match-res win">WIN</span>
-      <div class="match-teams">GLADKOVKA <span class="match-vs">—</span> <span class="match-opp">VORTEX TEAM</span></div>
-      <div class="match-score win">1 : 0</div>
-    </div>
-    <div class="match-row">
-      <span class="match-res win">WIN</span>
-      <div class="match-teams">GLADKOVKA <span class="match-vs">—</span> <span class="match-opp">TCGAMING</span></div>
-      <div class="match-score win">2 : 0</div>
-    </div>
-    <div class="match-row">
-      <span class="match-res win">WIN</span>
-      <div class="match-teams">GLADKOVKA <span class="match-vs">—</span> <span class="match-opp">PZW</span></div>
-      <div class="match-score win">1 : 0</div>
-    </div>
-    <div class="match-row">
-      <span class="match-res win">WIN</span>
-      <div class="match-teams">GLADKOVKA <span class="match-vs">—</span> <span class="match-opp">P1DRO TEAM</span></div>
-      <div class="match-score win">1 : 0</div>
-    </div>
-    <div class="match-row">
-      <span class="match-res loss">LOSS</span>
-      <div class="match-teams">GLADKOVKA <span class="match-vs">—</span> <span class="match-opp">TEAM SPIRIT</span></div>
-      <div class="match-score loss">1 : 2</div>
-    </div>
-    <div class="match-row">
-      <span class="match-res loss">LOSS</span>
-      <div class="match-teams">GLADKOVKA <span class="match-vs">—</span> <span class="match-opp">TEAM HOMYAK</span></div>
-      <div class="match-score loss">0 : 2</div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════════════════ DOTA 2 ════════════════════════════════ -->
-<div id="dota-roster" class="section">
-  <div class="sec-top">
-    <div>
-      <div class="sec-num">— 002.5</div>
-      <div class="sec-h">DOTA 2<br>ROSTER</div>
-    </div>
-    <button class="back" onclick="openSection('rosters')">Составы</button>
-  </div>
-  <div class="dota-grid">
-    <div class="dota-map-cell">
-      <div class="dota-pos-badge dp1">1</div>
-      <div class="dota-cell-info">
-        <div class="dota-cell-name">Nad0EL</div>
-        <div class="dota-cell-role">CARRY</div>
-      </div>
-      <img class="dota-cell-img" src="https://i.imgur.com/tsuPmmE.png" alt="Nad0EL">
-    </div>
-    <div class="dota-map-cell">
-      <div class="dota-pos-badge dp2">2</div>
-      <div class="dota-cell-info">
-        <div class="dota-cell-name">S0sa1bek</div>
-        <div class="dota-cell-role">MID</div>
-      </div>
-      <img class="dota-cell-img" src="https://i.imgur.com/C7a7xWP.png" alt="S0sa1bek">
-    </div>
-    <div class="dota-map-cell">
-      <div class="dota-pos-badge dp3">3</div>
-      <div class="dota-cell-info">
-        <div class="dota-cell-name">vov1k</div>
-        <div class="dota-cell-role">OFFLANE</div>
-      </div>
-      <img class="dota-cell-img" src="https://i.imgur.com/EzLuQwG.png" alt="vov1k">
-    </div>
-    <div class="dota-map-cell">
-      <div class="dota-pos-badge dp4">4</div>
-      <div class="dota-cell-info">
-        <div class="dota-cell-name">Chyort.og</div>
-        <div class="dota-cell-role">SOFT SUPPORT</div>
-      </div>
-      <img class="dota-cell-img" src="https://i.imgur.com/PhcMMCd.png" alt="Chyort.og">
-    </div>
-    <div class="dota-map-cell" style="grid-column:span 2;">
-      <div class="dota-pos-badge dp5">5</div>
-      <div class="dota-cell-info">
-        <div class="dota-cell-name">Ronik_Jr</div>
-        <div class="dota-cell-role">HARD SUPPORT</div>
-      </div>
-      <img class="dota-cell-img" src="https://i.imgur.com/hR61KjA.png" alt="Ronik_Jr">
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════════════════ SOCIALS ════════════════════════════════ -->
-<div id="socials" class="section">
-  <div class="sec-top">
-    <div>
-      <div class="sec-num">— 005</div>
-      <div class="sec-h">SOCIAL<br>MEDIA</div>
-    </div>
-    <button class="back" onclick="closeSections()">Главная</button>
-  </div>
-
-  <div class="socials-grid">
-
-    <a href="https://t.me/gladkovkateam" target="_blank" class="soc-card tg">
-      <div class="soc-platform">TELEGRAM</div>
-      <div class="soc-handle">gladkovkateam</div>
-      <div class="soc-url">t.me/gladkovkateam</div>
-      <div class="soc-arrow">→</div>
-      <div class="soc-bg-num">TG</div>
+    <a href="https://www.instagram.com/gladkovkateam" target="_blank" class="sc ig">
+      <div class="sc-plat">INSTAGRAM</div>
+      <div class="sc-handle">@gladkovkateam</div>
+      <div class="sc-url">instagram.com/gladkovkateam</div>
+      <div class="sc-arr">→</div>
+      <div class="sc-bg">IG</div>
     </a>
-
-    <a href="https://www.tiktok.com/@gladkovka.team" target="_blank" class="soc-card tt">
-      <div class="soc-platform">TIKTOK</div>
-      <div class="soc-handle">@gladkovka.team</div>
-      <div class="soc-url">tiktok.com/@gladkovka.team</div>
-      <div class="soc-arrow">→</div>
-      <div class="soc-bg-num">TT</div>
+    <a href="https://www.twitch.tv/gladkovka" target="_blank" class="sc tw">
+      <div class="sc-plat">TWITCH</div>
+      <div class="sc-handle">gladkovka</div>
+      <div class="sc-url">twitch.tv/gladkovka</div>
+      <div class="sc-arr">→</div>
+      <div class="sc-bg">TW</div>
     </a>
-
-    <a href="https://www.instagram.com/gladkovkateam" target="_blank" class="soc-card ig">
-      <div class="soc-platform">INSTAGRAM</div>
-      <div class="soc-handle">@gladkovkateam</div>
-      <div class="soc-url">instagram.com/gladkovkateam</div>
-      <div class="soc-arrow">→</div>
-      <div class="soc-bg-num">IG</div>
+    <a href="https://www.youtube.com/@gladkovkateam" target="_blank" class="sc yt">
+      <div class="sc-plat">YOUTUBE</div>
+      <div class="sc-handle">@gladkovkateam</div>
+      <div class="sc-url">youtube.com/@gladkovkateam</div>
+      <div class="sc-arr">→</div>
+      <div class="sc-bg">YT</div>
     </a>
-
-    <a href="https://www.twitch.tv/gladkovka" target="_blank" class="soc-card tw">
-      <div class="soc-platform">TWITCH</div>
-      <div class="soc-handle">gladkovka</div>
-      <div class="soc-url">twitch.tv/gladkovka</div>
-      <div class="soc-arrow">→</div>
-      <div class="soc-bg-num">TW</div>
-    </a>
-
-    <a href="https://www.youtube.com/@gladkovkateam" target="_blank" class="soc-card yt" style="grid-column: span 2;">
-      <div class="soc-platform">YOUTUBE</div>
-      <div class="soc-handle">@gladkovkateam</div>
-      <div class="soc-url">youtube.com/@gladkovkateam</div>
-      <div class="soc-arrow">→</div>
-      <div class="soc-bg-num">YT</div>
-    </a>
-
   </div>
 </div>
 
-<!-- ════════════════════════════════ DONATE ════════════════════════════════ -->
-<div id="donate" class="section">
-  <div class="sec-top">
+<!-- ══════════════════ DONATE ══════════════════ -->
+<div id="donate" class="SEC">
+  <div class="sh">
     <div>
-      <div class="sec-num">— 004</div>
-      <div class="sec-h">ПОДДЕРЖИ<br>КОМАНДУ</div>
+      <div class="sh-pre">— 004 / ПОДДЕРЖКА</div>
+      <div class="sh-title">SUPPORT<br>THE TEAM</div>
     </div>
-    <button class="back" onclick="closeSections()">Главная</button>
+    <button class="sh-back" onclick="goHome()">Главная</button>
   </div>
-  <div class="donate-block">
-    <div class="donate-left">
-      <div class="donate-big">ДОНАТ</div>
-      <div class="donate-note">
+  <div class="don-wrap">
+    <div class="don-l">
+      <div class="don-big">ДОНАТ</div>
+      <div class="don-note">
         Каждый взнос помогает нам<br>
-        развиваться и участвовать<br>
-        в турнирах.<br><br>
-        // GLADKOVKA TEAM<br>
-        // EST. 2024
+        развиваться, участвовать<br>
+        в турнирах и расти.<br><br>
+        <span style="color:rgba(13,255,110,.5)">//</span> GLADKOVKA TEAM<br>
+        <span style="color:rgba(13,255,110,.5)">//</span> ESPORTS · 2024
       </div>
     </div>
-    <div class="donate-right">
-      <div style="font-family:'DM Mono';font-size:9px;letter-spacing:0.3em;color:var(--ink2);">СПОСОБ ОПЛАТЫ</div>
-      <a href="https://donatepay.eu/don/38734" target="_blank" class="donate-link">
-        ЗАДОНАТИТЬ &nbsp;
-      </a>
-      <div style="font-family:'DM Mono';font-size:9px;color:var(--ink2);letter-spacing:0.15em;line-height:1.8;">
-        via DonatePay<br>
-        Безопасно · Быстро
-      </div>
+    <div class="don-r">
+      <div style="font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.3em;color:var(--w2);">СПОСОБ ОПЛАТЫ</div>
+      <a href="https://donatepay.eu/don/38734" target="_blank" class="don-btn">ЗАДОНАТИТЬ</a>
+      <div class="don-meta">via DonatePay<br>Безопасно · Быстро</div>
     </div>
   </div>
 </div>
 
 <script>
 // CURSOR
-const cur = document.getElementById('cur');
-document.addEventListener('mousemove', e => {
-  cur.style.left = e.clientX + 'px';
-  cur.style.top = e.clientY + 'px';
+const C=document.getElementById('C');
+const dot=C.querySelector('.dot'),ring=C.querySelector('.ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.left=mx+'px';dot.style.top=my+'px';
 });
-document.querySelectorAll('a,button,[onclick],.nav-item,.rp-tile,.match-row,tr').forEach(el => {
-  el.addEventListener('mouseenter', () => cur.style.opacity = '0.4');
-  el.addEventListener('mouseleave', () => cur.style.opacity = '1');
+(function animR(){
+  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animR);
+})();
+
+// LOADER
+window.addEventListener('load',()=>{
+  const L=document.getElementById('LDR');
+  L.classList.add('go');
+  setTimeout(()=>{
+    L.classList.add('out');
+    document.getElementById('HB').classList.add('show');
+  },1800);
 });
 
-// INTRO
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('intro').classList.add('gone'), 1600);
-});
-
-// NAVIGATION
-function openSection(id) {
-  document.getElementById('home').style.display = 'none';
-  document.querySelectorAll('.section').forEach(s => {
-    s.classList.remove('active'); s.style.display = 'none';
-  });
-  const t = document.getElementById(id);
-  if (t) { t.style.display = 'block'; setTimeout(() => t.classList.add('active'), 10); }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+// NAV
+const HOME=document.getElementById('HOME');
+const secs=document.querySelectorAll('.SEC');
+function openSection(id){
+  HOME.style.display='none';
+  secs.forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  const t=document.getElementById(id);
+  if(t){t.style.display='block';setTimeout(()=>t.classList.add('on'),10);}
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-function closeSections() {
-  document.querySelectorAll('.section').forEach(s => {
-    s.classList.remove('active'); s.style.display = 'none';
-  });
-  document.getElementById('home').style.display = 'grid';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function goHome(){
+  secs.forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  HOME.style.display='flex';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
-</html>
+</html
