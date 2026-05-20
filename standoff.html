@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Standoff 2 — Gladkovka Team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="shared.css"/>
+<style>
+  .coming-soon-wrap {
+    min-height: calc(100vh - 72px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 40px 5vw;
+    position: relative; overflow: hidden;
+  }
+  .cs-glow {
+    position: absolute; width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,255,135,0.09) 0%, transparent 65%);
+    filter: blur(80px); pointer-events: none;
+  }
+  .cs-tag {
+    font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--green2);
+    margin-bottom: 20px;
+  }
+  .cs-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 12vw, 120px); letter-spacing: 0.06em; line-height: 1;
+    background: linear-gradient(135deg, var(--text) 0%, rgba(232,234,237,0.4) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 16px; position: relative;
+  }
+  .cs-sub {
+    font-size: 15px; color: var(--text-muted); max-width: 420px; line-height: 1.7;
+    margin-bottom: 40px; position: relative;
+  }
+  .cs-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 28px; border-radius: 50px;
+    background: var(--bg2);
+    box-shadow: 6px 6px 16px var(--neo-dark), -4px -4px 12px var(--neo-light);
+    font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--green1);
+    position: relative;
+  }
+  .cs-badge::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green1);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 36px; padding: 12px 24px; border-radius: 12px;
+    background: rgba(0,255,135,0.08); border: 1px solid rgba(0,255,135,0.2);
+    color: var(--green1); text-decoration: none;
+    font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .back-btn:hover { background: rgba(0,255,135,0.15); border-color: rgba(0,255,135,0.4); }
+  .back-btn svg { width: 16px; height: 16px; fill: currentColor; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="header-back" href="index.html">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Back
+  </a>
+  <a class="header-logo-link" href="index.html">
+    <img src="https://i.imgur.com/dAsOvWz.png" alt="Gladkovka"/>
+    <span>GLADKOVKA</span>
+  </a>
+</header>
+
+<div class="coming-soon-wrap">
+  <div class="cs-glow"></div>
+  <div class="cs-tag">Gladkovka Team · Mobile Shooter</div>
+  <div class="cs-title">STANDOFF 2</div>
+  <p class="cs-sub">We're assembling our Standoff 2 roster. Stay tuned for updates — big things are coming.</p>
+  <div class="cs-badge">Coming Soon</div>
+  <a class="back-btn" href="index.html">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Back to Home
+  </a>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-logo">GLADKOVKA TEAM</div>
+  <p>© 2025 Gladkovka Team. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,942 +1,1080 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GLADKOVKA TEAM</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gladkovka Team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600;800&display=swap" rel="stylesheet"/>
 <style>
-/* ── RESET ── */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0e0f11;
+    --bg2: #131517;
+    --bg3: #161819;
+    --neo-light: #1d2024;
+    --neo-dark: #08090a;
+    --green1: #00ff87;
+    --green2: #00c853;
+    --green3: #1de954;
+    --text: #e8eaed;
+    --text-muted: #7a8494;
+    --header-h: 72px;
+    --radius: 18px;
+    --transition: cubic-bezier(0.16,1,0.3,1);
+  }
 
-/* ── SF FONT STACK ── */
-:root {
-  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Inter', Arial, sans-serif;
-  --bg:   #0d0d0d;
-  --bg2:  #111111;
-  --bg3:  #161616;
-  --bg4:  #1c1c1c;
-  --g1:   #0f5c1e;
-  --g2:   #1a8a2e;
-  --g3:   #28c43f;
-  --g4:   #4edd62;
-  --glow: rgba(40,196,63,.32);
-  --text: #f0f0f0;
-  --t2:   #999;
-  --t3:   #555;
-  --border: rgba(40,196,63,.16);
-  --b2:   rgba(40,196,63,.07);
-  --shadow-out: 5px 5px 12px #080808, -3px -3px 8px #202020;
-  --shadow-in:  inset 4px 4px 10px #070707, inset -3px -3px 7px #1e1e1e;
-  --r: 14px;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: auto; overflow-x: hidden; }
+  html { scroll-behavior: smooth; }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
 
-/* subtle grid */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(40,196,63,.022) 80px, rgba(40,196,63,.022) 81px),
-    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(40,196,63,.022) 80px, rgba(40,196,63,.022) 81px);
-}
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
 
-/* ── LANG SWITCHER ── */
-#lang-sw {
-  position: fixed; top: 16px; right: 20px; z-index: 1100;
-  display: flex; gap: 2px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 10px; padding: 3px;
-  box-shadow: var(--shadow-out);
-}
-.lb {
-  border: none; background: transparent;
-  color: var(--t3); font-family: var(--font);
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  padding: 5px 11px; border-radius: 7px;
-  cursor: pointer; transition: all .2s;
-}
-.lb.on, .lb:hover {
-  background: linear-gradient(135deg, var(--g1), var(--g2));
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(26,138,46,.45);
-}
+  .hero-glow {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,255,135,0.22) 0%, rgba(0,200,83,0.08) 50%, transparent 72%);
+    filter: blur(40px);
+    will-change: transform, opacity;
+    pointer-events: none;
+    transition: width 0s, height 0s;
+  }
 
-/* ── HEADER ── */
-#hdr {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  height: 60px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 28px;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background .35s, border-color .35s, backdrop-filter .35s;
-}
-#hdr.up {
-  background: rgba(12,12,12,.92);
-  border-color: var(--border);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-#hdr-logo {
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none;
-  opacity: 0; transform: translateX(-16px);
-  transition: opacity .3s, transform .3s;
-  pointer-events: none;
-}
-#hdr.up #hdr-logo { opacity: 1; transform: none; pointer-events: auto; }
-#hdr-logo img { height: 34px; width: 34px; object-fit: contain; filter: drop-shadow(0 0 6px var(--glow)); }
-#hdr-logo-txt {
-  font-size: 14px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-  background: linear-gradient(135deg, #fff 40%, var(--g4));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.hnav { display: flex; gap: 2px; }
-.hnav a {
-  color: var(--t2); text-decoration: none; font-size: 12px; font-weight: 500;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  padding: 6px 13px; border-radius: 8px; transition: all .18s;
-}
-.hnav a:hover { color: var(--g4); background: var(--b2); }
+  .hero-logo-wrap {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    will-change: transform, opacity;
+  }
 
-/* ── HERO ── */
-#hero {
-  position: relative; height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-}
-#glow {
-  position: absolute;
-  width: 560px; height: 560px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(40,196,63,.20) 0%, rgba(15,92,30,.09) 45%, transparent 70%);
-  pointer-events: none; will-change: transform;
-}
-#hero-wrap {
-  position: relative; z-index: 2;
-  display: flex; flex-direction: column; align-items: center; gap: 20px;
-  text-align: center;
-  will-change: transform, opacity;
-}
-#hero-img {
-  width: 190px; height: 190px; object-fit: contain;
-  filter: drop-shadow(0 0 44px rgba(40,196,63,.5));
-  animation: pulse 4s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { filter: drop-shadow(0 0 44px rgba(40,196,63,.5)); }
-  50%       { filter: drop-shadow(0 0 68px rgba(40,196,63,.72)); }
-}
-.ht1 {
-  font-size: clamp(56px, 8vw, 96px); font-weight: 900; letter-spacing: 4px; line-height: .92;
-  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,.62) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.ht2 {
-  font-size: clamp(28px, 4vw, 50px); font-weight: 200; letter-spacing: 18px; color: var(--g4);
-  text-shadow: 0 0 28px rgba(78,221,98,.35);
-}
-.ht3 {
-  font-size: 10px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
-  color: var(--t3); margin-top: 4px;
-}
-.scroll-cue {
-  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  color: var(--t3); font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-  animation: cue 2.4s ease-in-out infinite;
-}
-@keyframes cue {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(5px); }
-}
-.scroll-cue-bar { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--g4), transparent); }
+  .hero-logo-img {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 32px rgba(0,255,135,0.45));
+  }
 
-/* ── SHARED SECTION ── */
-.sec {
-  position: relative; z-index: 1;
-  max-width: 1240px; margin: 0 auto;
-  padding: 72px 40px;
-}
-.sec-eye {
-  font-size: 10px; font-weight: 700; letter-spacing: 4.5px; text-transform: uppercase;
-  color: var(--g3); margin-bottom: 10px;
-  display: flex; align-items: center; gap: 10px;
-}
-.sec-eye::before { content: ''; width: 28px; height: 1px; background: var(--g3); }
-.sec-h {
-  font-size: clamp(32px, 4.5vw, 52px); font-weight: 900; letter-spacing: -0.5px; line-height: 1.0;
-  background: linear-gradient(135deg, #fff, var(--g4));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  margin-bottom: 40px;
-}
-.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0 40px; }
+  .hero-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 8vw, 88px);
+    letter-spacing: 0.12em;
+    background: linear-gradient(135deg, var(--green1), var(--green2) 60%, var(--green3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    white-space: nowrap;
+  }
 
-/* ── ROSTER ── */
-.roster-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-}
-.pc {
-  background: var(--bg3);
-  border: 1px solid var(--b2);
-  border-radius: var(--r);
-  overflow: hidden;
-  box-shadow: var(--shadow-out);
-  cursor: pointer;
-  transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s, border-color .2s;
-  opacity: 0; transform: translateY(32px);
-}
-.pc[data-steam]:hover {
-  transform: translateY(-5px);
-  box-shadow: 6px 6px 18px #060606, -3px -3px 10px #232323, 0 0 24px rgba(40,196,63,.12);
-  border-color: rgba(40,196,63,.3);
-}
-.pc[data-steam]:hover .pc-img img { transform: scale(1.06); filter: grayscale(0%); }
-.pc-img {
-  position: relative; aspect-ratio: 1 / 1.12; overflow: hidden; background: var(--bg4);
-}
-.pc-img img {
-  width: 100%; height: 100%; object-fit: cover; object-position: top center;
-  transition: transform .45s, filter .35s; filter: grayscale(18%);
-}
-.pc-role {
-  position: absolute; bottom: 8px; left: 8px;
-  padding: 3px 8px; border-radius: 20px;
-  background: rgba(8,8,8,.88); border: 1px solid var(--g2);
-  font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--g4); backdrop-filter: blur(4px);
-}
-.st-ov {
-  position: absolute; inset: 0;
-  background: rgba(8,8,8,.76);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
-  opacity: 0; transition: opacity .22s; pointer-events: none;
-}
-.pc[data-steam]:hover .st-ov { opacity: 1; }
-.st-ov svg { width: 32px; height: 32px; fill: #c6d4df; }
-.st-ov span { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #c6d4df; }
-.pc-body { padding: 12px 14px; }
-.pc-nick { font-size: 17px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 3px; }
-.pc-name { font-size: 11px; color: var(--t3); margin-bottom: 5px; }
-.pc-age  { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--g3); }
+  /* ─── LANGUAGE SWITCHER ─── */
+  .lang-switcher {
+    position: fixed;
+    top: 20px;
+    right: 28px;
+    z-index: 9999;
+    display: flex;
+    gap: 6px;
+    background: rgba(20,22,25,0.7);
+    backdrop-filter: blur(14px);
+    border-radius: 32px;
+    padding: 5px 10px;
+    box-shadow: 4px 4px 10px var(--neo-dark), -2px -2px 8px var(--neo-light);
+  }
 
-/* ── TEAM GRID 2×2 ── */
-.tgrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-.tg-item {
-  position: relative; overflow: hidden;
-  background: var(--bg3);
-  border: 1px solid var(--b2);
-  border-radius: 20px;
-  min-height: 230px;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 30px 30px 28px;
-  text-decoration: none; color: inherit;
-  box-shadow: var(--shadow-out);
-  cursor: pointer;
-  transition: transform .32s cubic-bezier(.22,1,.36,1), box-shadow .32s, border-color .22s;
-  opacity: 0; transform: translateY(28px);
-}
-.tg-item::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(40,196,63,.045) 0%, transparent 55%);
-  opacity: 0; transition: opacity .3s;
-}
-.tg-item:hover { transform: translateY(-6px); border-color: rgba(40,196,63,.35); }
-.tg-item:hover::after { opacity: 1; }
-.tg-item:hover .tg-arrow { background: var(--g3); border-color: var(--g3); box-shadow: 0 0 14px rgba(40,196,63,.45); }
-.tg-item:hover .tg-arrow svg { stroke: #000; }
-.tg-bg-txt {
-  position: absolute; top: 20px; right: 24px;
-  font-size: 72px; line-height: 1; opacity: .07;
-  transition: opacity .3s; pointer-events: none;
-  user-select: none;
-}
-.tg-item:hover .tg-bg-txt { opacity: .13; }
-.tg-arrow {
-  position: absolute; top: 26px; right: 26px;
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--b2); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  transition: all .25s;
-}
-.tg-arrow svg { width: 14px; height: 14px; stroke: var(--g4); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .25s; }
-.tg-icon { font-size: 40px; margin-bottom: 14px; line-height: 1; }
-.tg-icon img { height: 44px; object-fit: contain; }
-.tg-eye { font-size: 9px; font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase; color: var(--g2); margin-bottom: 7px; }
-.tg-title { font-size: clamp(22px, 2.5vw, 28px); font-weight: 900; letter-spacing: -.3px; color: #fff; margin-bottom: 5px; }
-.tg-desc { font-size: 12px; color: var(--t3); line-height: 1.5; }
+  .lang-switcher button {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    padding: 4px 8px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+  }
 
-/* sub-page panels inside 2×2 */
-.panel {
-  display: none;
-  position: fixed; inset: 0; z-index: 900;
-  background: var(--bg2);
-  overflow-y: scroll;
-  overscroll-behavior: contain;
-  animation: panelIn .35s cubic-bezier(.22,1,.36,1);
-}
-.panel.open { display: block; }
-@keyframes panelIn { from { opacity: 0; transform: scale(.97) } to { opacity: 1; transform: scale(1) } }
-.panel-hdr {
-  position: sticky; top: 0; z-index: 10;
-  background: rgba(15,15,15,.92); backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border);
-  height: 60px; display: flex; align-items: center; gap: 16px;
-  padding: 0 28px;
-}
-.panel-close {
-  display: flex; align-items: center; gap: 8px;
-  background: none; border: none; cursor: pointer;
-  color: var(--t2); font-family: var(--font); font-size: 11px;
-  font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  transition: color .18s;
-}
-.panel-close:hover { color: var(--g4); }
-.panel-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.panel-title { font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--t2); flex: 1; text-align: left; padding-left: 8px; }
-.panel-body { max-width: 1240px; margin: 0 auto; padding: 52px 40px 80px; }
-.panel-eye { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--g3); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-.panel-eye::before { content: ''; width: 26px; height: 1px; background: var(--g3); }
-.panel-h { font-size: clamp(30px, 5vw, 48px); font-weight: 900; letter-spacing: -.5px; background: linear-gradient(135deg,#fff,var(--g4)); -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; margin-bottom: 36px; }
-.sub-lbl { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--t3); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(40,196,63,.09); }
-.pgrid { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; margin-bottom: 44px; }
-.pgrid.g4 { grid-template-columns: repeat(4,1fr); }
-.pgrid.g3 { grid-template-columns: repeat(3,1fr); max-width: 640px; }
-.pgrid.g5 { grid-template-columns: repeat(5,1fr); }
-.p2c { background: var(--bg3); border: 1px solid var(--b2); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow-out); transition: transform .28s, border-color .2s; }
-.p2c:hover { transform: translateY(-4px); border-color: rgba(40,196,63,.28); }
-.p2c:hover .p2img img { transform: scale(1.05); filter: grayscale(0%); }
-.p2img { aspect-ratio: 1/1.12; overflow: hidden; background: var(--bg4); position: relative; }
-.p2img img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .4s, filter .3s; filter: grayscale(18%); }
-.p2pill { position: absolute; bottom: 7px; left: 7px; padding: 2px 7px; border-radius: 20px; background: rgba(8,8,8,.88); border: 1px solid var(--g2); font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--g4); }
-.p2body { padding: 11px 13px; }
-.p2nick { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 2px; }
-.p2sub  { font-size: 11px; color: var(--t3); }
+  .lang-switcher button.active {
+    background: linear-gradient(135deg, var(--green1), var(--green2));
+    color: #0e0f11;
+  }
 
-/* brawl override */
-.brawl-card { border-color: rgba(255,200,0,.1); }
-.brawl-card:hover { border-color: rgba(255,200,0,.4); }
-.brawl-card .p2pill { border-color: rgba(255,200,0,.4); color: #ffd700; }
-.brawl-card .p2nick { color: #ffd700; }
-.brawl-card a { text-decoration: none; color: inherit; display: block; }
-.brawl-card .stat-ov { position: absolute; inset: 0; background: rgba(8,8,8,.75); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; opacity: 0; transition: opacity .22s; }
-.brawl-card:hover .stat-ov { opacity: 1; }
-.brawl-card .stat-ov svg { width: 26px; height: 26px; fill: #ffd700; }
-.brawl-card .stat-ov span { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #ffd700; }
+  /* ─── STICKY HEADER ─── */
+  #sticky-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    background: rgba(14,15,17,0.82);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 1px 0 rgba(0,255,135,0.08);
+    transform: translateY(-100%);
+    transition: transform 0.5s var(--transition);
+    will-change: transform;
+  }
 
-/* standoff override */
-.so-card { border-color: rgba(210,80,30,.1); }
-.so-card:hover { border-color: rgba(210,80,30,.4); }
-.so-card .p2pill { border-color: rgba(210,80,30,.5); color: #e0692a; }
-.so-card .p2nick { color: #fff; }
+  #sticky-header.visible { transform: translateY(0); }
 
-/* ── SOCIALS ── */
-.soc-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-.soc-c {
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
-  padding: 30px 20px;
-  background: var(--bg3); border: 1px solid var(--b2); border-radius: 18px;
-  box-shadow: var(--shadow-out);
-  text-decoration: none; color: var(--t2);
-  transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .2s;
-  opacity: 0; transform: translateY(20px);
-}
-.soc-c:hover { transform: translateY(-5px); border-color: var(--sc, var(--g3)); }
-.soc-c:hover .sc-ico { fill: var(--sc, var(--g3)); filter: drop-shadow(0 0 8px var(--sc, var(--glow))); }
-.soc-c:hover .sc-lbl { color: var(--sc, var(--g4)); }
-.sc-ico { width: 36px; height: 36px; fill: var(--t3); transition: fill .25s, filter .25s; }
-.sc-lbl { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; transition: color .25s; }
-.sc-hand { font-size: 11px; color: var(--t3); }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
 
-/* ── CONTACT ── */
-.contact-box {
-  background: var(--bg3); border: 1px solid var(--b2); border-radius: 20px;
-  padding: 52px 48px; box-shadow: var(--shadow-in);
-  display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: center;
-}
-.ct-h { font-size: clamp(26px, 3.5vw, 38px); font-weight: 900; letter-spacing: -.5px; background: linear-gradient(135deg,#fff,var(--g4)); -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; margin-bottom: 12px; }
-.ct-p { font-size: 14px; color: var(--t2); line-height: 1.7; margin-bottom: 24px; }
-.ct-btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 13px 26px; background: rgba(40,196,63,.09);
-  border: 1px solid var(--border); border-radius: 11px;
-  font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--g4);
-  text-decoration: none; transition: all .22s; box-shadow: var(--shadow-out);
-}
-.ct-btn:hover { background: rgba(40,196,63,.17); box-shadow: 0 0 18px rgba(40,196,63,.2); }
-.ct-btn svg { width: 16px; height: 16px; fill: currentColor; }
-.ct-stats { display: flex; flex-direction: column; gap: 14px; }
-.ct-stat {
-  display: flex; align-items: center; gap: 18px;
-  padding: 16px 20px; background: var(--bg2);
-  border: 1px solid var(--b2); border-radius: 12px; box-shadow: var(--shadow-out);
-}
-.ct-num { font-size: 30px; font-weight: 900; color: var(--g4); line-height: 1; min-width: 52px; }
-.ct-lbl { font-size: 11px; color: var(--t3); letter-spacing: 1px; text-transform: uppercase; }
+  .header-logo img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(0,255,135,0.4));
+  }
 
-/* ── FOOTER ── */
-footer {
-  background: var(--bg2); border-top: 1px solid var(--b2);
-  padding: 26px 40px;
-  display: flex; align-items: center; justify-content: space-between;
-  position: relative; z-index: 1;
-}
-.ft-brand { display: flex; align-items: center; gap: 10px; }
-.ft-brand img { height: 30px; object-fit: contain; }
-.ft-txt { font-size: 12px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--t2); }
-.ft-txt span { color: var(--g4); }
-.ft-copy { font-size: 11px; color: var(--t3); letter-spacing: .5px; }
+  .header-logo span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    background: linear-gradient(90deg, var(--green1), var(--green2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-/* ── MODAL ── */
-.modal-bd {
-  position: fixed; inset: 0; z-index: 2000;
-  background: rgba(0,0,0,.84);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity .2s; backdrop-filter: blur(8px);
-}
-.modal-bd.on { opacity: 1; pointer-events: auto; }
-.modal {
-  background: var(--bg3); border: 1px solid var(--border); border-radius: 18px;
-  width: 360px; overflow: hidden;
-  box-shadow: 0 28px 70px rgba(0,0,0,.65), 0 0 36px rgba(40,196,63,.1);
-  transform: scale(.9) translateY(14px);
-  transition: transform .3s cubic-bezier(.22,1,.36,1);
-}
-.modal-bd.on .modal { transform: scale(1) translateY(0); }
-.m-hd { background: linear-gradient(135deg,#16202e,#0d1620); padding: 20px 22px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(103,193,245,.1); }
-.m-av { width: 72px; height: 72px; object-fit: cover; border-radius: 10px; border: 2px solid rgba(103,193,245,.22); }
-.m-nick { font-size: 24px; font-weight: 800; color: #c6d4df; line-height: 1; margin-bottom: 4px; }
-.m-role { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #67c1f5; }
-.m-body { padding: 20px 22px; }
-.m-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.05); font-size: 13px; }
-.m-row:last-child { border: none; }
-.m-row .k { color: var(--t3); }
-.m-row .v { color: var(--text); font-weight: 600; }
-.m-acts { padding: 14px 22px 22px; display: flex; gap: 10px; }
-.m-st {
-  flex: 1; padding: 11px; background: linear-gradient(135deg,#16202e,#0d1620);
-  border: 1px solid #67c1f5; border-radius: 9px; color: #67c1f5;
-  font-family: var(--font); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 7px; transition: all .2s;
-}
-.m-st:hover { background: #1a3a52; box-shadow: 0 0 18px rgba(103,193,245,.22); }
-.m-st svg { width: 16px; height: 16px; fill: currentColor; }
-.m-cl {
-  padding: 11px 18px; background: transparent;
-  border: 1px solid var(--b2); border-radius: 9px;
-  color: var(--t3); font-family: var(--font); font-size: 11px; font-weight: 700;
-  letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all .2s;
-}
-.m-cl:hover { border-color: var(--t2); color: var(--text); }
+  nav.header-nav {
+    margin-left: auto;
+    margin-right: 20px;
+    display: flex;
+    gap: 28px;
+  }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 1100px) {
-  .roster-grid { grid-template-columns: repeat(3, 1fr); }
-  .pgrid { grid-template-columns: repeat(3,1fr) !important; }
-}
-@media (max-width: 780px) {
-  .sec { padding: 52px 20px; }
-  .roster-grid { grid-template-columns: repeat(2, 1fr); }
-  .tgrid { grid-template-columns: 1fr; }
-  .soc-grid { grid-template-columns: repeat(2, 1fr); }
-  .contact-box { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
-  .pgrid, .pgrid.g4, .pgrid.g5, .pgrid.g3 { grid-template-columns: repeat(2,1fr) !important; max-width: 100%; }
-  footer { flex-direction: column; gap: 12px; text-align: center; }
-  #lang-sw { top: 12px; right: 14px; }
-  .hnav { display: none; }
-  #hero-img { width: 140px; height: 140px; }
-  .panel-body { padding: 36px 20px 60px; }
-}
-@media (max-width: 460px) {
-  .roster-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .soc-grid { grid-template-columns: 1fr 1fr; }
-}
+  nav.header-nav a {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav.header-nav a:hover { color: var(--green1); }
+
+  /* ─── NEOMORPHIC HELPERS ─── */
+  .neo-card {
+    background: var(--bg2);
+    border-radius: var(--radius);
+    box-shadow: 6px 6px 16px var(--neo-dark), -4px -4px 12px var(--neo-light), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+
+  .neo-inset {
+    background: var(--bg2);
+    border-radius: var(--radius);
+    box-shadow: inset 4px 4px 10px var(--neo-dark), inset -3px -3px 8px var(--neo-light);
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green2);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 64px);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  /* ─── ROSTER SECTION ─── */
+  #roster {
+    padding: 120px 5vw 80px;
+    min-height: 100vh;
+  }
+
+  .roster-header {
+    margin-bottom: 56px;
+  }
+
+  .roster-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+  }
+
+  .player-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--bg2);
+    box-shadow: 8px 8px 20px var(--neo-dark), -4px -4px 14px var(--neo-light);
+    cursor: pointer;
+    transition: transform 0.4s var(--transition), box-shadow 0.4s var(--transition);
+    opacity: 0;
+    transform: translateY(60px);
+    will-change: transform, opacity;
+    text-decoration: none;
+    display: block;
+  }
+
+  .player-card.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .player-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 12px 18px 36px rgba(0,0,0,0.6), -4px -4px 14px var(--neo-light), 0 0 30px rgba(0,255,135,0.12);
+  }
+
+  .player-img-wrap {
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .player-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(14,15,17,0.95) 0%, rgba(14,15,17,0.1) 50%, transparent 100%);
+  }
+
+  .player-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.6s var(--transition);
+  }
+
+  .player-card:hover .player-img-wrap img { transform: scale(1.06); }
+
+  .player-info {
+    padding: 16px 18px 20px;
+    position: relative;
+  }
+
+  .player-role {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--green2);
+    margin-bottom: 4px;
+  }
+
+  .player-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .player-steam-icon {
+    position: absolute;
+    bottom: 18px;
+    right: 16px;
+    width: 22px;
+    height: 22px;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+  }
+
+  .player-card:hover .player-steam-icon { opacity: 1; }
+
+  /* ─── GRID NAV ─── */
+  #grid-nav {
+    padding: 80px 5vw;
+  }
+
+  .grid-nav-header {
+    margin-bottom: 48px;
+  }
+
+  .apple-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 700px) {
+    .apple-grid { grid-template-columns: 1fr; }
+  }
+
+  .apple-block {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px;
+    text-decoration: none;
+    background: var(--bg2);
+    box-shadow: 8px 8px 24px var(--neo-dark), -4px -4px 14px var(--neo-light);
+    transition: transform 0.45s var(--transition), box-shadow 0.45s var(--transition);
+    will-change: transform;
+    cursor: pointer;
+  }
+
+  .apple-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,255,135,0.0) 0%, rgba(0,200,83,0.0) 100%);
+    transition: background 0.4s;
+    z-index: 1;
+  }
+
+  .apple-block:hover::before {
+    background: linear-gradient(135deg, rgba(0,255,135,0.07) 0%, rgba(0,200,83,0.04) 100%);
+  }
+
+  .apple-block:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 14px 22px 44px rgba(0,0,0,0.65), -4px -4px 14px var(--neo-light), 0 0 40px rgba(0,255,135,0.1);
+  }
+
+  .apple-block-bg {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    opacity: 0.18;
+    filter: saturate(0.5);
+    transition: opacity 0.4s, filter 0.4s;
+  }
+
+  .apple-block:hover .apple-block-bg {
+    opacity: 0.28;
+    filter: saturate(0.8);
+  }
+
+  .apple-block-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(14,15,17,0.95) 0%, rgba(14,15,17,0.3) 60%, transparent 100%);
+    z-index: 1;
+  }
+
+  .apple-block-logo {
+    position: absolute;
+    top: 28px;
+    left: 32px;
+    height: 52px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+    z-index: 2;
+    transition: opacity 0.3s;
+  }
+
+  .apple-block:hover .apple-block-logo { opacity: 1; }
+
+  .apple-block-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .apple-block-tag {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green1);
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  .apple-block-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: 0.05em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .apple-block-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .apple-block-arrow {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,255,135,0.12);
+    border: 1px solid rgba(0,255,135,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .apple-block:hover .apple-block-arrow {
+    background: rgba(0,255,135,0.25);
+    transform: translate(3px, -3px);
+  }
+
+  .apple-block-arrow svg { width: 16px; height: 16px; }
+
+  /* ─── SOCIALS ─── */
+  #socials {
+    padding: 100px 5vw;
+  }
+
+  .socials-header { margin-bottom: 48px; }
+
+  .socials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+  }
+
+  .social-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 32px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    background: var(--bg2);
+    box-shadow: 6px 6px 16px var(--neo-dark), -4px -4px 12px var(--neo-light);
+    transition: transform 0.35s var(--transition), box-shadow 0.35s var(--transition), color 0.3s;
+    color: var(--text-muted);
+  }
+
+  .social-btn svg {
+    width: 36px;
+    height: 36px;
+    transition: fill 0.3s, filter 0.3s;
+    fill: var(--text-muted);
+  }
+
+  .social-btn span {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .social-btn:hover {
+    transform: translateY(-6px);
+    box-shadow: 8px 14px 28px rgba(0,0,0,0.5), -4px -4px 12px var(--neo-light);
+  }
+
+  .social-btn.twitch:hover { color: #9147ff; box-shadow: 8px 14px 28px rgba(0,0,0,0.5), 0 0 24px rgba(145,71,255,0.25); }
+  .social-btn.twitch:hover svg { fill: #9147ff; filter: drop-shadow(0 0 8px rgba(145,71,255,0.6)); }
+
+  .social-btn.telegram:hover { color: #2aabee; box-shadow: 8px 14px 28px rgba(0,0,0,0.5), 0 0 24px rgba(42,171,238,0.25); }
+  .social-btn.telegram:hover svg { fill: #2aabee; filter: drop-shadow(0 0 8px rgba(42,171,238,0.6)); }
+
+  .social-btn.instagram:hover { color: #e1306c; box-shadow: 8px 14px 28px rgba(0,0,0,0.5), 0 0 24px rgba(225,48,108,0.25); }
+  .social-btn.instagram:hover svg { fill: #e1306c; filter: drop-shadow(0 0 8px rgba(225,48,108,0.6)); }
+
+  .social-btn.tiktok:hover { color: #ff0050; box-shadow: 8px 14px 28px rgba(0,0,0,0.5), 0 0 24px rgba(255,0,80,0.25); }
+  .social-btn.tiktok:hover svg { fill: #ff0050; filter: drop-shadow(0 0 8px rgba(255,0,80,0.6)); }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding: 100px 5vw 60px;
+  }
+
+  .contact-inner {
+    background: var(--bg2);
+    border-radius: 28px;
+    box-shadow: inset 4px 4px 12px var(--neo-dark), inset -3px -3px 10px var(--neo-light);
+    padding: 60px 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .contact-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 58px);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .contact-left h2 span {
+    background: linear-gradient(90deg, var(--green1), var(--green2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .contact-left p {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 420px;
+  }
+
+  .contact-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    border-radius: 14px;
+    background: var(--bg3);
+    box-shadow: 4px 4px 10px var(--neo-dark), -2px -2px 8px rgba(30,33,37,0.8);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.3s var(--transition), box-shadow 0.3s;
+  }
+
+  .contact-item:hover {
+    transform: translateX(6px);
+    box-shadow: 6px 6px 16px var(--neo-dark), -2px -2px 8px rgba(30,33,37,0.8), 0 0 20px rgba(0,255,135,0.1);
+  }
+
+  .contact-item-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(0,255,135,0.15), rgba(0,200,83,0.08));
+    border: 1px solid rgba(0,255,135,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-item-icon svg { width: 18px; height: 18px; fill: var(--green1); }
+
+  .contact-item-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .contact-item-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 32px 5vw;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  footer .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    background: linear-gradient(90deg, var(--green1), var(--green2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  footer p {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,255,135,0.15), transparent);
+    margin: 0 5vw;
+    width: 90vw;
+  }
+
+  /* ─── SCROLL FADE IN ─── */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s var(--transition), transform 0.7s var(--transition);
+  }
+
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── NOISE TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* GREEN ACCENT LINE */
+  .green-line {
+    display: inline-block;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green1), var(--green2));
+    margin-right: 10px;
+    vertical-align: middle;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 600px) {
+    nav.header-nav { display: none; }
+    .lang-switcher { right: 16px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- LANG -->
-<div id="lang-sw">
-  <button class="lb on" onclick="setL('en')">EN</button>
-  <button class="lb"    onclick="setL('ua')">UA</button>
-  <button class="lb"    onclick="setL('ru')">RU</button>
+<!-- LANGUAGE SWITCHER -->
+<div class="lang-switcher">
+  <button class="active" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('ua')">UA</button>
+  <button onclick="setLang('ru')">RU</button>
 </div>
 
-<!-- HEADER -->
-<header id="hdr">
-  <a id="hdr-logo" href="#hero">
-    <img src="https://i.imgur.com/NtWvGlp.png" alt="GT" onerror="this.style.display='none'">
-    <div id="hdr-logo-txt">GLADKOVKA <span style="color:var(--g4)">TEAM</span></div>
+<!-- STICKY HEADER -->
+<header id="sticky-header">
+  <a href="#" class="header-logo" onclick="scrollToTop(event)">
+    <img src="https://i.imgur.com/dAsOvWz.png" alt="Gladkovka Logo"/>
+    <span>GLADKOVKA</span>
   </a>
-  <nav class="hnav">
-    <a href="#roster"  data-en="Roster"  data-ua="Склад"   data-ru="Состав">Roster</a>
-    <a href="#socials" data-en="Socials" data-ua="Соцмережі" data-ru="Соцсети">Socials</a>
-    <a href="#contact" data-en="Contact" data-ua="Контакт" data-ru="Контакт">Contact</a>
+  <nav class="header-nav">
+    <a href="#roster" data-i18n="nav_roster">Roster</a>
+    <a href="#socials" data-i18n="nav_socials">Socials</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
   </nav>
 </header>
 
-<!-- ══ HERO ══ -->
+<!-- HERO -->
 <section id="hero">
-  <div id="glow"></div>
-  <div id="hero-wrap">
-    <img id="hero-img" src="https://i.imgur.com/NtWvGlp.png" alt="Gladkovka Team" onerror="this.style.opacity='0'">
-    <div>
-      <div class="ht1">GLADKOVKA</div>
-      <div class="ht2">TEAM</div>
-      <div class="ht3" data-en="Esports Club · CS2 · Brawl Stars · Standoff 2"
-                       data-ua="Кіберспортивний клуб · CS2 · Brawl Stars · Standoff 2"
-                       data-ru="Киберспортивный клуб · CS2 · Brawl Stars · Standoff 2">
-        Esports Club · CS2 · Brawl Stars · Standoff 2
-      </div>
-    </div>
-  </div>
-  <div class="scroll-cue">
-    <div class="scroll-cue-bar"></div>
-    <span data-en="SCROLL" data-ua="СКРОЛ" data-ru="СКРОЛЛ">SCROLL</span>
+  <div class="hero-glow" id="heroGlow"></div>
+  <div class="hero-logo-wrap" id="heroLogoWrap">
+    <img class="hero-logo-img" src="https://i.imgur.com/dAsOvWz.png" alt="Gladkovka Team"/>
+    <div class="hero-wordmark">GLADKOVKA</div>
   </div>
 </section>
 
-<!-- ══ ROSTER ══ -->
-<div class="divider"></div>
+<!-- ROSTER -->
 <section id="roster">
-  <div class="sec">
-    <div class="sec-eye" data-en="Main Roster" data-ua="Основний склад" data-ru="Основной состав">Main Roster</div>
-    <h2 class="sec-h" data-en="CS2 — GLADKOVKA TEAM" data-ua="CS2 — GLADKOVKA TEAM" data-ru="CS2 — GLADKOVKA TEAM">CS2 — GLADKOVKA TEAM</h2>
-    <div class="roster-grid">
+  <div class="roster-header scroll-reveal">
+    <p class="section-label" data-i18n="roster_label">Main Roster</p>
+    <h2 class="section-title" data-i18n="roster_title">CS2 TEAM</h2>
+  </div>
 
-      <div class="pc" data-steam="https://steamcommunity.com/id/sfghsdfgdsfz/"
-           data-nick="Ronik" data-name="Stanislav K." data-role="Rifler" data-age="38 y.o."
-           data-img="https://i.imgur.com/7ZUxz4N.jpeg" onclick="openModal(this)">
-        <div class="pc-img">
-          <img src="https://i.imgur.com/7ZUxz4N.jpeg" alt="Ronik" loading="lazy">
-          <div class="pc-role">Rifler</div>
-          <div class="st-ov"><svg viewBox="0 0 24 24"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.711L.581 17.187C1.907 20.961 5.712 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.606 0 11.979 0z"/></svg><span>Steam</span></div>
-        </div>
-        <div class="pc-body"><div class="pc-nick">"Ronik"</div><div class="pc-name">Stanislav K.</div><div class="pc-age">38 y.o.</div></div>
+  <div class="roster-grid">
+    <a class="player-card" href="https://steamcommunity.com/id/sfghsdfgdsfz/" target="_blank" rel="noopener">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/vX4t6TP.jpeg" alt="Ronik" loading="lazy"/></div>
+      <div class="player-info">
+        <div class="player-role">Rifler · 2nd AWP</div>
+        <div class="player-name">Ronik</div>
+        <img class="player-steam-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam"/>
       </div>
-
-      <div class="pc" data-steam="https://steamcommunity.com/profiles/76561199531602090"
-           data-nick="VITALIK" data-name="Dmitry S." data-role="Rifler / 2nd AWP" data-age="38 y.o."
-           data-img="https://i.imgur.com/exGwQGE.jpeg" onclick="openModal(this)">
-        <div class="pc-img">
-          <img src="https://i.imgur.com/exGwQGE.jpeg" alt="VITALIK" loading="lazy">
-          <div class="pc-role">Rifler / 2nd AWP</div>
-          <div class="st-ov"><svg viewBox="0 0 24 24"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.711L.581 17.187C1.907 20.961 5.712 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.606 0 11.979 0z"/></svg><span>Steam</span></div>
-        </div>
-        <div class="pc-body"><div class="pc-nick">"VITALIK"</div><div class="pc-name">Dmitry S.</div><div class="pc-age">38 y.o.</div></div>
+    </a>
+    <a class="player-card" href="https://steamcommunity.com/profiles/76561199531602090" target="_blank" rel="noopener">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/hLvxu2m.jpeg" alt="VITALIK" loading="lazy"/></div>
+      <div class="player-info">
+        <div class="player-role">Rifler</div>
+        <div class="player-name">VITALIK</div>
+        <img class="player-steam-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam"/>
       </div>
-
-      <div class="pc" data-steam="https://steamcommunity.com/profiles/76561199447097399"
-           data-nick="Malish-Vasya" data-name="Egor B." data-role="AWP" data-age="67 y.o."
-           data-img="https://i.imgur.com/xShvEiT.jpeg" onclick="openModal(this)">
-        <div class="pc-img">
-          <img src="https://i.imgur.com/xShvEiT.jpeg" alt="Malish-Vasya" loading="lazy">
-          <div class="pc-role">AWP</div>
-          <div class="st-ov"><svg viewBox="0 0 24 24"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.711L.581 17.187C1.907 20.961 5.712 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.606 0 11.979 0z"/></svg><span>Steam</span></div>
-        </div>
-        <div class="pc-body"><div class="pc-nick">"Malish-Vasya"</div><div class="pc-name">Egor B.</div><div class="pc-age">67 y.o.</div></div>
+    </a>
+    <a class="player-card" href="https://steamcommunity.com/profiles/76561199447097399" target="_blank" rel="noopener">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/JtzNj63.jpeg" alt="VASILIY" loading="lazy"/></div>
+      <div class="player-info">
+        <div class="player-role">AWP</div>
+        <div class="player-name">VASILIY</div>
+        <img class="player-steam-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam"/>
       </div>
-
-      <div class="pc" data-steam="https://steamcommunity.com/profiles/76561198986472222"
-           data-nick="Danich" data-name="Daniil S." data-role="Rifler · Photographer" data-age="20 y.o."
-           data-img="https://i.imgur.com/RBlUDU6.jpeg" onclick="openModal(this)">
-        <div class="pc-img">
-          <img src="https://i.imgur.com/RBlUDU6.jpeg" alt="Danich" loading="lazy">
-          <div class="pc-role">Rifler</div>
-          <div class="st-ov"><svg viewBox="0 0 24 24"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.711L.581 17.187C1.907 20.961 5.712 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.606 0 11.979 0z"/></svg><span>Steam</span></div>
-        </div>
-        <div class="pc-body"><div class="pc-nick">"Danich"</div><div class="pc-name">Daniil S.</div><div class="pc-age">20 y.o. · 📷</div></div>
+    </a>
+    <a class="player-card" href="#" onclick="return false;">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/0cPc27X.png" alt="DNK" loading="lazy"/></div>
+      <div class="player-info">
+        <div class="player-role">IGL</div>
+        <div class="player-name">DNK</div>
       </div>
-
-      <div class="pc" data-steam="https://steamcommunity.com/profiles/76561199532469905"
-           data-nick="DXNXSIXS" data-name="Denis S." data-role="Support" data-age="9 y.o."
-           data-img="https://i.imgur.com/BUGQSks.jpeg" onclick="openModal(this)">
-        <div class="pc-img">
-          <img src="https://i.imgur.com/BUGQSks.jpeg" alt="DXNXSIXS" loading="lazy">
-          <div class="pc-role">Support</div>
-          <div class="st-ov"><svg viewBox="0 0 24 24"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.711L.581 17.187C1.907 20.961 5.712 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.606 0 11.979 0z"/></svg><span>Steam</span></div>
-        </div>
-        <div class="pc-body"><div class="pc-nick">"DXNXSIXS"</div><div class="pc-name">Denis S.</div><div class="pc-age">9 y.o.</div></div>
+    </a>
+    <a class="player-card" href="https://steamcommunity.com/profiles/76561199532469905" target="_blank" rel="noopener">
+      <div class="player-img-wrap"><img src="https://i.imgur.com/7FM1rjI.jpeg" alt="DXNXSXS" loading="lazy"/></div>
+      <div class="player-info">
+        <div class="player-role">Support</div>
+        <div class="player-name">DXNXSXS</div>
+        <img class="player-steam-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam"/>
       </div>
-
-    </div>
+    </a>
   </div>
 </section>
 
-<!-- ══ TEAM GRID ══ -->
-<div class="divider"></div>
-<section id="divisions">
-  <div class="sec">
-    <div class="sec-eye" data-en="All Divisions" data-ua="Всі дивізіони" data-ru="Все дивизионы">All Divisions</div>
-    <h2 class="sec-h" data-en="EXPLORE THE CLUB" data-ua="ДОСЛІДЖУЙ КЛУБ" data-ru="ИЗУЧИ КЛУБ">EXPLORE THE CLUB</h2>
-    <div class="tgrid">
+<div class="section-divider"></div>
 
-      <div class="tg-item" onclick="openPanel('panel-academy')">
-        <div class="tg-bg-txt">🎯</div>
-        <div class="tg-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        <div class="tg-icon"><img src="https://i.imgur.com/04zGT00.png" alt="" onerror="this.innerHTML='🎯'"></div>
-        <div class="tg-eye">Counter-Strike 2</div>
-        <div class="tg-title" data-en="CS2 Academy" data-ua="CS2 Академія" data-ru="CS2 Академия">CS2 Academy</div>
-        <div class="tg-desc" data-en="Youth roster & rising talent" data-ua="Молодіжний склад та таланти" data-ru="Молодёжный состав и таланты">Youth roster & rising talent</div>
+<!-- APPLE GRID NAV -->
+<section id="grid-nav">
+  <div class="grid-nav-header scroll-reveal">
+    <p class="section-label" data-i18n="divisions_label">Divisions</p>
+    <h2 class="section-title" data-i18n="divisions_title">EXPLORE TEAMS</h2>
+  </div>
+
+  <div class="apple-grid">
+    <!-- CS2 Academy -->
+    <a class="apple-block" href="cs2-academy.html">
+      <img class="apple-block-bg" src="https://i.imgur.com/tABG2yR.png" alt="" aria-hidden="true"/>
+      <div class="apple-block-overlay"></div>
+      <img class="apple-block-logo" src="https://i.imgur.com/3JHW50v.png" alt="Academy"/>
+      <div class="apple-block-content">
+        <div class="apple-block-tag" data-i18n="block_cs2_tag">Academy</div>
+        <div class="apple-block-title" data-i18n="block_cs2_title">CS2 ACADEMY</div>
+        <div class="apple-block-subtitle" data-i18n="block_cs2_sub">6 rising talents</div>
       </div>
-
-      <div class="tg-item" onclick="openPanel('panel-bench')">
-        <div class="tg-bg-txt">🔄</div>
-        <div class="tg-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        <div class="tg-icon"><img src="https://i.imgur.com/NtWvGlp.png" alt="" onerror="this.innerHTML='🔄'"></div>
-        <div class="tg-eye">CS2 Main</div>
-        <div class="tg-title" data-en="Substitutes" data-ua="Замінники" data-ru="Запасные">Substitutes</div>
-        <div class="tg-desc">lominok · nopidorabeme · synblyadi</div>
+      <div class="apple-block-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00ff87" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
       </div>
+    </a>
 
-      <div class="tg-item" onclick="openPanel('panel-brawl')">
-        <div class="tg-bg-txt">⭐</div>
-        <div class="tg-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        <div class="tg-icon" style="font-size:40px">⭐</div>
-        <div class="tg-eye">Brawl Stars</div>
-        <div class="tg-title">Brawl Stars</div>
-        <div class="tg-desc">Hamster · AnalnyKaktus · степан памперс</div>
+    <!-- Bench -->
+    <a class="apple-block" href="bench.html">
+      <img class="apple-block-bg" src="https://i.imgur.com/U1NT5eB.jpeg" alt="" aria-hidden="true"/>
+      <div class="apple-block-overlay"></div>
+      <div class="apple-block-content">
+        <div class="apple-block-tag" data-i18n="block_bench_tag">Substitute</div>
+        <div class="apple-block-title" data-i18n="block_bench_title">BENCH PLAYERS</div>
+        <div class="apple-block-subtitle" data-i18n="block_bench_sub">3 substitute players</div>
       </div>
-
-      <div class="tg-item" onclick="openPanel('panel-standoff')">
-        <div class="tg-bg-txt">🔫</div>
-        <div class="tg-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        <div class="tg-icon" style="font-size:40px">🔫</div>
-        <div class="tg-eye">Standoff 2</div>
-        <div class="tg-title">Standoff 2</div>
-        <div class="tg-desc">4rvvr · 4ddy tei · nomu · wirvexxqw · Tickrate</div>
+      <div class="apple-block-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00ff87" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
       </div>
+    </a>
 
-    </div>
+    <!-- Brawl Stars -->
+    <a class="apple-block" href="brawl-stars.html">
+      <img class="apple-block-bg" src="https://i.imgur.com/pN9Rwud.png" alt="" aria-hidden="true"/>
+      <div class="apple-block-overlay"></div>
+      <div class="apple-block-content">
+        <div class="apple-block-tag" data-i18n="block_bs_tag">Mobile Gaming</div>
+        <div class="apple-block-title" data-i18n="block_bs_title">BRAWL STARS</div>
+        <div class="apple-block-subtitle" data-i18n="block_bs_sub">3 brawl players</div>
+      </div>
+      <div class="apple-block-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00ff87" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </div>
+    </a>
+
+    <!-- Standoff -->
+    <a class="apple-block" href="standoff.html">
+      <div class="apple-block-overlay" style="background:linear-gradient(to top,rgba(14,15,17,0.98),rgba(14,15,17,0.5) 60%,rgba(14,15,17,0.3))"></div>
+      <div class="apple-block-content">
+        <div class="apple-block-tag" data-i18n="block_so_tag">Mobile Shooter</div>
+        <div class="apple-block-title" data-i18n="block_so_title">STANDOFF 2</div>
+        <div class="apple-block-subtitle" data-i18n="block_so_sub">Coming soon</div>
+      </div>
+      <div class="apple-block-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00ff87" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </div>
+    </a>
   </div>
 </section>
 
-<!-- ══ SOCIALS ══ -->
-<div class="divider"></div>
+<div class="section-divider"></div>
+
+<!-- SOCIALS -->
 <section id="socials">
-  <div class="sec">
-    <div class="sec-eye" data-en="Follow Us" data-ua="Підписуйтесь" data-ru="Подписывайтесь">Follow Us</div>
-    <h2 class="sec-h" data-en="SOCIAL MEDIA" data-ua="СОЦІАЛЬНІ МЕРЕЖІ" data-ru="СОЦИАЛЬНЫЕ СЕТИ">SOCIAL MEDIA</h2>
-    <div class="soc-grid">
-      <a href="https://t.me/gladkovkateam" target="_blank" class="soc-c" style="--sc:#29a8e0">
-        <svg class="sc-ico" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.01 9.47c-.15.672-.54.836-1.094.52l-3.017-2.223-1.455 1.4c-.162.16-.297.295-.607.295l.216-3.063 5.575-5.033c.243-.216-.052-.335-.374-.119L7.35 14.17l-2.99-.937c-.648-.203-.66-.648.136-.96l11.684-4.507c.54-.196 1.014.119.382.483z"/></svg>
-        <span class="sc-lbl">Telegram</span><span class="sc-hand">@gladkovkateam</span>
-      </a>
-      <a href="https://www.tiktok.com/@gladkovka.team" target="_blank" class="soc-c" style="--sc:#ee1d52">
-        <svg class="sc-ico" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.88a8.22 8.22 0 004.79 1.52V7a4.85 4.85 0 01-1.02-.31z"/></svg>
-        <span class="sc-lbl">TikTok</span><span class="sc-hand">@gladkovka.team</span>
-      </a>
-      <a href="https://www.instagram.com/gladkovkateam" target="_blank" class="soc-c" style="--sc:#e1306c">
-        <svg class="sc-ico" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        <span class="sc-lbl">Instagram</span><span class="sc-hand">@gladkovkateam</span>
-      </a>
+  <div class="socials-header scroll-reveal">
+    <p class="section-label" data-i18n="socials_label">Follow Us</p>
+    <h2 class="section-title" data-i18n="socials_title">COMMUNITY</h2>
+  </div>
 
-    </div>
+  <div class="socials-grid scroll-reveal">
+    <a class="social-btn twitch" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+      <span>Twitch</span>
+    </a>
+    <a class="social-btn telegram" href="https://t.me/gladkovkateam" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      <span>Telegram</span>
+    </a>
+    <a class="social-btn instagram" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      <span>Instagram</span>
+    </a>
+    <a class="social-btn tiktok" href="https://www.tiktok.com/@gladkovka.team" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+      <span>TikTok</span>
+    </a>
   </div>
 </section>
 
-<!-- ══ CONTACT ══ -->
-<div class="divider"></div>
+<div class="section-divider"></div>
+
+<!-- CONTACT -->
 <section id="contact">
-  <div class="sec">
-    <div class="sec-eye" data-en="Business" data-ua="Бізнес" data-ru="Бизнес">Business</div>
-    <h2 class="sec-h" data-en="PARTNERSHIP" data-ua="ПАРТНЕРСТВО" data-ru="ПАРТНЁРСТВО">PARTNERSHIP</h2>
-    <div class="contact-box">
-      <div>
-        <div class="ct-h" data-en="Work With Us" data-ua="Працюйте з нами" data-ru="Работайте с нами">Work With Us</div>
-        <p class="ct-p" data-en="Interested in sponsoring Gladkovka Team or partnering with our esports organization? We're open to collaborations." data-ua="Зацікавлені у спонсорстві або партнерстві? Напишіть нам." data-ru="Заинтересованы в спонсорстве или партнёрстве? Напишите нам.">
-          Interested in sponsoring Gladkovka Team or partnering with our esports organization? We're open to collaborations.
-        </p>
-        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
-          <a href="https://t.me/gladkovkateam" target="_blank" class="ct-btn">
-            <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.01 9.47c-.15.672-.54.836-1.094.52l-3.017-2.223-1.455 1.4c-.162.16-.297.295-.607.295l.216-3.063 5.575-5.033c.243-.216-.052-.335-.374-.119L7.35 14.17l-2.99-.937c-.648-.203-.66-.648.136-.96l11.684-4.507c.54-.196 1.014.119.382.483z"/></svg>
-            <span data-en="Contact via Telegram" data-ua="Написати в Telegram" data-ru="Написать в Telegram">Contact via Telegram</span>
-          </a>
-          <a href="mailto:laptopdrivetop@gmail.com" class="ct-btn">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-            laptopdrivetop@gmail.com
-          </a>
+  <div class="contact-inner">
+    <div class="contact-left scroll-reveal">
+      <div class="section-label" data-i18n="contact_label">Business</div>
+      <h2><span data-i18n="contact_title_green">Partnership</span><br/><span data-i18n="contact_title">& Contact</span></h2>
+      <p data-i18n="contact_desc">Interested in sponsoring Gladkovka Team or collaborating with us? Reach out through any of the channels below and we'll get back to you promptly.</p>
+    </div>
+    <div class="contact-right scroll-reveal">
+      <a class="contact-item" href="mailto:laptopdrivetop@gmail.com">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         </div>
-      </div>
-      <div class="ct-stats">
-        <div class="ct-stat"><div class="ct-num">3</div><div><div class="ct-lbl" data-en="Disciplines" data-ua="Дисципліни" data-ru="Дисциплины">Disciplines</div></div></div>
-        <div class="ct-stat"><div class="ct-num">16+</div><div><div class="ct-lbl" data-en="Active Players" data-ua="Активних гравців" data-ru="Активных игроков">Active Players</div></div></div>
-        <div class="ct-stat"><div class="ct-num">4</div><div><div class="ct-lbl" data-en="Rosters" data-ua="Склади" data-ru="Составы">Rosters</div></div></div>
-      </div>
+        <div>
+          <div class="contact-item-label" data-i18n="contact_email_label">Email · Partnerships</div>
+          <div class="contact-item-value">laptopdrivetop@gmail.com</div>
+        </div>
+      </a>
+      <a class="contact-item" href="https://t.me/gladkovkateam" target="_blank" rel="noopener">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </div>
+        <div>
+          <div class="contact-item-label" data-i18n="contact_tg_label">Telegram Channel</div>
+          <div class="contact-item-value">@gladkovkateam</div>
+        </div>
+      </a>
+      <a class="contact-item" href="https://t.me/gladkovkateambot" target="_blank" rel="noopener">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V15a1 1 0 0 0-2 0v1.93A8 8 0 0 1 4.07 11H6a1 1 0 0 0 0-2H4.07A8 8 0 0 1 11 4.07V6a1 1 0 0 0 2 0V4.07A8 8 0 0 1 19.93 11H18a1 1 0 0 0 0 2h1.93A8 8 0 0 1 13 16.93zM12 10a2 2 0 1 0 2 2 2 2 0 0 0-2-2z"/></svg>
+        </div>
+        <div>
+          <div class="contact-item-label" data-i18n="contact_bot_label">5v5 Challenge Bot</div>
+          <div class="contact-item-value">@gladkovkateambot</div>
+        </div>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
 <footer>
-  <div class="ft-brand">
-    <img src="https://i.imgur.com/NtWvGlp.png" alt="GT" onerror="this.style.display='none'">
-    <div class="ft-txt">GLADKOVKA <span>TEAM</span></div>
-  </div>
-  <div class="ft-copy">© 2025 Gladkovka Team · CS2 · Brawl Stars · Standoff 2</div>
+  <div class="footer-logo">GLADKOVKA TEAM</div>
+  <p data-i18n="footer_copy">© 2025 Gladkovka Team. All rights reserved.</p>
 </footer>
 
-<!-- ══════════════ PANELS ══════════════ -->
-
-<!-- CS2 ACADEMY -->
-<div class="panel" id="panel-academy">
-  <div class="panel-hdr">
-    <button class="panel-close" onclick="closePanel('panel-academy')">
-      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      <span data-en="Back" data-ua="Назад" data-ru="Назад">Back</span>
-    </button>
-    <span class="panel-title" data-en="CS2 Academy" data-ua="CS2 Академія" data-ru="CS2 Академия">CS2 Academy</span>
-  </div>
-  <div class="panel-body">
-    <div class="panel-eye" data-en="Counter-Strike 2" data-ua="Counter-Strike 2" data-ru="Counter-Strike 2">Counter-Strike 2</div>
-    <h2 class="panel-h">GLADKOVKA ACADEMIC</h2>
-    <div class="sub-lbl" data-en="Starting Lineup" data-ua="Основний склад" data-ru="Основной состав">Starting Lineup</div>
-    <div class="pgrid g5" style="margin-bottom:40px">
-      <div class="p2c"><div class="p2img"><img src="https://i.imgur.com/tABG2yR.png" loading="lazy"><div class="p2pill">Sniper</div></div><div class="p2body"><div class="p2nick">"Emotionqcold"</div><div class="p2sub">87 y.o.</div></div></div>
-      <div class="p2c"><div class="p2img"><img src="https://i.imgur.com/QHwhYxw.jpeg" loading="lazy"><div class="p2pill">Rifler</div></div><div class="p2body"><div class="p2nick">"Femboy_Mateo"</div><div class="p2sub">67 y.o.</div></div></div>
-      <div class="p2c"><div class="p2img"><img src="https://i.imgur.com/2J6PNBf.jpeg" loading="lazy"><div class="p2pill">Rifler</div></div><div class="p2body"><div class="p2nick">"Cooldildo"</div><div class="p2sub">27 y.o.</div></div></div>
-      <div class="p2c"><div class="p2img"><img src="https://i.imgur.com/fme0Vt8.jpeg" loading="lazy"><div class="p2pill">Rifler</div></div><div class="p2body"><div class="p2nick">"Magnolia"</div><div class="p2sub">0 y.o.</div></div></div>
-      <div class="p2c"><div class="p2img"><img src="https://i.imgur.com/e54FvO1.jpeg" loading="lazy"><div class="p2pill">Rifler</div></div><div class="p2body"><div class="p2nick">"Reeynix"</div><div class="p2sub">52 y.o.</div></div></div>
-      <div class="p2c"><div class="p2img"><img src="https://i.imgur.com/rxyhmAL.png" loading="lazy"><div class="p2pill">2nd AWP</div></div><div class="p2body"><div class="p2nick">"Stariy_Bot"</div><div class="p2sub">—</div></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- BENCH -->
-<div class="panel" id="panel-bench">
-  <div class="panel-hdr">
-    <button class="panel-close" onclick="closePanel('panel-bench')">
-      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      <span data-en="Back" data-ua="Назад" data-ru="Назад">Back</span>
-    </button>
-    <span class="panel-title" data-en="Substitutes" data-ua="Замінники" data-ru="Запасные">Substitutes</span>
-  </div>
-  <div class="panel-body">
-    <div class="panel-eye">CS2 Main</div>
-    <h2 class="panel-h" data-en="SUBSTITUTES" data-ua="ЗАМІННИКИ" data-ru="ЗАПАСНЫЕ">SUBSTITUTES</h2>
-    <div class="pgrid g3">
-      <div class="p2c"><div class="p2img"><img src="https://i.imgur.com/U1NT5eB.jpeg" loading="lazy"><div class="p2pill">Sub</div></div><div class="p2body"><div class="p2nick">"lominok"</div><div class="p2sub">Stanislav P.</div></div></div>
-      <div class="p2c"><div class="p2img"><img src="https://i.imgur.com/j5xX7fi.jpeg" loading="lazy"><div class="p2pill">Sub</div></div><div class="p2body"><div class="p2nick">"nopidorabeme"</div><div class="p2sub">Nikita Zh.</div></div></div>
-      <div class="p2c"><div class="p2img"><img src="https://i.imgur.com/bm7rarb.jpeg" loading="lazy"><div class="p2pill">Sub</div></div><div class="p2body"><div class="p2nick">"synblyadi"</div><div class="p2sub">Ivan L.</div></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- BRAWL STARS -->
-<div class="panel" id="panel-brawl">
-  <div class="panel-hdr">
-    <button class="panel-close" onclick="closePanel('panel-brawl')">
-      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      <span data-en="Back" data-ua="Назад" data-ru="Назад">Back</span>
-    </button>
-    <span class="panel-title">⭐ Brawl Stars</span>
-  </div>
-  <div class="panel-body">
-    <div class="panel-eye">Brawl Stars</div>
-    <h2 class="panel-h" style="background:linear-gradient(135deg,#fff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">GLADKOVKA BRAWL</h2>
-    <div class="pgrid g3">
-      <a href="https://brawlytix.com/profile/P02PL2P8Q" target="_blank" class="p2c brawl-card" style="text-decoration:none">
-        <div class="p2img">
-          <img src="https://i.imgur.com/pN9Rwud.png" loading="lazy">
-          <div class="stat-ov"><svg viewBox="0 0 24 24" width="26" height="26" fill="#ffd700"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg><span>Stats</span></div>
-        </div>
-        <div class="p2body"><div class="p2nick">Hamster</div><div class="p2sub">Brawl Stars</div></div>
-      </a>
-      <a href="https://brawlytix.com/profile/8PQP9V8VO" target="_blank" class="p2c brawl-card" style="text-decoration:none">
-        <div class="p2img">
-          <img src="https://i.imgur.com/fKd8PQV.png" loading="lazy">
-          <div class="stat-ov"><svg viewBox="0 0 24 24" width="26" height="26" fill="#ffd700"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg><span>Stats</span></div>
-        </div>
-        <div class="p2body"><div class="p2nick">AnalnyKaktus</div><div class="p2sub">Brawl Stars</div></div>
-      </a>
-      <a href="https://brawlytix.com/profile/9VVOURLRY" target="_blank" class="p2c brawl-card" style="text-decoration:none">
-        <div class="p2img">
-          <img src="https://i.imgur.com/prNvgKk.png" loading="lazy">
-          <div class="stat-ov"><svg viewBox="0 0 24 24" width="26" height="26" fill="#ffd700"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg><span>Stats</span></div>
-        </div>
-        <div class="p2body"><div class="p2nick">степан памперс</div><div class="p2sub">Brawl Stars</div></div>
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- STANDOFF 2 -->
-<div class="panel" id="panel-standoff">
-  <div class="panel-hdr">
-    <button class="panel-close" onclick="closePanel('panel-standoff')">
-      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      <span data-en="Back" data-ua="Назад" data-ru="Назад">Back</span>
-    </button>
-    <span class="panel-title">🔫 Standoff 2</span>
-  </div>
-  <div class="panel-body">
-    <div class="panel-eye" style="color:#e0692a">Standoff 2</div>
-    <h2 class="panel-h" style="background:linear-gradient(135deg,#fff,#e0692a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">GLADKOVKA STANDOFF</h2>
-    <div class="pgrid g5">
-      <div class="p2c so-card"><div class="p2img"><img src="https://i.imgur.com/9jpCJm4.png" loading="lazy"><div class="p2pill">SO2</div></div><div class="p2body"><div class="p2nick">4rvvr</div></div></div>
-      <div class="p2c so-card"><div class="p2img"><img src="https://i.imgur.com/PN2tGel.png" loading="lazy"><div class="p2pill">SO2</div></div><div class="p2body"><div class="p2nick">4ddy tei</div></div></div>
-      <div class="p2c so-card"><div class="p2img"><img src="https://i.imgur.com/D67GUon.png" loading="lazy"><div class="p2pill">SO2</div></div><div class="p2body"><div class="p2nick">nomu</div></div></div>
-      <div class="p2c so-card"><div class="p2img"><img src="https://i.imgur.com/fRccUwE.png" loading="lazy"><div class="p2pill">SO2</div></div><div class="p2body"><div class="p2nick">wirvexxqw</div></div></div>
-      <div class="p2c so-card"><div class="p2img"><img src="https://i.imgur.com/B0zLgCh.png" loading="lazy"><div class="p2pill">SO2</div></div><div class="p2body"><div class="p2nick">Tickrate</div></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- STEAM MODAL -->
-<div class="modal-bd" id="modal" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="m-hd">
-      <img id="m-av" src="" alt="" class="m-av">
-      <div><div class="m-nick" id="m-nick"></div><div class="m-role" id="m-role"></div></div>
-    </div>
-    <div class="m-body">
-      <div class="m-row"><span class="k" data-en="Name" data-ua="Ім'я" data-ru="Имя">Name</span><span class="v" id="m-name"></span></div>
-      <div class="m-row"><span class="k" data-en="Age" data-ua="Вік" data-ru="Возраст">Age</span><span class="v" id="m-age"></span></div>
-      <div class="m-row"><span class="k" data-en="Game" data-ua="Гра" data-ru="Игра">Game</span><span class="v">CS2</span></div>
-    </div>
-    <div class="m-acts">
-      <a id="m-steam" href="#" target="_blank" class="m-st">
-        <svg viewBox="0 0 24 24"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.711L.581 17.187C1.907 20.961 5.712 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.606 0 11.979 0z"/></svg>
-        <span data-en="Open Steam" data-ua="Відкрити Steam" data-ru="Открыть Steam">Open Steam</span>
-      </a>
-      <button class="m-cl" onclick="closeModal()" data-en="Close" data-ua="Закрити" data-ru="Закрыть">Close</button>
-    </div>
-  </div>
-</div>
-
 <script>
-gsap.registerPlugin(ScrollTrigger);
+// ─── I18N ───
+const i18n = {
+  en: {
+    nav_roster: 'Roster', nav_socials: 'Socials', nav_contact: 'Contact',
+    roster_label: 'Main Roster', roster_title: 'CS2 TEAM',
+    divisions_label: 'Divisions', divisions_title: 'EXPLORE TEAMS',
+    block_cs2_tag: 'Academy', block_cs2_title: 'CS2 ACADEMY', block_cs2_sub: '6 rising talents',
+    block_bench_tag: 'Substitute', block_bench_title: 'BENCH PLAYERS', block_bench_sub: '3 substitute players',
+    block_bs_tag: 'Mobile Gaming', block_bs_title: 'BRAWL STARS', block_bs_sub: '3 brawl players',
+    block_so_tag: 'Mobile Shooter', block_so_title: 'STANDOFF 2', block_so_sub: 'Coming soon',
+    socials_label: 'Follow Us', socials_title: 'COMMUNITY',
+    contact_label: 'Business', contact_title_green: 'Partnership', contact_title: '& Contact',
+    contact_desc: 'Interested in sponsoring Gladkovka Team or collaborating with us? Reach out through any of the channels below and we\'ll get back to you promptly.',
+    contact_email_label: 'Email · Partnerships', contact_tg_label: 'Telegram Channel', contact_bot_label: '5v5 Challenge Bot',
+    footer_copy: '© 2025 Gladkovka Team. All rights reserved.'
+  },
+  ua: {
+    nav_roster: 'Склад', nav_socials: 'Соцмережі', nav_contact: 'Контакт',
+    roster_label: 'Основний склад', roster_title: 'CS2 КОМАНДА',
+    divisions_label: 'Підрозділи', divisions_title: 'НАШІ КОМАНДИ',
+    block_cs2_tag: 'Академія', block_cs2_title: 'CS2 АКАДЕМІЯ', block_cs2_sub: '6 молодих талантів',
+    block_bench_tag: 'Запасні', block_bench_title: 'ЗАПАСНІ ГРАВЦІ', block_bench_sub: '3 запасних гравця',
+    block_bs_tag: 'Мобільний', block_bs_title: 'BRAWL STARS', block_bs_sub: '3 гравці',
+    block_so_tag: 'Мобільний шутер', block_so_title: 'STANDOFF 2', block_so_sub: 'Незабаром',
+    socials_label: 'Слідкуйте', socials_title: 'СПІЛЬНОТА',
+    contact_label: 'Бізнес', contact_title_green: 'Партнерство', contact_title: 'та Контакт',
+    contact_desc: 'Зацікавлені у спонсорстві або співпраці з Gladkovka Team? Звертайтеся до нас через зазначені канали.',
+    contact_email_label: 'Email · Партнерства', contact_tg_label: 'Telegram-канал', contact_bot_label: 'Бот для 5v5',
+    footer_copy: '© 2025 Gladkovka Team. Усі права захищені.'
+  },
+  ru: {
+    nav_roster: 'Состав', nav_socials: 'Соцсети', nav_contact: 'Контакт',
+    roster_label: 'Основной состав', roster_title: 'CS2 КОМАНДА',
+    divisions_label: 'Подразделения', divisions_title: 'НАШИ КОМАНДЫ',
+    block_cs2_tag: 'Академия', block_cs2_title: 'CS2 АКАДЕМИЯ', block_cs2_sub: '6 молодых талантов',
+    block_bench_tag: 'Запасные', block_bench_title: 'ЗАПАСНЫЕ ИГРОКИ', block_bench_sub: '3 запасных игрока',
+    block_bs_tag: 'Мобильный', block_bs_title: 'BRAWL STARS', block_bs_sub: '3 игрока',
+    block_so_tag: 'Мобильный шутер', block_so_title: 'STANDOFF 2', block_so_sub: 'Скоро',
+    socials_label: 'Следите за нами', socials_title: 'СООБЩЕСТВО',
+    contact_label: 'Бизнес', contact_title_green: 'Партнёрство', contact_title: 'и Контакт',
+    contact_desc: 'Хотите стать спонсором Gladkovka Team или сотрудничать с нами? Свяжитесь с нами через один из каналов ниже.',
+    contact_email_label: 'Email · Партнёрства', contact_tg_label: 'Telegram-канал', contact_bot_label: 'Бот для 5v5',
+    footer_copy: '© 2025 Gladkovka Team. Все права защищены.'
+  }
+};
 
-/* ── HERO SCROLL (native, no lerp, tied directly to scroll position) ── */
-const heroWrap = document.getElementById('hero-wrap');
-const glowEl   = document.getElementById('glow');
-const hdr      = document.getElementById('hdr');
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-switcher button').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase() === lang);
+  });
+  const t = i18n[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+}
 
-function onScroll() {
-  const sy = window.scrollY;
-  const vh = window.innerHeight;
-  const p  = Math.min(sy / (vh * 0.7), 1); // complete over 70% of vh
+// ─── SCROLL PHYSICS ───
+let scrollY = 0, lerpY = 0, ticking = false;
+const heroGlow = document.getElementById('heroGlow');
+const heroLogoWrap = document.getElementById('heroLogoWrap');
+const header = document.getElementById('sticky-header');
 
-  // Logo: scale + opacity
-  const s = 1 - p * 0.48;
-  const o = Math.max(1 - p * 1.5, 0);
-  heroWrap.style.transform = `scale(${s})`;
-  heroWrap.style.opacity   = o;
+const HERO_HEIGHT = window.innerHeight;
+const TRANSITION_RANGE = HERO_HEIGHT * 0.85;
 
-  // Glow shrinks
-  const gs = Math.max(1 - p * 0.75, 0.05);
-  const go = Math.max(1 - p * 1.3, 0);
-  glowEl.style.transform = `scale(${gs})`;
-  glowEl.style.opacity   = go;
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+let currentLerp = 0;
+let targetLerp = 0;
+let rafId = null;
+
+function updateHeader(progress) {
+  const p = Math.min(Math.max(progress, 0), 1);
+  const eased = 1 - Math.pow(1 - p, 3);
+
+  // Logo: scale from 1 to 0 (it will be replaced by fixed header logo)
+  const scale = 1 - eased * 0.72;
+  const opacity = 1 - eased * 1.4;
+  heroLogoWrap.style.transform = `scale(${scale})`;
+  heroLogoWrap.style.opacity = Math.max(opacity, 0);
+
+  // Glow
+  const glowScale = 1 - eased * 0.85;
+  heroGlow.style.transform = `scale(${glowScale})`;
+  heroGlow.style.opacity = Math.max(1 - eased * 1.2, 0);
 
   // Header
-  if (sy > 60) hdr.classList.add('up');
-  else         hdr.classList.remove('up');
-}
-
-window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
-
-/* ── GSAP ENTRANCE ANIMATIONS ── */
-// Player cards
-document.querySelectorAll('.pc').forEach((el, i) => {
-  ScrollTrigger.create({
-    trigger: el, start: 'top 88%', once: true,
-    onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.55, delay: i * 0.07, ease: 'power2.out' })
-  });
-});
-
-// Team grid items
-document.querySelectorAll('.tg-item').forEach((el, i) => {
-  ScrollTrigger.create({
-    trigger: el, start: 'top 90%', once: true,
-    onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.6, delay: i * 0.1, ease: 'power2.out' })
-  });
-});
-
-// Social cards
-document.querySelectorAll('.soc-c').forEach((el, i) => {
-  ScrollTrigger.create({
-    trigger: el, start: 'top 92%', once: true,
-    onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.5, delay: i * 0.08, ease: 'power2.out' })
-  });
-});
-
-// Hero entrance
-gsap.from('#hero-wrap', { opacity: 0, y: 24, duration: 1.0, ease: 'power3.out', delay: 0.15 });
-gsap.from('#glow',      { opacity: 0, scale: 0.5, duration: 1.4, ease: 'power2.out', delay: 0.05 });
-
-/* ── PANELS ── */
-function openPanel(id) {
-  const p = document.getElementById(id);
-  p.classList.add('open');
-  p.scrollTop = 0;
-}
-function closePanel(id) {
-  document.getElementById(id).classList.remove('open');
-}
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.panel.open').forEach(p => p.classList.remove('open'));
-    document.getElementById('modal').classList.remove('on');
+  if (p > 0.5) {
+    header.classList.add('visible');
+  } else {
+    header.classList.remove('visible');
   }
-});
-
-/* ── MODAL ── */
-function openModal(card) {
-  document.getElementById('m-av').src     = card.dataset.img;
-  document.getElementById('m-nick').textContent = '"' + card.dataset.nick + '"';
-  document.getElementById('m-role').textContent = card.dataset.role;
-  document.getElementById('m-name').textContent = card.dataset.name;
-  document.getElementById('m-age').textContent  = card.dataset.age;
-  document.getElementById('m-steam').href       = card.dataset.steam;
-  document.getElementById('modal').classList.add('on');
-}
-function closeModal() {
-  document.getElementById('modal').classList.remove('on');
 }
 
-/* ── LOCALIZATION ── */
-let lang = 'en';
-function setL(l) {
-  lang = l;
-  document.querySelectorAll('.lb').forEach(b => b.classList.toggle('on', b.textContent.toLowerCase() === l));
-  document.querySelectorAll('[data-' + l + ']').forEach(el => { el.textContent = el.dataset[l]; });
+function animFrame() {
+  const diff = targetLerp - currentLerp;
+  if (Math.abs(diff) > 0.1) {
+    currentLerp += diff * 0.085;
+    updateHeader(currentLerp / TRANSITION_RANGE);
+    rafId = requestAnimationFrame(animFrame);
+  } else {
+    currentLerp = targetLerp;
+    updateHeader(currentLerp / TRANSITION_RANGE);
+    rafId = null;
+  }
 }
 
-/* ── SMOOTH ANCHOR NAV ── */
+window.addEventListener('scroll', () => {
+  targetLerp = window.scrollY;
+  if (!rafId) rafId = requestAnimationFrame(animFrame);
+}, { passive: true });
+
+// ─── SCROLL REVEAL ───
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
+
+// Staggered player cards
+const playerCards = document.querySelectorAll('.player-card');
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const cards = entry.target.closest('.roster-grid').querySelectorAll('.player-card:not(.revealed)');
+      cards.forEach((card, i) => {
+        setTimeout(() => {
+          card.classList.add('revealed');
+        }, i * 80);
+      });
+      cardObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+if (playerCards.length) cardObserver.observe(playerCards[0]);
+
+// ─── SCROLL TO TOP ───
+function scrollToTop(e) {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── SMOOTH ANCHOR SCROLL ───
 document.querySelectorAll('a[href^="#"]').forEach(a => {
+  const href = a.getAttribute('href');
+  if (href === '#') return;
   a.addEventListener('click', e => {
-    const id = a.getAttribute('href').slice(1);
-    const el = document.getElementById(id);
-    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
 </script>
